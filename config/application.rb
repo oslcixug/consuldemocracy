@@ -59,46 +59,10 @@ module Consul
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = :en
+    config.i18n.default_locale = :gl
     available_locales = [
-      "ar",
-      "bg",
-      "bs",
-      "ca",
-      "cs",
-      "da",
-      "de",
-      "el",
-      "en",
       "es",
-      "es-PE",
-      "eu",
-      "fa",
-      "fr",
-      "gd",
       "gl",
-      "he",
-      "hr",
-      "id",
-      "it",
-      "ka",
-      "ne",
-      "nl",
-      "oc",
-      "pl",
-      "pt-BR",
-      "ro",
-      "ru",
-      "sl",
-      "sq",
-      "so",
-      "sr",
-      "sv",
-      "tr",
-      "uk-UA",
-      "val",
-      "zh-CN",
-      "zh-TW"
     ]
     config.i18n.available_locales = available_locales
     config.i18n.fallbacks = [I18n.default_locale, {
@@ -121,6 +85,7 @@ module Consul
     end
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    config.assets.paths << Rails.root.join("app", "assets", "images")
     config.assets.paths << Rails.root.join("vendor", "assets", "fonts")
     config.assets.paths << Rails.root.join("node_modules", "jquery-ui", "themes", "base")
     config.assets.paths << Rails.root.join("node_modules")
