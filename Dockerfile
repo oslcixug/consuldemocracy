@@ -56,8 +56,12 @@ RUN npm install
 # Copy the Rails application into place
 COPY . .
 
+RUN bin/rake assets:precompile
+
 ENTRYPOINT ["./docker-entrypoint.sh"]
 # Define the script we want run once the container boots
 # Use the "exec" form of CMD so our script shuts down gracefully on SIGTERM (i.e. `docker stop`)
 # CMD [ "config/containers/app_cmd.sh" ]
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+
+EXPOSE 3000
+CMD ["./bin/rails", "server", "-p", "3000"]
