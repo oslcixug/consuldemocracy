@@ -26,7 +26,7 @@ gl:
         sections:
           homepage: Páxina principal
           debates: Debates
-          proposals: Propostas cidadás
+          proposals: Propostas
           budgets: Orzamentos participativos
           help_page: Páxina de axuda
       edit:
@@ -49,7 +49,7 @@ gl:
           all: Todo
           on_comments: Comentarios
           on_debates: Debates
-          on_proposals: Propostas cidadás
+          on_proposals: Propostas
           on_users: Usuarios/as
           on_system_emails: Correos electrónicos do sistema
         title: Actividade de moderadores
@@ -441,7 +441,7 @@ gl:
           homepage: Páxina principal
           draft_versions: Redacción
           questions: o debate
-          proposals: Propostas cidadás
+          proposals: Propostas
           milestones: Seguindo
       homepage:
         edit:
@@ -549,7 +549,7 @@ gl:
       activity: Actividade de moderador
       admin: Menú de administración
       banner: Xestionar anuncios
-      proposals: Propostas cidadás
+      proposals: Propostas
       proposals_topics: Temas das propostas
       budgets: Orzamentos participativos
       geozones: Xestionar zonas
@@ -587,7 +587,7 @@ gl:
         information_texts_menu:
           debates: "Debates"
           community: "Comunidade"
-          proposals: "Propostas cidadás"
+          proposals: "Propostas"
           polls: "Votacións"
           layouts: "Capas"
           mailers: "Correos"
@@ -890,7 +890,7 @@ gl:
       index:
         title: "Preguntas"
         create: "Crear pregunta"
-        no_questions: "Non hai preguntas cidadás."
+        no_questions: "Non hai preguntas."
         filter_poll: Filtrar por votación
         select_poll: Escoller votación
         questions_tab: "Preguntas"
@@ -1035,7 +1035,7 @@ gl:
         no_results: Non se atoparon organizacións.
     proposals:
       index:
-        title: Propostas cidadás
+        title: Propostas
         id: ID
         author: Autoría
         select: Seleccionar
@@ -1159,7 +1159,7 @@ gl:
           debate_votes: Votos en debates
           debates: Debates
           proposal_votes: Votos en propostas
-          proposals: Propostas cidadás
+          proposals: Propostas
           budgets: Orzamentos abertos
           budget_investments: Proxectos de investimento
           unverified_users: Usuarios con contas sen verificar
@@ -1179,7 +1179,7 @@ gl:
       graph:
         debate_created: Debates
         visit: Visitas
-        proposal_created: Propostas cidadás
+        proposal_created: Propostas
       budget_balloting:
         vote_count: Votos
         participant_count: Participantes
@@ -1211,7 +1211,7 @@ gl:
       sdg:
         debates: "Debates"
         polls: "Votacións"
-        proposals: "Propostas cidadás"
+        proposals: "Propostas"
     tags:
       create: Crea un tema
       index:
@@ -1330,7 +1330,7 @@ gl:
       create_card: Crear tarxeta
       no_cards: Non hai tarxetas.
       feeds:
-        proposals: Propostas cidadás
+        proposals: Propostas
         debates: Debates
         processes: Procesos
       new:

@@ -580,7 +580,7 @@ gl:
   shared:
     edit: "Editar proposta"
     filter: "Filtro"
-    save: "Guardar"
+    save: "Gardar"
     delete: "Borrar"
     "yes": "Si"
     "no": "Non"
@@ -632,7 +632,7 @@ gl:
           one: "Existe unha proposta co termo '%{query}', podes participar nela en vez de abrir unha nova."
           other: "Existen propostas co termo '%{query}', podes participar nelas en vez de abrir unha nova."
         message: "Estás vendo %{limit} de %{count} propostas que conteñen o termo '%{query}'"
-        see_all: "Ver todos"
+        see_all: "Ver todas"
     tags_cloud:
       tags: Tendencias
       districts: "Zonas"
@@ -661,6 +661,16 @@ gl:
     translations:
       remove_language: Eliminar idioma
       add_language: Engadir idioma
+      languages_in_use:
+        zero: "0 idiomas en uso"
+        one: "1 idioma en uso"
+        other: "%{count} idiomas en uso"
+    optional: "Campos opcionais"
+    required: "Campos obrigatorios"
+    comments:
+      one: "1 comentario"
+      other: "%{count} comentarios"
+      zero: "Sen comentarios"
   social:
     facebook: "%{org} Facebook"
     twitter: "%{org} Twitter"

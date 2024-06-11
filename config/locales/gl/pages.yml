@@ -19,7 +19,7 @@ gl:
         description: "Na sección de %{link} podes expoñer e compartir a túa opinión con outras persoas sobre temas que che preocupan relacionados co municipio. Tamén é un espazo onde xerar ideas que a través das outras secciones de %{org} leven a actuacións concretas por parte do Concello."
         link: "debates cidadáns"
         feature: "Podes abrir debates, comentalos e valoralos cos botóns de <strong>estou de acordo</strong> ou <strong>non estou de acordo</strong>. Para iso tes que %{link}."
-        feature_link: "registrarte en %{org}"
+        feature_link: "rexistrarte en %{org}"
         image_alt: "Botóns para avaliar os debates"
         figcaption: 'Botones "estou de acordo" e "non estou de acordo" para avaliar os debates.'
       proposals:
