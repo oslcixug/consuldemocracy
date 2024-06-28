@@ -30,7 +30,6 @@ services:
       - "3000:3000"
     volumes: &app_volumes
       - ./config/secrets.yml:/var/www/consul/config/secrets.yml
-      - bundle:/usr/local/bundle
       - storage:/var/www/consul/storage
     environment: &app_environment
       - POSTGRES_PASSWORD=Passw0rd!
@@ -48,5 +47,4 @@ services:
 
 volumes:
   db_data: {}
-  bundle: {}
   storage: {}
