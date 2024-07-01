@@ -9,6 +9,7 @@
 /config/secrets.yml
 /config/deploy-secrets.yml
 /config/maintenance.yml
+docker-compose.yml
 
 # Logfiles and tempfiles.
 log/*
