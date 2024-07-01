@@ -9,3 +9,10 @@
     color: black;
   }
 }
+
+a:active, a:focus:active, a:focus, button:focus {
+  box-shadow: none;
+  //box-shadow: 0 0 0 3px #ca0083;
+  outline: none;
+  outline-offset: none;
+}

@@ -102,20 +102,20 @@ button,
 [type="button"],
 [type="submit"] {
   &:focus {
-    @include focus-outline;
+    //@include focus-outline;
   }
 
   &:focus-visible {
-    @include focus-outline;
+    //@include focus-outline;
   }
 
   &:focus:not(:focus-visible) {
-    @include no-outline;
+    //@include no-outline;
   }
 
   &:active,
   &:focus:active {
-    @include focus-outline;
+    //@include focus-outline;
   }
 }
 
