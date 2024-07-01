@@ -74,7 +74,7 @@ gl:
         other: Papeletas
       proposal:
         one: "Proposta cidadá"
-        other: "Propostas cidadás"
+        other: "Propostas"
       site_customization/page:
         one: Páxina
         other: Páxinas personalizadas
@@ -92,7 +92,7 @@ gl:
         other: "Procesos"
       legislation/proposal:
         one: "a proposta"
-        other: "Propostas cidadás"
+        other: "Propostas"
       legislation/draft_versions:
         one: "Versión borrador"
         other: "Versións do borrador"

@@ -201,7 +201,7 @@ gl:
       my_account_link: A miña conta
       my_activity_link: A miña actividade
       open_gov: Goberno aberto
-      proposals: Propostas cidadás
+      proposals: Propostas
       poll_questions: Votacións
       budgets: Orzamentos participativos
       notification_item:
@@ -337,11 +337,11 @@ gl:
         other: " contén o termo <strong>'%{search_term}'</strong>"
       select_order_long: "Estás vendo as propostas"
       start_proposal: Crea unha proposta
-      title: Propostas cidadás
+      title: Propostas
       top_link_proposals: Propostas máis apoiadas por categoría
       section_header:
         icon_alt: Icona das propostas
-        title: Propostas cidadás
+        title: Propostas
         help: Axuda sobre as propostas
       section_footer:
         title: Axuda sobre as propostas
@@ -681,7 +681,7 @@ gl:
     index:
       visits: Visitas
       debates: Debates
-      proposals: Propostas cidadás
+      proposals: Propostas
       comments: Comentarios
       proposal_votes: Votos en propostas
       debate_votes: Votos en debates
@@ -712,7 +712,7 @@ gl:
       deleted_debate: Este debate foi eliminado
       deleted_proposal: Esta proposta foi eliminada
       deleted_budget_investment: Este proxecto de investimento foi borrado
-      proposals: Propostas cidadás
+      proposals: Propostas
       proposals_status: Estado
       debates: Debates
       budget_investments: Investimentos orzamentarios

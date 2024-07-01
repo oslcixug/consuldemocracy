@@ -43,7 +43,7 @@ gl:
       flagged_comments: Comentarios
       flagged_debates: Debates
       flagged_investments: Proxectos de orzamentos participativos
-      proposals: Propostas cidadás
+      proposals: Propostas
       proposal_notifications: Notificacións de propostas
       users: Bloquear usuarios
     proposals:
@@ -62,7 +62,7 @@ gl:
         orders:
           created_at: Máis recentes
           flags: Máis denunciadas
-        title: Propostas cidadás
+        title: Propostas
     budget_investments:
       index:
         block_authors: Bloquear autores/as

@@ -360,7 +360,7 @@ es:
         other: " que contienen <strong>'%{search_term}'</strong>"
       select_order_long: "Estas viendo las propuestas"
       start_proposal: Crea una propuesta
-      title: Propuestas ciudadanas
+      title: Propuestas
       top_link_proposals: Propuestas más apoyadas por categoría
       section_header:
         icon_alt: Icono de Propuestas

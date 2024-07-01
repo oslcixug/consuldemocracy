@@ -108,7 +108,7 @@ gl:
     process:
       debates: "Debates"
       debates_description: "O espazo de debate da cidadanía está dirixido a calquera que poida presentar problemas que lles afecten e sobre os que queren compartir as súas opinións con outros"
-      proposals: "Propostas cidadás"
+      proposals: "Propostas"
       polls: "Votacións"
       polls_description: "As votacións da cidadanía son un proceso participativo polo cal os veciños con dereito a voto poden tomar decisións dun modo directo"
       budgets: "Orzamentos participativos"
