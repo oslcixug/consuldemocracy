@@ -16,3 +16,15 @@ a:active, a:focus:active, a:focus, button:focus {
   outline: none;
   outline-offset: none;
 }
+
+h1, .h1 {
+  font-size: 2.5rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+}
+
+.logo {
+  line-height: 0;
+}
