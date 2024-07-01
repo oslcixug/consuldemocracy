@@ -9,7 +9,7 @@ gl:
       guide: "Esta guía explica para que serven e como funcionan cada unha das seccións de %{org}."
       menu:
         debates: "Debates"
-        proposals: "Propostas cidadás"
+        proposals: "Propostas"
         budgets: "Orzamentos participativos"
         polls: "Votacións"
         other: "Outra información de interese"
@@ -23,7 +23,7 @@ gl:
         image_alt: "Botóns para avaliar os debates"
         figcaption: 'Botones "estou de acordo" e "non estou de acordo" para avaliar os debates.'
       proposals:
-        title: "Propostas cidadás"
+        title: "Propostas"
         description: "Na sección %{link} podes formular propostas para que o Concello as leve a cabo. As propostas obteñen apoios e se alcanzan abondos sométense a votación cidadá. As propostas aprobadas nestas votacións cidadás son asumidas polo Concello e lévanse a cabo."
         link: "propostas cidadás"
         image_alt: "Botón para apoiar unha proposta"
@@ -94,7 +94,7 @@ gl:
               page_column: Debates
             - 
               key_column: 2
-              page_column: Propostas cidadás
+              page_column: Propostas
             - 
               key_column: 3
               page_column: Votos

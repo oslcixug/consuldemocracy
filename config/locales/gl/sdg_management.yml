@@ -9,7 +9,7 @@ gl:
       debates: "Debates"
       legislation_processes: "Procesos lexislativos"
       polls: "Votacións"
-      proposals: "Propostas cidadás"
+      proposals: "Propostas"
     relations:
       index:
         filter: "Filtro"

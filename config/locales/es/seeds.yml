@@ -47,7 +47,7 @@ es:
         title: "¿Cómo funcionan las propuestas ciudadanas?"
         description: "Un espacio para que el ciudadano cree una propuesta y busque apoyo. Las propuestas que obtengan el apoyo necesario serán votadas. Así juntos podemos decidir sobre los temas que nos importan."
         link_text: "Más sobre propuestas"
-        label: "Propuestas ciudadanas"
+        label: "Propuestas"
     categories:
       associations: Asociaciones
       culture: Cultura

@@ -77,7 +77,7 @@ gl:
         allegations_dates: Comentarios
         result_publication_date: Publicación do resultado final
         milestones_date: Seguindo
-        proposals_dates: Propostas cidadás
+        proposals_dates: Propostas
     questions:
       comments:
         comment_button: Publicar resposta
