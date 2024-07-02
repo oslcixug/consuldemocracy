@@ -612,7 +612,7 @@ gl:
             short_title: "Promoción de indicadores que vaian máis aló do PIB"
       help:
         title: "Axuda Obxectivos de Desenvolvemento Sostible"
-        description: "Podes aliñar as túas aportacións á comunidade (temas, propostas cidadás e proxectos de inversión) cos Obxectivos de Desenvolvemento Sostible da Axenda 2030, isto  permitiranos ter unha visión xeral da nosa aportación en cada uno dos obxectivos de desenvolvemento sostible. A continuación podes informarte de todos os obxectivos, as súas metas e as metas localizadas."
+        description: "Podes aliñar as túas aportacións á comunidade (temas, propostas e proxectos de inversión) cos Obxectivos de Desenvolvemento Sostible da Axenda 2030, isto  permitiranos ter unha visión xeral da nosa aportación en cada uno dos obxectivos de desenvolvemento sostible. A continuación podes informarte de todos os obxectivos, as súas metas e as metas localizadas."
       show:
         read_more: "Ler máis sobre %{goal}"
         read_less: "Ler menos sobre %{goal}"

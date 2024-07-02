@@ -2,7 +2,7 @@ gl:
   helpers:
     page_entries_info:
       entry:
-        zero: Entradas
+        zero: Sen entradas
         one: Entrada
         other: Entradas
       more_pages:
@@ -17,6 +17,6 @@ gl:
       current: Estás na páxina
       first: Primeira
       last: Última
-      next: Proximamente
+      next: Seguinte
       previous: Anterior
       truncate: "&hellip;"

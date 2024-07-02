@@ -10,7 +10,7 @@ gl:
       feature_4_html: "Se a cidadanía aprobar os proxectos, faranse realidade"
       new_button: Quero crear un proxecto de investimento
     proposal:
-      title: "Unha proposta cidadá"
+      title: "Unha proposta"
       feature_1_html: "Son ideas sobre calquera acción que poida realizar o Concello"
       feature_2_html: "Precisan <strong>%{votes} apoios</strong> en %{org} para pasaren á fase de votación"
       feature_3_html: "Actívanse en calquera momento. Tes <strong>un ano</strong> para reunir os apoios"
