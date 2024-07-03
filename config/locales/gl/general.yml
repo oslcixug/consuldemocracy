@@ -77,27 +77,27 @@ gl:
     edit:
       editing: Editar debate
       form:
-        submit_button: Gardar so cambios
+        submit_button: Gardar os cambios
       show_link: Ver debate
     form:
       tags_instructions: Etiqueta este debate.
       tags_placeholder: "Escribe as etiquetas que desexes separadas por unha coma (',')"
     index:
-      featured_debates: Destacar
+      featured_debates: Destacados
       orders:
-        confidence_score: Máis apoiadas
-        created_at: Novas
-        hot_score: Máis activas hoxe
-        most_commented: Máis comentadas
+        confidence_score: Máis apoiados
+        created_at: Novos
+        hot_score: Máis activos hoxe
+        most_commented: Máis comentados
         relevance: Máis relevantes
-        recommendations: recomendacións
+        recommendations: Recomendacións
       recommendations:
         without_results: Non hai debates relacionados cos teus intereses
-        without_interests: Sigue propostas para que che poidamos facer recomendacións
+        without_interests: Segue propostas para que che poidamos facer recomendacións
         disable: "As recomendacións dos debates deixarán de amosarse se as desactiva. Pode volver a activalas desde a páxina «A miña conta»"
         actions:
-          success: "As recomendacións para debates foron deshabilitadas para esta conta"
-          error: "Produciuse un erro. Por favor, accede á páxina 'A miña conta' para deshabilitar de xeito manual as recomendacións para os debates"
+          success: "As recomendacións para debates foron desactivadas para esta conta"
+          error: "Produciuse un erro. Por favor, accede á páxina «A miña conta» para deshabilitar de xeito manual as recomendacións para os debates"
       search_form:
         button: Buscar
         placeholder: Buscar debates...
@@ -112,7 +112,7 @@ gl:
         title: Axuda sobre os debates
         description: Comeza un debate para compartir puntos de vista con outras persoas sobre os temas que te preocuparen.
         help_text_1: "O espazo de debates está dirixido para que calquera persoa poida expor temas que lle preocupan e sobre os que queira compartir puntos de vista con outras persoas."
-        help_text_2: 'Para abrir un debate é preciso rexistrarse en %{org}. As persoas xa rexistradas tamén poden comentar os debates que estean abertos e valoralos cos botóns de ''Estou de acordo'' ou ''Non estou de acordo'' que se atopan en cada un deles.'
+        help_text_2: 'Para abrir un debate é preciso rexistrarse en %{org}. As persoas xa rexistradas tamén poden comentar os debates que estean abertos e valoralos cos botóns de «Estou de acordo» ou «Non estou de acordo» que se atopan en cada un deles.'
     new:
       form:
         submit_button: Comezar un debate
@@ -126,13 +126,13 @@ gl:
     show:
       author_deleted: Usuario/a borrado/a
       comments_title: Comentarios
-      edit_debate_link: Editar proposta
+      edit_debate_link: Editar
       flag: Este debate foi marcado como inapropiado por varias persoas usuarias.
       share: Compartir
       author: Autoría
     update:
       form:
-        submit_button: Gardar so cambios
+        submit_button: Gardar os cambios
   errors:
     messages:
       allowed_file_content_types: "o tipo de contido debe ser un dos seguintes: %{types}"
@@ -140,32 +140,32 @@ gl:
       invalid_date_range: "O rango de datas non é correcto"
       past_date: "Non pode ser unha data do pasado"
       cannot_change_date:
-        poll_started: "Non pode ser cambiada se a votación xa comezou"
-        poll_ended: "Non pode ser cambiada se a votación xa rematou"
+        poll_started: "Non se pode cambiar se a votación xa comezou"
+        poll_ended: "Non se pode cambiar se a votación xa rematou"
   form:
     accept_terms: Acepto a %{policy} e as %{conditions}
     conditions: Condicións de uso
     debate: Debate
-    direct_message: a mensaxe privada
-    error: erro
-    errors: erros
+    direct_message: Mensaxe privada
+    error: Erro
+    errors: Erros
     not_saved: "impediron gardar %{resource}. <br>Revisa os campos marcados para saber como corrixilos:"
     policy: Política de privacidade
-    banner: anuncio
-    proposal: a proposta
+    banner: Anuncio
+    proposal: Proposta
     proposal_notification: "a notificación"
     budget/investment: Investimento
     budget/group: Grupo orzamento
-    budget/heading: a partida orzamentaria
+    budget/heading: Partida orzamentaria
     geozone: xeozona
-    legislation/draft_version: borrador
+    legislation/draft_version: bosquexo
     legislation/process: proceso
     legislation/question: pregunta
     poll/shift: Quenda
     poll/question/option: Resposta
-    user: a conta
-    verification/sms: o teléfono
-    signature_sheet: a folla de sinaturas
+    user: Conta
+    verification/sms: Teléfono
+    signature_sheet: Folla de sinaturas
     document: Documento
     topic: Tema
     image: Imaxe
@@ -175,7 +175,7 @@ gl:
     site_customization/page: páxina
     sdg/local_target: obxectivo local
   geozones:
-    none: Toda a cidade
+    none: Toda a universidade
   layouts:
     dashboard:
       proposal_header:
@@ -198,10 +198,10 @@ gl:
       consul: aplicación CONSUL DEMOCRACY
       consul_url: https://github.com/consuldemocracy/consuldemocracy
       copyright: CONSUL DEMOCRACY, %{year}
-      description: Este portal usa a %{consul} que é %{open_source}. De Madrid, para o mundo enteiro.
+      description: Este portal usa a %{consul} que é %{open_source}.
       open_source: software libre
       open_source_url: http://www.gnu.org/licenses/agpl-3.0.html
-      participation_text: Decide como debe ser a cidade de Madrid que queres.
+      participation_text: Decide como debe ser a Universidade que queres.
       participation_title: Participación
       privacy: Política de privacidade
     header:
@@ -211,7 +211,7 @@ gl:
       debates: Debates
       locale: "Idioma:"
       management: Xestión
-      moderation: Moderar
+      moderation: Moderación
       valuation: Avaliación
       officing: Presidencias de mesa
       help: Axuda
@@ -296,7 +296,7 @@ gl:
     edit:
       editing: Editar proposta
       form:
-        submit_button: Gardar so cambios
+        submit_button: Gardar os cambios
       show_link: Ver proposta
     retire_form:
       title: Retirar proposta
@@ -322,22 +322,22 @@ gl:
       map_location_instructions: "Navega polo mapa até a localización e coloca o marcador."
       map_remove_marker: "Borrar o marcador do mapa"
     index:
-      featured_proposals: Destacar
+      featured_proposals: Destacadas
       orders:
-        confidence_score: Máis apoiados
-        created_at: novos
-        hot_score: Máis activos
-        most_commented: máis comentados
-        relevance: importancia
+        confidence_score: Máis apoiadas
+        created_at: Novas
+        hot_score: Máis activas
+        most_commented: Máis comentadas
+        relevance: Importancia
         archival_date: Arquivadas
-        recommendations: recomendacións
+        recommendations: Recomendacións
       recommendations:
         without_results: Non hai propostas relacionadas cos teus intereses
-        without_interests: Sigue propostas para que poidamos ofrecerche recomendacións
+        without_interests: Segue propostas para que poidamos ofrecerche recomendacións
         disable: "As recomendacións de propostas deixarán de amosarse se as desactivas. Podes volver a activalas desde a páxina «A miña conta»"
         actions:
           success: "As recomendacións para propostas foron deshabilitadas para esta conta"
-          error: "Produciuse un erro. Por favor, accede á páxina 'A miña conta' para deshabilitar de xeito manual as recomendacións para as propostas"
+          error: "Produciuse un erro. Por favor, accede á páxina «A miña conta» para deshabilitar de xeito manual as recomendacións para as propostas"
       retired_proposals: Propostas retiradas
       retired_proposals_link: "Propostas retiradas polos seus autores"
       selected_proposals: Propostas seleccionadas
@@ -424,7 +424,7 @@ gl:
       draft: Proposta en borrador. Non se poden obter apoios, nin aparecerá na lista de propostas.
     update:
       form:
-        submit_button: Gardar so cambios
+        submit_button: Gardar os cambios
   dashboard:
     menu:
       my_proposal: Editar a miña proposta
@@ -849,7 +849,7 @@ gl:
       process_label: Proceso
       see_process: Ver proceso
     cards:
-      title: Destacar
+      title: Destacados
     recommended:
       title: Recomendacións que che poden interesar
       help: "Estas recomendacións son creadas polas etiquetas dos debates e propostas que estás a seguir."
