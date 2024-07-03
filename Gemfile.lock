@@ -394,6 +394,10 @@ GEM
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
+    omniauth-cas (3.0.0)
+      addressable (~> 2.8)
+      nokogiri (~> 1.12)
+      omniauth (~> 2.1)
     omniauth-facebook (9.0.0)
       omniauth-oauth2 (~> 1.2)
     omniauth-google-oauth2 (1.1.1)
@@ -744,6 +748,7 @@ DEPENDENCIES
   mdl (~> 0.13.0)
   mini_magick (~> 4.12.0)
   omniauth (~> 2.1.2)
+  omniauth-cas
   omniauth-facebook (~> 9.0.0)
   omniauth-google-oauth2 (~> 1.1.1)
   omniauth-rails_csrf_protection (~> 1.0.1)
