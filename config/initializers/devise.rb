@@ -287,6 +287,13 @@ Devise.setup do |config|
                   client_options: { site: Rails.application.secrets.wordpress_oauth2_site },
                   setup: ->(env) { OmniauthTenantSetup.wordpress_oauth2(env) }
 
+  config.omniauth :cas,
+                  Rails.application.secrets.cas_key,
+                  Rails.application.secrets.cas_secret,
+                  client_options: { site: Rails.application.secrets.cas_site },
+                  setup: ->(env) { OmniauthTenantSetup.cas(env) },
+                  strategy_class: OmniAuth::Strategies::OAuth2
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

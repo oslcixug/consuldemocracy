@@ -16,6 +16,10 @@ module OmniauthTenantSetup
       oauth2(env, secrets.wordpress_oauth2_key, secrets.wordpress_oauth2_secret)
     end
 
+    def cas(env)
+      oauth2(env, secrets.cas_key, secrets.cas_secret)
+    end
+
     private
 
       def oauth(env, key, secret)

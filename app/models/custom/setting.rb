@@ -22,9 +22,15 @@ class Setting
       if Rails.env.test?
         consul_defaults
       else
-        consul_defaults.merge({
-          # Overwrite default CONSUL DEMOCRACY settings or add new settings here
-        })
+        consul_defaults.merge(
+          {
+            # Overwrite default CONSUL DEMOCRACY settings or add new settings here
+            "feature.cas_login": true,
+            "feature.facebook_login": false,
+            "feature.google_login": false,
+            "feature.twitter_login": false,
+          }
+        )
       end
     end
   end
