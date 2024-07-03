@@ -110,7 +110,7 @@ gl:
         notice: "Orzamentos participativos publicados con éxito"
       edit:
         title: Editar campaña de orzamentos participativos
-        drafting: "Este orzamento participativo está en modo borrador, só os administradores poden velo dende a parte pública da páxina. Unha vez publicado, non se poderá volver a poñer en modo borrador outra vez."
+        drafting: "Este orzamento participativo está en modo bosquexo, só os administradores poden velo dende a parte pública da páxina. Unha vez publicado, non se poderá volver a poñer en modo bosquexo outra vez."
         publish: "Publicar orzamento"
         delete: Eliminar orzamento
         phase: Fase
@@ -638,13 +638,13 @@ gl:
           custom_categories_placeholder: Escribe as etiquetas que desexes, separadas por comas (,) e entre comiñas duplas ("")
       draft_versions:
         create:
-          notice: 'Borrador creado correctamente. <a href="%{link}">Preme para o veres</a>'
-          error: Non se puido crear o borrador
+          notice: 'Bosquexo creado correctamente. <a href="%{link}">Preme para o veres</a>'
+          error: Non se puido crear o bosquexo
         update:
-          notice: 'Borrador actualizado correctamente. <a href="%{link}">Preme para o ver</a>'
-          error: Non se puido actualizar o borrador
+          notice: 'Bosquexo actualizado correctamente. <a href="%{link}">Preme para o ver</a>'
+          error: Non se puido actualizar o bosquexo
         destroy:
-          notice: O borrador borrouse correctamente
+          notice: O bosquexo borrouse correctamente
         edit:
           back: Volver
           submit_button: Gardar os cambios
@@ -662,7 +662,7 @@ gl:
               published: Visible para todo o mundo
           changelog_placeholder: Describe calquera cambio relevante coa versión anterior
         index:
-          title: Versións borrador
+          title: Versións do bosquexo
           create: Crear versión
           preview: Vista previa
         new:
@@ -877,7 +877,7 @@ gl:
       delete_success: Notificación eliminada correctamente
       index:
         section_title: Notificacións
-        new_notification: Novo notificación
+        new_notification: Nova notificación
         title: Título
         segment_recipient: Destinatarios
         sent: Data
@@ -1389,9 +1389,9 @@ gl:
       description: Descrición
       image: Imaxe
       show_image: Amosar imaxe
-      moderated_content: "Comprobar o contido revisado polos moderadores, e confirmar se a moderación foi realizada correctamente."
+      moderated_content: "Comproba o contido revisado polos moderadores, e confirma se a moderación foi realizada correctamente."
       view: Ver
-      proposal: a proposta
+      proposal: Proposta
       author: Autoría
       content: Contido
       created_at: Creada

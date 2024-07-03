@@ -57,7 +57,7 @@ gl:
     menu:
       create_proposal: Crear proposta
       print_proposals: Imprimir propostas
-      support_proposals: Apoiar propostas*
+      support_proposals: Apoiar propostas
       create_budget_investment: Crear investimento orzamentario
       print_budget_investments: Imprimir investimentos orzamentarios
       support_budget_investments: Apoiar investimentos orzamentarios
@@ -76,7 +76,7 @@ gl:
       print:
         print_button: Imprimir
       index:
-        title: Apoiar propostas*
+        title: Apoiar propostas
     budgets:
       create_new_investment: Crear investimento orzamentario
       print_investments: Imprimir investimentos orzamentarios
