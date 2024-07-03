@@ -6,7 +6,7 @@ gl:
         one: Entrada
         other: Entradas
       more_pages:
-        display_entries: Amósanse <strong>%{first}&nbsp;&nbsp;%{last}</strong> dun total de <strong>%{total}%{entry_name}</strong>
+        display_entries: Amósanse <strong>%{first}&nbsp;-&nbsp;%{last}</strong> dun total de <strong>%{total} %{entry_name}</strong>
       one_page:
         display_entries:
           zero: "Non se atopou a entrada %{entry_name}"

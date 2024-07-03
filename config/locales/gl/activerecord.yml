@@ -29,13 +29,13 @@ gl:
         one: "Barra de progreso"
         other: "Barras de progreso"
       comment:
-        one: "Comentar"
+        one: "Comentario"
         other: "Comentarios"
       debate:
-        one: "o debate"
+        one: "Debate"
         other: "Debates"
       tag:
-        one: "Tema"
+        one: "Etiqueta"
         other: "Etiquetas"
       user:
         one: "Usuario"
@@ -44,7 +44,7 @@ gl:
         one: "Moderador"
         other: "Moderadores"
       administrator:
-        one: "Administración"
+        one: "Administrador"
         other: "Administradores"
       valuator:
         one: "Avaliador"
@@ -57,7 +57,7 @@ gl:
         other: "Xestores"
       newsletter:
         one: "Boletín informativo"
-        other: "Envío de newsletters"
+        other: "Boletíns informativos"
       vote:
         one: "Voto"
         other: "Votos"
@@ -77,8 +77,8 @@ gl:
         one: "Proposta"
         other: "Propostas"
       sdg/goal:
-        one: "obxectivo"
-        other: "obxectivos"
+        one: "Obxectivo"
+        other: "Obxectivos"
       sdg/local_target:
         one: "meta local"
         other: "metas locais"
@@ -90,13 +90,13 @@ gl:
         other: "metas"
       site_customization/page:
         one: Páxina
-        other: Páxinas personalizadas
+        other: Páxinas
       site_customization/image:
         one: Imaxe
-        other: Personalizar imaxes
+        other: Imaxes
       site_customization/content_block:
         one: Bloque
-        other: Personalizar bloques
+        other: Bloques
       document:
         one: Documento
         other: Documentos
@@ -104,22 +104,22 @@ gl:
         one: "Proceso"
         other: "Procesos"
       legislation/proposal:
-        one: "a proposta"
+        one: "Proposta"
         other: "Propostas"
       legislation/draft_versions:
-        one: "Versión borrador"
-        other: "Versións do borrador"
+        one: "Versión do bosquexo"
+        other: "Versións do bosquexo"
       legislation/questions:
         one: "Pregunta"
         other: "Preguntas"
       legislation/question_options:
-        one: "Opción de resposta pechada"
+        one: "Opción de resposta"
         other: "Opcións da resposta"
       legislation/answers:
         one: "Resposta"
         other: "Respostas"
       documents:
-        one: "o documento"
+        one: "Dcumento"
         other: "Documentos"
       images:
         one: "Imaxe"

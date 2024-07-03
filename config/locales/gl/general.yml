@@ -145,7 +145,7 @@ gl:
   form:
     accept_terms: Acepto a %{policy} e as %{conditions}
     conditions: Condicións de uso
-    debate: o debate
+    debate: Debate
     direct_message: a mensaxe privada
     error: erro
     errors: erros
@@ -887,8 +887,8 @@ gl:
     score_positive: "Si"
     score_negative: "Non"
     content_title:
-      proposal: "a proposta"
-      debate: "o debate"
+      proposal: "Proposta"
+      debate: "Debate"
       budget_investment: "Investimento orzamentario"
   admin/widget:
     header:

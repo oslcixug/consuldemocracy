@@ -31,7 +31,7 @@ gl:
           pending_flag_review: Pendentes
           with_ignored_flag: Marcado como revisado
         headers:
-          debate: o debate
+          debate: Debate
           moderate: Moderar
         hide: Ocultar debates
         ignore_flags: Marcar como revisado
