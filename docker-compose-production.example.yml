@@ -1,0 +1,9 @@
+services:
+  database:
+    environment:
+      - POSTGRES_PASSWORD=Passw0rd!
+  app:
+    environment: &app_environment
+      - POSTGRES_PASSWORD=Passw0rd!
+  jobs:
+    environment: *app_environment
