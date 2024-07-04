@@ -214,7 +214,7 @@ gl:
       moderation: Moderación
       valuation: Avaliación
       officing: Presidencias de mesa
-      help: Axuda
+      help: Axuda 
       my_account_link: A miña conta
       my_activity_link: A miña actividade
       open_gov: Goberno aberto
@@ -721,7 +721,7 @@ gl:
       categories: "Categorías"
     target_blank: " (ábrese nunha nova xanela)"
     you_are_in: "Estás en"
-    unflag: Desfacer denuncia
+    unflag: Retirar denuncia
     unfollow_entity: "Deixar de seguir %{entity}"
     outline:
       searcher: Buscador
@@ -767,7 +767,7 @@ gl:
     login_to_comment: "Precisas %{signin} ou %{signup} para comentares."
     login_to_continue: "Debes %{signin} ou %{signup} para continuares."
     signin: "iniciar sesión"
-    signup: "rexistrate"
+    signup: "rexistrarte"
     verify_account: "verificar a túa conta"
     direct_messages:
       new:

@@ -432,7 +432,7 @@ gl:
         content: "Contido"
         author: "Autoría"
         commentable_type: "Tipo"
-        title: Comentarios ocultos
+        title: Comentarios agochados
         no_comments: Non hai comentarios.
         table_link: "Ligazón"
     hidden_comments:
@@ -440,7 +440,7 @@ gl:
         filter: Filtro
         filters:
           all: Todo
-          with_confirmed_hide: Confirmadas
+          with_confirmed_hide: Confirmados
           without_confirmed_hide: Pendentes
         hidden_debate: Debate agochado
         hidden_proposal: Proposta agochada
@@ -510,7 +510,7 @@ gl:
           solving: Resolver tarefa pendente
         form:
           solve: Marcar como resolto
-          proposal: a proposta
+          proposal: Proposta
           request: Recurso solicitado
         update:
           success: A tarefa foi marcada como resolta.
@@ -525,7 +525,7 @@ gl:
         filter: Filtro
         filters:
           all: Todo
-          with_confirmed_hide: Confirmadas
+          with_confirmed_hide: Confirmados
           without_confirmed_hide: Pendentes
         title: Debates agochados
         no_hidden_debates: Non hai debates agochados.
@@ -549,7 +549,7 @@ gl:
         filter: Filtro
         filters:
           all: Todo
-          with_confirmed_hide: Confirmadas
+          with_confirmed_hide: Confirmados
           without_confirmed_hide: Pendentes
         title: Usuarios agochados
         user: Usuario/a
@@ -740,7 +740,7 @@ gl:
       locales: Idiomas
       hidden_comments: Comentarios agochados
       hidden_debates: Debates agochados
-      hidden_proposals: Propostas ocultas
+      hidden_proposals: Propostas agochadas
       hidden_budget_investments: Agochar proposta de investimento
       hidden_proposal_notifications: Notificacións de propostas agochadas
       hidden_users: Usuarios bloqueados
@@ -1139,7 +1139,7 @@ gl:
         questions_tab: "Preguntas"
         successful_proposals_tab: "Propostas que superaron o límite"
         create_question: "Crear pregunta"
-        table_proposal: "a proposta"
+        table_proposal: "Proposta"
         table_question: "Pregunta"
         table_poll: "Votación"
         poll_not_assigned: "Votación sen asignar"
