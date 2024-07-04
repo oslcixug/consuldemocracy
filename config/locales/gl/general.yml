@@ -255,6 +255,10 @@ gl:
     proposal_for_district: "Crea unha proposta para o teu distrito"
     start_proposal: Crea unha proposta
   omniauth:
+    cas:
+      sign_in: Entra co teu usuario da UDC
+      sign_up: Rexístrate co teu usuario da UDC
+      name: Entra co teu usuario da UDC
     facebook:
       sign_in: Entra con Facebook
       sign_up: Rexístrate con Facebook
