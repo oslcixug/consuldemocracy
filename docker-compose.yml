@@ -1,5 +1,16 @@
 services:
   # service configuration for our database
+  proxy:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ../data:/data
+      - ../letsencrypt:/etc/letsencrypt
+
   database:
 
     # use the preferred version of the official Postgres image
