@@ -89,7 +89,7 @@ gl:
     user_permission_debates: Participar en debates
     user_permission_info: Comprobando a túa información serás capaz de...
     user_permission_proposal: Crear novas propostas
-    user_permission_support_proposal: Apoiar propostas*
+    user_permission_support_proposal: Apoiar propostas
     user_permission_votes: Participar nas votacións finais
     verification_needed: É necesaria unha verificación adicional
     verified_user:

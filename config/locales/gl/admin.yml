@@ -110,7 +110,7 @@ gl:
         notice: "Orzamentos participativos publicados con éxito"
       edit:
         title: Editar campaña de orzamentos participativos
-        drafting: "Este orzamento participativo está en modo borrador, só os administradores poden velo dende a parte pública da páxina. Unha vez publicado, non se poderá volver a poñer en modo borrador outra vez."
+        drafting: "Este orzamento participativo está en modo bosquexo, só os administradores poden velo dende a parte pública da páxina. Unha vez publicado, non se poderá volver a poñer en modo bosquexo outra vez."
         publish: "Publicar orzamento"
         delete: Eliminar orzamento
         phase: Fase
@@ -432,7 +432,7 @@ gl:
         content: "Contido"
         author: "Autoría"
         commentable_type: "Tipo"
-        title: Comentarios ocultos
+        title: Comentarios agochados
         no_comments: Non hai comentarios.
         table_link: "Ligazón"
     hidden_comments:
@@ -440,7 +440,7 @@ gl:
         filter: Filtro
         filters:
           all: Todo
-          with_confirmed_hide: Confirmadas
+          with_confirmed_hide: Confirmados
           without_confirmed_hide: Pendentes
         hidden_debate: Debate agochado
         hidden_proposal: Proposta agochada
@@ -510,7 +510,7 @@ gl:
           solving: Resolver tarefa pendente
         form:
           solve: Marcar como resolto
-          proposal: a proposta
+          proposal: Proposta
           request: Recurso solicitado
         update:
           success: A tarefa foi marcada como resolta.
@@ -525,7 +525,7 @@ gl:
         filter: Filtro
         filters:
           all: Todo
-          with_confirmed_hide: Confirmadas
+          with_confirmed_hide: Confirmados
           without_confirmed_hide: Pendentes
         title: Debates agochados
         no_hidden_debates: Non hai debates agochados.
@@ -549,7 +549,7 @@ gl:
         filter: Filtro
         filters:
           all: Todo
-          with_confirmed_hide: Confirmadas
+          with_confirmed_hide: Confirmados
           without_confirmed_hide: Pendentes
         title: Usuarios agochados
         user: Usuario/a
@@ -638,13 +638,13 @@ gl:
           custom_categories_placeholder: Escribe as etiquetas que desexes, separadas por comas (,) e entre comiñas duplas ("")
       draft_versions:
         create:
-          notice: 'Borrador creado correctamente. <a href="%{link}">Preme para o veres</a>'
-          error: Non se puido crear o borrador
+          notice: 'Bosquexo creado correctamente. <a href="%{link}">Preme para o veres</a>'
+          error: Non se puido crear o bosquexo
         update:
-          notice: 'Borrador actualizado correctamente. <a href="%{link}">Preme para o ver</a>'
-          error: Non se puido actualizar o borrador
+          notice: 'Bosquexo actualizado correctamente. <a href="%{link}">Preme para o ver</a>'
+          error: Non se puido actualizar o bosquexo
         destroy:
-          notice: O borrador borrouse correctamente
+          notice: O bosquexo borrouse correctamente
         edit:
           back: Volver
           submit_button: Gardar os cambios
@@ -662,7 +662,7 @@ gl:
               published: Visible para todo o mundo
           changelog_placeholder: Describe calquera cambio relevante coa versión anterior
         index:
-          title: Versións borrador
+          title: Versións do bosquexo
           create: Crear versión
           preview: Vista previa
         new:
@@ -740,7 +740,7 @@ gl:
       locales: Idiomas
       hidden_comments: Comentarios agochados
       hidden_debates: Debates agochados
-      hidden_proposals: Propostas ocultas
+      hidden_proposals: Propostas agochadas
       hidden_budget_investments: Agochar proposta de investimento
       hidden_proposal_notifications: Notificacións de propostas agochadas
       hidden_users: Usuarios bloqueados
@@ -877,7 +877,7 @@ gl:
       delete_success: Notificación eliminada correctamente
       index:
         section_title: Notificacións
-        new_notification: Novo notificación
+        new_notification: Nova notificación
         title: Título
         segment_recipient: Destinatarios
         sent: Data
@@ -1139,7 +1139,7 @@ gl:
         questions_tab: "Preguntas"
         successful_proposals_tab: "Propostas que superaron o límite"
         create_question: "Crear pregunta"
-        table_proposal: "a proposta"
+        table_proposal: "Proposta"
         table_question: "Pregunta"
         table_poll: "Votación"
         poll_not_assigned: "Votación sen asignar"
@@ -1389,9 +1389,9 @@ gl:
       description: Descrición
       image: Imaxe
       show_image: Amosar imaxe
-      moderated_content: "Comprobar o contido revisado polos moderadores, e confirmar se a moderación foi realizada correctamente."
+      moderated_content: "Comproba o contido revisado polos moderadores, e confirma se a moderación foi realizada correctamente."
       view: Ver
-      proposal: a proposta
+      proposal: Proposta
       author: Autoría
       content: Contido
       created_at: Creada

@@ -108,8 +108,8 @@ gl:
           username_is_not_available: Nome de usuario xa existente
           username_note: Nome público que aparecerá nas túas publicacións
         success:
-          back_to_index: Enténdoo; regresar á páxina principal
+          back_to_index: Volver á páxina principal
           instructions_1: Por favor, <b>comproba o teu correo electrónico</b> - enviámosche unha <b>ligazón para confirmares a túa conta</b>.
           instructions_2: Logo de a confirmares, poderás comezar a participar.
           thank_you: Grazas por te rexistrares na web. Agora debes <b>confirmar o teu correo</b>.
-          title: Modifica o teu correo
+          title: Confirma o teu correo
