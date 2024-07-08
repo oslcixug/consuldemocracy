@@ -372,7 +372,7 @@ gl:
         help: Axuda sobre as propostas
       section_footer:
         title: Axuda sobre as propostas
-        description: As propostas da cidadanía son unha oportunidade para que os veciños e colectivos poidan decidir sobre como queren que sexa a súa cidade, despois de conseguir suficientes apoios e sometelas a un proceso de votación.
+        description: As propostas da comunidade universitaria son unha oportunidade para que se poida decidir sobre como queremos que sexa a nosa universidade, despois de conseguir suficientes apoios e sometelas a un proceso de votación.
     new:
       form:
         submit_button: Crear proposta
@@ -543,7 +543,7 @@ gl:
         title: Vista previa do cartel
         poster_title: "Non sigas mirando"
         poster_subtitle: "apóiame! ;-)"
-        intro_text: "<strong>Estou participando en %{org}</strong> coa miña propia propostan e se me axudas poderei lograr os apoios necesarios para facer a cidade que todos queremos"
+        intro_text: "<strong>Estou participando en %{org}</strong> coa miña propia proposta e se me axudas poderei lograr os apoios necesarios para facer a universidade que todos queremos"
         proposal_code: "Código da proposta: %{code}"
         support: Apoia a miña proposta
         footer: "<strong>Entra en %{link} e apoia esta proposta.</strong> Necesitamos ser moitos/as. Decide ti tamén. Grazas!"
@@ -568,8 +568,8 @@ gl:
         support_button: Apoia esta proposta
         share_in: Compartir en
         hi: "Ola!"
-        introduction: Escríboche para dicirche que estou a participar en %{org}, a plataforma na que podemos decidir a cidade que queremos. E para isto, veño de crear a miña propia proposta, e agora necesito da túa axuda! Pero non te preocupes porque é moi sinxelo.
-        support: "Tan só tes que facer clic no botón que verás a continuación «Apoiar esta proposta» e directamente poderás consultar os detalles antes de impulsala. Só as propostas que consigan o máximo apoio poderán levarse a cabo por parte do Concello, e pensei que ti seguro que me axudas a conseguilo!"
+        introduction: Escríboche para dicirche que estou a participar en %{org}, a plataforma na que podemos decidir a universidade que queremos. E para isto, veño de crear a miña propia proposta, e agora necesito da túa axuda! Pero non te preocupes porque é moi sinxelo.
+        support: "Tan só tes que facer clic no botón que verás a continuación «Apoiar esta proposta» e directamente poderás consultar os detalles antes de impulsala. Só as propostas que consigan o máximo apoio poderán levarse a cabo por parte da universidade, e pensei que ti seguro que me axudas a conseguilo!"
         share: "E se a maiores, me fas o favor de compartir a miña proposta entre os teus contactos, amigos e familiares, xa sería perfecto!"
   polls:
     all: "Todo"
@@ -582,7 +582,7 @@ gl:
       title: "Votacións"
       participate_button: "Participar nesta votación"
       participate_button_expired: "Votación rematada"
-      no_geozone_restricted: "Toda a cidade"
+      no_geozone_restricted: "Toda a universidade"
       geozone_restricted: "Zonas"
       geozone_info: "Poden participar as persoas empadroadas en: "
       already_answer: "Xa participaches nesta votación"

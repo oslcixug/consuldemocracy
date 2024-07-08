@@ -178,9 +178,9 @@ gl:
       zoom_description: "Zoom para amosar a posición do mapa"
     process:
       debates: "Debates"
-      debates_description: "O espazo de debate da cidadanía está dirixido a calquera que poida presentar problemas que lles afecten e sobre os que queren compartir as súas opinións con outros"
+      debates_description: "O espazo de debate da comunidade universitaria está dirixido a calquera que poida presentar problemas que lles afecten e sobre os que queren compartir as súas opinións con outros"
       proposals: "Propostas"
-      proposals_description: "As propostas da cidadanía son unha oportunidade para que os veciños e colectivos poidan decidir sobre como queren que sexa a súa sociedade, despois de conseguir suficientes apoios e sometelas a un proceso de votación"
+      proposals_description: "As propostas da comunidade universitaria son unha oportunidade para que se poida decidir sobre como queremos que sexa a nosa universidade, despois de conseguir suficientes apoios e sometelas a un proceso de votación."
       polls: "Votacións"
       polls_description: "As votacións son un proceso participativo polo cal a comunidade universitaria con dereito a voto pode tomar decisións dun modo directo"
       budgets: "Orzamentos participativos"

@@ -476,7 +476,7 @@ gl:
           order: Orde
           published_proposal: Proposta publicada
           default:
-            email: O teu correo electrónico
+            email: Correo electrónico
             polls: Votacións
             poster: Cartel
         new:
@@ -1493,11 +1493,11 @@ gl:
         polls: Votacións
         sdg: ODS
       graph:
-        budget_investment_created: Crearonse os proxectos de gasto
+        budget_investment_created: Proxectos de gasto creados
         budget_investment_supported: Proxectos de gasto admitidos
         debate_created: Debates
-        legislation_annotation_created: Crearonse as anotacións lexislativas
-        legislation_answer_created: Crearonse as respostas lexislativas
+        legislation_annotation_created: Anotacións lexislativas creadas
+        legislation_answer_created: Respostas lexislativas creadas
         level_3_user: Usuarios de nivel 3 verificados
         proposal_created: Propostas
         title: Diagrama
@@ -1560,7 +1560,7 @@ gl:
         id: ID
         erase_reason: Motivo da baixa
         name: Nome
-        email: O teu correo electrónico
+        email: Correo electrónico
         document_number: Número de documento
         roles: Roles
         verification_level: Nivel de verificación
@@ -1574,7 +1574,7 @@ gl:
         filter: Filtro
         filters:
           active: Activos
-          erased: Borrado
+          erased: Eliminados
       search:
         placeholder: Buscar usuarios por correo electrónico, nome ou DNI
     verifications:
