@@ -97,7 +97,7 @@ gl:
   errors:
     format: "%{attribute} %{message}"
     messages:
-      accepted: debe ser aceptado
+      accepted: ten que ser aceptado
       blank: non pode estar en branco
       present: debe estar en branco
       confirmation: non coincide %{attribute}
