@@ -6,7 +6,7 @@
 <% if User.devise_modules.include?(:registerable) %>
   <p>
     <%= sanitize(t("devise_views.shared.links.signup",
-                   signup_link: link_to(t("devise_views.shared.links.signup_link"), new_user_registration_path))) %>
+                   signup_link: link_to(t("devise_views.shared.links.signup_link"), new_user_session_path))) %>
   </p>
 <% end %>
 
