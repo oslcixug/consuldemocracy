@@ -287,7 +287,17 @@ Devise.setup do |config|
                   client_options: { site: Rails.application.secrets.wordpress_oauth2_site },
                   setup: ->(env) { OmniauthTenantSetup.wordpress_oauth2(env) }
 
-  config.omniauth :cas, host: 'cas-saml.udc.es'
+  config.omniauth :cas, host: 'cas-saml.udc.es',
+                  fetch_raw_info: Proc.new { |strategy, opts, ticket, user_info, rawxml|
+                    return {} if user_info.empty? || rawxml.nil? # Auth failed
+
+                    # Log all parameters
+                    Rails.logger.debug "CAS strategy: #{strategy}"
+                    Rails.logger.debug "CAS opts: #{opts}"
+                    Rails.logger.debug "CAS ticket: #{ticket}"
+                    Rails.logger.debug "CAS rawxml: #{rawxml}"
+                    Rails.logger.debug "CAS user_info: #{user_info}"
+                  }
 
 
   # ==> Warden configuration
