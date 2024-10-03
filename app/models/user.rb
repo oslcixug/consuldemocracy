@@ -131,6 +131,7 @@ class User < ApplicationRecord
 
   # Get the existing user by email if the provider gives us a verified email.
   def self.first_or_initialize_for_oauth(auth)
+    Rails.logger.info "User.first_or_initialize_for_oauth: #{auth.inspect}"
     oauth_email           = auth.info.email
     oauth_verified        = auth.info.verified || auth.info.verified_email || auth.info.email_verified
     oauth_email_confirmed = oauth_email.present? && oauth_verified
