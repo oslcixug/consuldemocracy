@@ -287,7 +287,7 @@ Devise.setup do |config|
                   client_options: { site: Rails.application.secrets.wordpress_oauth2_site },
                   setup: ->(env) { OmniauthTenantSetup.wordpress_oauth2(env) }
 
-  config.omniauth :cas, host: 'cas.udc.es'
+  config.omniauth :cas, host: 'cas-saml.udc.es'
 
 
   # ==> Warden configuration
