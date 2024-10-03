@@ -288,6 +288,7 @@ Devise.setup do |config|
                   setup: ->(env) { OmniauthTenantSetup.wordpress_oauth2(env) }
 
   config.omniauth :cas, host: 'cas-saml.udc.es',
+                  email_key: 'mail',
                   fetch_raw_info: Proc.new { |strategy, opts, ticket, user_info, rawxml|
                     return {} if user_info.empty? || rawxml.nil? # Auth failed
 
