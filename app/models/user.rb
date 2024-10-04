@@ -133,7 +133,7 @@ class User < ApplicationRecord
   def self.first_or_initialize_for_oauth(auth)
     Rails.logger.info "User.first_or_initialize_for_oauth: #{auth.inspect}"
     oauth_email           = auth.info.email
-    oauth_verified        = auth.info.verified || auth.info.verified_email || auth.info.email_verified
+    oauth_verified        = auth.info.verified || auth.info.verified_email || auth.info.email_verified || auth.extra.verified
     oauth_email_confirmed = oauth_email.present? && oauth_verified
     oauth_user            = User.find_by(email: oauth_email) if oauth_email_confirmed
 
