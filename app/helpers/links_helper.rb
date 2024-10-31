@@ -10,7 +10,8 @@ module LinksHelper
   end
 
   def link_to_signup(options = {})
-    link_to t("users.signup"), new_user_registration_path, options
+    # Registration is not allowed, all registration links are replaced with sign in links
+    link_to t("users.signup"), new_user_session_path, options
   end
 
   def link_to_verify_account
