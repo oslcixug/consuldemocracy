@@ -12,12 +12,12 @@ services:
       - ../letsencrypt:/etc/letsencrypt
 
   database:
-
+    
     # use the preferred version of the official Postgres image
     # see https://hub.docker.com/_/postgres/
     image: postgres:9.6.21
-    environment:
-      - POSTGRES_PASSWORD=Passw0rd!
+    container_name: database
+    restart: unless-stopped
     # persist the database between containers by storing it in a volume
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -27,6 +27,8 @@ services:
 
     # use the Dockerfile next to this file
     build: .
+    container_name: app
+    restart: unless-stopped
 
     # rely on the RAILS_ENV value of the host machine
     # environment:
@@ -43,12 +45,12 @@ services:
       - ./config/secrets.yml:/var/www/consul/config/secrets.yml
       - storage:/var/www/consul/storage
     environment: &app_environment
-      - POSTGRES_PASSWORD=Passw0rd!
       - RAILS_ENV=production
       - RAILS_SERVE_STATIC_FILES=true
       - RAILS_LOG_TO_STDOUT=enabled
   jobs:
     build: .
+    restart: unless-stopped
     depends_on:
       - database
       - app
