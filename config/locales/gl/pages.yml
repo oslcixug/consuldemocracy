@@ -50,7 +50,7 @@ gl:
         feature: "Para participares nos procesos tes que %{link} e verificar a túa conta."
         feature_link: "rexistrarte en %{org_name}"
       faq:
-        title: "Problemas técnicos?"
+        title: "Tés algunha dúbida?"
         description: "Le as preguntas frecuentes e resolve as túas dúbidas."
         button: "Ver as preguntas frecuentes"
         page:

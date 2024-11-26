@@ -50,7 +50,7 @@ es:
         feature: "Para participar en la legislación colaborativa tienes que %{link} y verificar tu cuenta."
         feature_link: "registrarte en %{org_name}"
       faq:
-        title: "¿Problemas técnicos?"
+        title: "¿Tienes alguna duda?"
         description: "Lee las preguntas frecuentes y resuelve tus dudas."
         button: "Ver preguntas frecuentes"
         page:
