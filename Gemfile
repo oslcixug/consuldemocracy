@@ -38,6 +38,7 @@ gem "omniauth-facebook", "~> 9.0.0"
 gem "omniauth-google-oauth2", "~> 1.1.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0.1"
 gem "omniauth-twitter", "~> 1.4.0"
+gem 'omniauth-cas'
 gem "paranoia", "~> 2.6.3"
 gem "pg", "~> 1.5.6"
 gem "pg_search", "~> 2.3.6"

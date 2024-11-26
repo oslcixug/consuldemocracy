@@ -255,6 +255,10 @@ es:
     proposal_for_district: "Crea una propuesta para tu distrito"
     start_proposal: Crea una propuesta
   omniauth:
+    cas:
+      sign_in: Entra con tu usuario de la UDC
+      sign_up: Regístrate con tu usuario de la UDC
+      name: Entra con tu usuario de la UDC
     facebook:
       sign_in: Entra con Facebook
       sign_up: Regístrate con Facebook

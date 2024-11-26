@@ -1274,6 +1274,33 @@ table {
   }
 }
 
+.button.button-cas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $white;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    height: 25px;
+    width: 60px;
+  }
+
+  &::before {
+    background-image: image-url("mini_logo_udc_white.png");
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-size: 45px auto;
+    margin-right: auto;
+  }
+
+  &::after {
+    margin-left: auto;
+  }
+}
+
 .button.button-twitter {
   @include has-fa-icon(twitter, brands);
   background: #ecf7fc;
