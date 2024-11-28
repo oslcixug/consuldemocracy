@@ -147,9 +147,9 @@ gl:
     conditions: Condicións de uso
     debate: Debate
     direct_message: Mensaxe privada
-    error: Erro
-    errors: Erros
-    not_saved: "impediron gardar %{resource}. <br>Revisa os campos marcados para saber como corrixilos:"
+    error: erro
+    errors: erros
+    not_saved: "impediron gardar a %{resource}. <br>Revisa os campos marcados para saber como corrixilos:"
     policy: Política de privacidade
     banner: Anuncio
     proposal: Proposta
@@ -163,7 +163,7 @@ gl:
     legislation/question: pregunta
     poll/shift: Quenda
     poll/question/option: Resposta
-    user: Conta
+    user: os datos 
     verification/sms: Teléfono
     signature_sheet: Folla de sinaturas
     document: Documento
