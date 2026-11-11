@@ -1,0 +1,45 @@
+# Cadeas en galego que faltan ou se corrixen respecto a Crowdin (2.6.1).
+# Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
+gl:
+  cookies_consent:
+    accept_all_cookies: Aceptar todas
+    accept_essential_cookies: Aceptar as cookies esenciais
+    management: Configurar
+    message: As cookies axúdannos a ofrecer os nosos servizos. Ao utilizar os nosos servizos, aceptas o uso de cookies.
+    more_info_link: Máis información sobre as cookies
+    title: Política de cookies
+  cookies_management:
+    description: Este sitio web usa cookies propias e de terceiros para funcionar correctamente. Ao premer o botón «Aceptar todas», aceptas o uso destas tecnoloxías e o tratamento dos teus datos con estes fins.
+    essentials:
+      description: Úsanse para fins moi diversos, como recoñecerte como persoa usuaria, escoller o idioma ou personalizar o xeito en que se amosa o contido.
+      hint: Sen elas, as funcións básicas de navegación veríanse afectadas, polo que deben estar sempre activas.
+      title: Cookies esenciais
+    save_preferences: Gardar as preferencias
+    third_party:
+      description: Este sitio web usa cookies de terceiros. Estas cookies poden engadir funcionalidades ou recoller información para mellorar a túa experiencia de uso.
+      title: Cookies de terceiros
+    title: Configuración das cookies
+  dashboard:
+    recommended_actions:
+      execute: Marcar a acción %{name} como feita
+      unexecute: Desmarcar a acción %{name} como feita
+  ip_denied_handler:
+    unauthorized: Acceso denegado. O teu enderezo IP non ten permiso para ver este contido.
+  layouts:
+    footer:
+      cookies_consent_management: Configuración das cookies
+      source_code: Código fonte
+  proposals:
+    form:
+      map_marker_coordinates: 'Latitude: %{latitude}. Lonxitude: %{longitude}'
+      proposal_responsible_name_note: (individualmente ou como representante dun colectivo; non se amosará publicamente)
+  shared:
+    actions:
+      label: '%{action} %{name}'
+    embedded_video:
+      accept: Ver o vídeo
+      warning: Esta páxina contén un vídeo dun provedor externo. Ao acceder ao seu contido, aceptas que os teus datos poidan transferirse a provedores externos.
+    show: Amosar
+    translations:
+      current_language: Idioma actual
+    warning_for_external_links: Ao confirmar, aceptas saír do sitio web.
