@@ -14,6 +14,7 @@ gl:
           on_budget_investments: Proxectos de gasto
     admin_notifications:
       index:
+        draft: Borrador
         new_notification: Nova notificación
     banners:
       edit:
@@ -30,8 +31,8 @@ gl:
       edit:
         save_changes: Gardar os cambios
     budgets:
-      edit:
-        drafting: Este orzamento participativo está en modo bosquexo, só os administradores poden velo dende a parte pública da páxina. Unha vez publicado, non se poderá volver a poñer en modo bosquexo outra vez.
+      index:
+        table_draft: Borrador
     comments:
       index:
         title: Comentarios agochados
@@ -85,18 +86,10 @@ gl:
           with_confirmed_hide: Confirmados
     legislation:
       draft_versions:
-        create:
-          error: Non se puido crear o bosquexo
-          notice: Bosquexo creado correctamente. <a href="%{link}">Preme para o veres</a>
-        destroy:
-          notice: O bosquexo borrouse correctamente
         edit:
           submit_button: Gardar os cambios
         index:
-          title: Versións do bosquexo
-        update:
-          error: Non se puido actualizar o bosquexo
-          notice: Bosquexo actualizado correctamente. <a href="%{link}">Preme para o ver</a>
+          title: Versións do borrador
       processes:
         edit:
           submit_button: Gardar os cambios
@@ -107,6 +100,9 @@ gl:
           submit_button: Gardar os cambios
     menu:
       hidden_proposals: Propostas agochadas
+    newsletters:
+      index:
+        draft: Borrador
     poll_shifts:
       new:
         search_officer_button: Buscar

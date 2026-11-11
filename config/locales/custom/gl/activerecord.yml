@@ -9,8 +9,12 @@ gl:
         cookie: Nome da cookie
         name: Nome do provedor
         script: Código JavaScript
+      legislation/draft_version:
+        status_draft: Borrador
       poll/question/option:
         allow_custom_text: Permitir texto libre
+      site_customization/page:
+        status_draft: Borrador
       votation_type/vote_type:
         open: Resposta aberta
     errors:

@@ -56,6 +56,9 @@ gl:
   ip_denied_handler:
     unauthorized: Acceso denegado. O teu enderezo IP non ten permiso para ver este contido.
   layouts:
+    dashboard:
+      proposal_header:
+        draft: Borrador
     footer:
       cookies_consent_management: Configuración das cookies
       source_code: Código fonte
@@ -86,8 +89,6 @@ gl:
           blank: En branco
           valid: Válidas
   proposals:
-    created:
-      motivation_2: <strong>Se queres recomendacións para preparar a publicación, deixa a proposta en modo bosquexo e guiarémoste.</strong>
     edit:
       form:
         submit_button: Gardar os cambios
@@ -110,8 +111,6 @@ gl:
       search_form:
         button: Buscar
         title: Buscar
-    show:
-      draft: Proposta en bosquexo. Non se poden obter apoios, nin aparecerá na lista de propostas.
     update:
       form:
         submit_button: Gardar os cambios
@@ -132,6 +131,8 @@ gl:
     unflag: Retirar denuncia
     warning_for_external_links: Ao confirmar, aceptas saír do sitio web.
   users:
+    proposals:
+      draft: Borrador
     signup: rexistrarte
   welcome:
     cards:
