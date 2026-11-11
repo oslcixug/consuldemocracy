@@ -29,6 +29,15 @@ gl:
     footer:
       cookies_consent_management: Configuración das cookies
       source_code: Código fonte
+  omniauth:
+    oidc:
+      name: OIDC
+      sign_in: Entra con OIDC
+      sign_up: Rexístrate con OIDC
+    saml:
+      name: SAML
+      sign_in: Entra con SAML
+      sign_up: Rexístrate con SAML
   proposals:
     form:
       map_marker_coordinates: 'Latitude: %{latitude}. Lonxitude: %{longitude}'

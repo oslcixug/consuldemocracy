@@ -1,0 +1,37 @@
+# Cadeas en galego que faltan ou se corrixen respecto a Crowdin (2.6.1).
+# Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
+gl:
+  admin:
+    actions:
+      select: Seleccionar
+    cookies:
+      vendors:
+        create:
+          notice: Provedor de cookies creado correctamente
+        create_button: Crear provedor de cookies
+        destroy:
+          notice: Provedor de cookies eliminado correctamente
+        edit:
+          title: Editar provedor de cookies
+        empty: Non se atopou ningún provedor
+        form:
+          cookie:
+            help_text: Esta información usarase internamente. O nome da cookie debe ser único e só pode conter letras, díxitos e guións baixos.
+          description:
+            help_text: Esta información será visible publicamente.
+          name:
+            help_text: Esta información será visible publicamente.
+          script:
+            help_text: Este é o script que se executa cando a persoa usuaria acepta esta cookie. Podes introducir código JavaScript simple e facer referencia a outro JavaScript da aplicación.
+        new:
+          title: Novo provedor de cookies
+        third_party_cookies: Cookies de terceiros
+        update:
+          notice: Provedor de cookies actualizado correctamente
+    settings:
+      index:
+        blank_option: Ningún
+        cookies_consent:
+          title: Consentimento de cookies
+        cookies_consent_banner:
+          title: Aviso de consentimento de cookies

@@ -2,7 +2,23 @@
 # Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
 gl:
   activerecord:
+    attributes:
+      comment:
+        parent_id: Comentario pai
+      cookies/vendor:
+        cookie: Nome da cookie
+        name: Nome do provedor
+        script: Código JavaScript
+    errors:
+      models:
+        geozone:
+          attributes:
+            geojson:
+              invalid_coordinates: O GeoJSON proporcionado contén coordenadas non válidas; as coordenadas deben estar no formato «Lonxitude, Latitude» e seguir o formato estándar RFC 7946
     models:
+      cookies/vendor:
+        one: provedor de cookies
+        other: provedores de cookies
       image:
         one: Imaxe
         other: Imaxes
