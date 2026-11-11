@@ -15,12 +15,14 @@ services:
     
     # use the preferred version of the official Postgres image
     # see https://hub.docker.com/_/postgres/
-    image: postgres:9.6.21
+    image: postgres:17.11-trixie@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f
     container_name: database
     restart: unless-stopped
     # persist the database between containers by storing it in a volume
     volumes:
-      - db_data:/var/lib/postgresql/data
+      # Volume novo para PostgreSQL 17: o db_data de 9.6 queda sen tocar
+      # (volta atrás); os datos pásanse con pg_dump/pg_restore
+      - db_data_17:/var/lib/postgresql/data
 
   # service configuration for our dockerized Rails app
   app:
@@ -66,5 +68,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  db_data: {}
+  db_data_17: {}
   storage: {}
