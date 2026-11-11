@@ -80,7 +80,6 @@ eu:
         confidence_score: Hobekien baloratuta
         created_at: Berriak
         hot_score: Aktiboenak gaur
-        most_commented: Iruzkinduenak
         relevance: Aipagarrienak
         recommendations: Gomendioak
       recommendations:
@@ -116,7 +115,6 @@ eu:
       recommendations_title: Eztabaida bat sortzeko gomendioak
       start_new: Eztabaida bat hasi
     show:
-      author_deleted: Erabiltzailea ezabatuta
       comments_title: Iruzkinak
       edit_debate_link: Eztabaida editatu
       flag: Eztabaida hau desegoki moduan markatu da zenbait erabiltzaileengaitik.
@@ -142,7 +140,6 @@ eu:
     budget/investment: Inbertsioa
     budget/heading: aurrekontu-saila
     poll/shift: txanda
-    poll/question/answer: Erantzuna
     user: kontua
     verification/sms: telefonoa
     signature_sheet: firma orria
@@ -340,10 +337,8 @@ eu:
         one: Bozka 1
         other: "%{count} bozka"
       supports_necessary: "%{number} babes behar dira"
-      total_percent: '%100'
       archived: "Proposamen hau artxibatu egin da eta ezin du babesik jaso."
     show:
-      author_deleted: Erabiltzailea ezabatuta
       code: "Proposamen kodea:"
       comments_tab: Iruzkinak
       flag: Eztabaida hau desegoki moduan markatu da zenbait erabiltzaileengaitik.
@@ -402,8 +397,6 @@ eu:
       forward:
         support_button: Proposamen hau babestu
   polls:
-    all: "Guztiak"
-    no_dates: "data jarri gabe"
     dates: "%{open_at}-tik %{closed_at}-ra"
     final_date: "Azken zenbaketa/Emaitzak"
     index:
@@ -455,10 +448,6 @@ eu:
       results:
         title: "Galderak"
         most_voted_answer: "Gehien bozkatutako erantzuna: "
-  poll_questions:
-    show:
-      vote_answer: "%{answer} bozkatu"
-      voted: "%{answer} bozkatu duzu"
   proposal_notifications:
     new:
       title: "Mezua bidali"
@@ -491,7 +480,6 @@ eu:
     author_info:
       author_deleted: Erabiltzailea ezabatuta
     back: Itzuli
-    check: Aukeratu
     check_all: Guztiak
     check_none: Bat ere ez
     collective: Kolektibo
@@ -552,18 +540,6 @@ eu:
     youtube: "%{org} YouTubea"
     telegram: "%{org} Telegrama"
     instagram: "%{org} Instagrama"
-  stats:
-    index:
-      visits: Bisita
-      debates: Eztabaidak
-      proposals: Herri proposamenak
-      comments: Iruzkinak
-      proposal_votes: Bozkak proposamenetan
-      debate_votes: Bozkak eztabaidetan
-      comment_votes: Bozkak iruzkinetan
-      votes: Bozkak
-      verified_users: Egiaztatutatutako erabiltzaileak
-      unverified_users: Egiaztatu gabeko erabiltzaileak
   unauthorized:
     default: Ez duzu baimenik orri honetara sartzeko.
     manage:

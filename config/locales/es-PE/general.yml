@@ -79,7 +79,6 @@ es-PE:
         confidence_score: Mejor valoradas
         created_at: mais recente
         hot_score: mais ativa
-        most_commented: mais comentada
         relevance: relevância
         recommendations: Recomendaciones
       recommendations:
@@ -111,7 +110,6 @@ es-PE:
       recommendations_title: Recomendações para criar um debate
       start_new: Empieza un debate
     show:
-      author_deleted: Usuario eliminado
       comments_title: Comentarios
       edit_debate_link: Editar propuesta
       flag: Este debate foi marcado como inapropriado por vários usuários.
@@ -138,7 +136,6 @@ es-PE:
     budget/investment: Proyecto de inversión
     budget/heading: la partida presupuestaria
     poll/shift: Turno
-    poll/question/answer: Respuesta
     user: Conta
     verification/sms: el teléfono
     signature_sheet: la hoja de firmas
@@ -329,7 +326,6 @@ es-PE:
       supports_necessary: "%{number} apoios necessários"
       archived: "Esta propuesta ha sido archivada y ya no puede recoger apoyos."
     show:
-      author_deleted: Usuario eliminado
       code: "Código da proposta:"
       comments_tab: Comentarios
       flag: Esta proposta já foi marcada como inadequada por vários usuários.
@@ -385,8 +381,6 @@ es-PE:
       forward:
         support_button: Apoyar esta propuesta
   polls:
-    all: "Todas"
-    no_dates: "sin fecha asignada"
     dates: "Desde el %{open_at} hasta el %{closed_at}"
     final_date: "Recuento final/Resultados"
     index:
@@ -435,10 +429,6 @@ es-PE:
       results:
         title: "Preguntas ciudadanas"
         most_voted_answer: "Respuesta más votada: "
-  poll_questions:
-    show:
-      vote_answer: "Votar %{answer}"
-      voted: "Has votado %{answer}"
   proposal_notifications:
     new:
       title: "Enviar mensaje"
@@ -470,7 +460,6 @@ es-PE:
     author_info:
       author_deleted: Usuario eliminado
     back: Volver
-    check: Seleccionar
     check_all: Todas
     check_none: Nenhum
     collective: Coletivo
@@ -524,18 +513,6 @@ es-PE:
     youtube: "YouTube de %{org}"
     telegram: "Telegram de %{org}"
     instagram: "Instagram de %{org}"
-  stats:
-    index:
-      visits: Visitas
-      debates: Discusiones
-      proposals: Propuestas
-      comments: Comentarios
-      proposal_votes: Votos en propuestas
-      debate_votes: Votos en debates
-      comment_votes: Votos en comentarios
-      votes: Votos
-      verified_users: Usuarios verificados
-      unverified_users: Usuarios sin verificar
   unauthorized:
     default: Você não possui permissão de acesso a esta página.
     manage:

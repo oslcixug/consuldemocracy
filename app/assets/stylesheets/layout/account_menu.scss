@@ -1,7 +1,7 @@
 .account-menu.menu {
 
   @include breakpoint(small only) {
-    margin-top: calc(#{$line-height} / 2);
+    margin-top: calc($line-height / 2);
 
     &,
     .menu {
@@ -9,19 +9,6 @@
       margin-bottom: $line-height;
       padding-bottom: $line-height;
     }
-  }
-
-  .is-dropdown-submenu {
-    @extend %body-colors;
-    margin: 0;
-    margin-top: rem-calc(-12);
-    padding: 0;
-    z-index: 9;
-  }
-
-  .is-submenu-item {
-    display: block;
-    margin-bottom: 0;
   }
 
   li {
@@ -32,14 +19,21 @@
       width: auto;
     }
 
-    a {
+    a,
+    button,
+    summary {
       color: inherit;
+      cursor: pointer;
       line-height: inherit;
       padding-left: 0;
 
       @include breakpoint(medium) {
         font-size: $small-font-size;
         padding: rem-calc(8) rem-calc(16);
+      }
+
+      &:hover {
+        text-decoration: underline;
       }
     }
 
@@ -55,10 +49,26 @@
     }
   }
 
-  .has-submenu {
+  .admin-login-items {
+    details {
+      position: relative;
 
-    &.is-active a {
-      font-weight: bold;
+      &[open] {
+        summary {
+          font-weight: bold;
+        }
+      }
+
+      ul {
+        @extend %body-colors;
+        background: $dropdownmenu-submenu-background;
+        border: $dropdownmenu-border;
+        margin-top: calc($line-height / 4);
+        min-width: $dropdownmenu-min-width;
+        position: absolute;
+        top: 100%;
+        z-index: 9;
+      }
     }
   }
 }

@@ -205,48 +205,6 @@ ar:
         few: "إقتراحات"
         many: "إقتراحات"
         other: "إقتراحات"
-      legislation/draft_versions:
-        zero: "إصدارات المسودة"
-        one: "إصدار المسودّة"
-        two: "إصدارات المسودة"
-        few: "إصدارات المسودة"
-        many: "إصدارات المسودة"
-        other: "إصدارات المسودة"
-      legislation/questions:
-        zero: "الأسئلة"
-        one: "سؤال"
-        two: "الأسئلة"
-        few: "الأسئلة"
-        many: "الأسئلة"
-        other: "الأسئلة"
-      legislation/question_options:
-        zero: "خيارات السؤال"
-        one: "خيار السؤال"
-        two: "خيارات السؤال"
-        few: "خيارات السؤال"
-        many: "خيارات السؤال"
-        other: "خيارات السؤال"
-      legislation/answers:
-        zero: "الإجابة"
-        one: "إجابة"
-        two: "إجابتان"
-        few: "إجابات"
-        many: "إجابات"
-        other: "إجابات"
-      documents:
-        zero: "الوثائق"
-        one: "وثيقة"
-        two: "الوثائق"
-        few: "الوثائق"
-        many: "الوثائق"
-        other: "الوثائق"
-      images:
-        zero: "صور"
-        one: "صورة"
-        two: "صور"
-        few: "صور"
-        many: "صور"
-        other: "صور"
       topic:
         zero: "مواضبع"
         one: "موضوع"
@@ -416,7 +374,6 @@ ar:
         public_activity: "أترك قائمة الأنشطة الخاصة بي عامة"
         recommended_debates: "إظهار توصيات المناقشات"
         recommended_proposals: "إظهار توصيات المقترحات"
-        redeemable_code: "رمز التحقق الواردة عبر البريد الإلكتروني"
       direct_message:
         title: "عنوان"
         body: "رسالة"
@@ -474,7 +431,6 @@ ar:
         title: "عنوان"
       site_customization/page:
         content: المحتوى
-        created_at: أنشئت في
         subtitle: عنوان فرعي
         slug: سبيكة
         status: حالة
@@ -569,15 +525,6 @@ ar:
       image:
         title: عنوان
         attachment: "مرفق"
-      poll/question/answer:
-        title: الإجابة
-        description: الوصف
-      poll/question/answer/translation:
-        title: الإجابة
-        description: "الوصف"
-      poll/question/answer/video:
-        title: عنوان
-        url: فيديو خارجي
       newsletter:
         segment_recipient: المستلمين
         subject: الموضوع
@@ -667,8 +614,6 @@ ar:
           attributes:
             document_number:
               not_in_census: "الوثيقة ليست في التعداد"
-            user_id:
-              has_voted: "هذا المستخدم قد صوت بالفعل"
         legislation/process:
           attributes:
             end_date:

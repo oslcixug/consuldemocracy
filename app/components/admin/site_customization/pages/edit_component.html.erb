@@ -4,11 +4,11 @@
 <%= header do %>
   <%= render Admin::ActionComponent.new(
     :destroy,
-    @page,
+    page,
     text: t("admin.site_customization.pages.index.delete"),
     confirm: true,
     class: "delete"
   ) %>
 <% end %>
 
-<%= render "form" %>
+<%= render Admin::SiteCustomization::Pages::FormComponent.new(page) %>

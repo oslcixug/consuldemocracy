@@ -10,9 +10,6 @@ gl:
           all: Todo
           pending_flag_review: Pendentes
           with_ignored_flag: Marcados como revisados
-        headers:
-          comment: Comentar
-          moderate: Moderar
         hide: Agochar comentarios
         ignore_flags: Marcar como revisadas
         orders:
@@ -30,9 +27,6 @@ gl:
           all: Todo
           pending_flag_review: Pendentes
           with_ignored_flag: Marcados como revisados
-        headers:
-          debate: Debate
-          moderate: Moderar
         hide: Agochar debate/s
         ignore_flags: Marcar como revisado/s
         orders:
@@ -58,7 +52,6 @@ gl:
           with_ignored_flag: Marcadas como revisadas
         headers:
           moderate: Moderar
-          proposal: Proposta
         hide: Agochar proposta/s
         ignore_flags: Marcar como revisada/s
         orders:
@@ -73,9 +66,6 @@ gl:
           all: Todo
           pending_flag_review: Pendentes
           with_ignored_flag: Marcadas como revisadas
-        headers:
-          moderate: Moderar
-          budget_investment: Proposta de investimento
         hide: Agochar investimentos orzamentarios
         ignore_flags: Marcadas como revisadas
         orders:
@@ -90,9 +80,6 @@ gl:
           all: Todo
           pending_review: Pendentes de revisión
           ignored: Marcadas como revisadas
-        headers:
-          moderate: Moderar
-          proposal_notification: Aviso de proposta
         hide: Agochar propostas
         ignore_flags: Marcadas como revisadas
         orders:

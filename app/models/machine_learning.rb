@@ -15,57 +15,55 @@ class MachineLearning
   end
 
   def run
-    begin
-      export_proposals_to_json
-      export_budget_investments_to_json
-      export_comments_to_json
+    export_proposals_to_json
+    export_budget_investments_to_json
+    export_comments_to_json
 
-      return unless run_machine_learning_scripts
+    return unless run_machine_learning_scripts
 
-      if updated_file?(MachineLearning.proposals_taggings_filename) &&
-         updated_file?(MachineLearning.proposals_tags_filename)
-        cleanup_proposals_tags!
-        import_ml_proposals_tags
-        update_machine_learning_info_for("tags")
-      end
-
-      if updated_file?(MachineLearning.investments_taggings_filename) &&
-         updated_file?(MachineLearning.investments_tags_filename)
-        cleanup_investments_tags!
-        import_ml_investments_tags
-        update_machine_learning_info_for("tags")
-      end
-
-      if updated_file?(MachineLearning.proposals_related_filename)
-        cleanup_proposals_related_content!
-        import_proposals_related_content
-        update_machine_learning_info_for("related_content")
-      end
-
-      if updated_file?(MachineLearning.investments_related_filename)
-        cleanup_investments_related_content!
-        import_budget_investments_related_content
-        update_machine_learning_info_for("related_content")
-      end
-
-      if updated_file?(MachineLearning.proposals_comments_summary_filename)
-        cleanup_proposals_comments_summary!
-        import_ml_proposals_comments_summary
-        update_machine_learning_info_for("comments_summary")
-      end
-
-      if updated_file?(MachineLearning.investments_comments_summary_filename)
-        cleanup_investments_comments_summary!
-        import_ml_investments_comments_summary
-        update_machine_learning_info_for("comments_summary")
-      end
-
-      job.update!(finished_at: Time.current)
-      Mailer.machine_learning_success(user).deliver_later
-    rescue Exception => error
-      handle_error(error)
-      raise error
+    if updated_file?(MachineLearning.proposals_taggings_filename) &&
+       updated_file?(MachineLearning.proposals_tags_filename)
+      cleanup_proposals_tags!
+      import_ml_proposals_tags
+      update_machine_learning_info_for("tags")
     end
+
+    if updated_file?(MachineLearning.investments_taggings_filename) &&
+       updated_file?(MachineLearning.investments_tags_filename)
+      cleanup_investments_tags!
+      import_ml_investments_tags
+      update_machine_learning_info_for("tags")
+    end
+
+    if updated_file?(MachineLearning.proposals_related_filename)
+      cleanup_proposals_related_content!
+      import_proposals_related_content
+      update_machine_learning_info_for("related_content")
+    end
+
+    if updated_file?(MachineLearning.investments_related_filename)
+      cleanup_investments_related_content!
+      import_budget_investments_related_content
+      update_machine_learning_info_for("related_content")
+    end
+
+    if updated_file?(MachineLearning.proposals_comments_summary_filename)
+      cleanup_proposals_comments_summary!
+      import_ml_proposals_comments_summary
+      update_machine_learning_info_for("comments_summary")
+    end
+
+    if updated_file?(MachineLearning.investments_comments_summary_filename)
+      cleanup_investments_comments_summary!
+      import_ml_investments_comments_summary
+      update_machine_learning_info_for("comments_summary")
+    end
+
+    job.update!(finished_at: Time.current)
+    Mailer.machine_learning_success(user).deliver_later
+  rescue Exception => e
+    handle_error(e)
+    raise e
   end
   handle_asynchronously :run, queue: "machine_learning"
 
@@ -191,18 +189,16 @@ class MachineLearning
     end
 
     def scripts_info
-      scripts_info = []
-      Dir[SCRIPTS_FOLDER.join("*.py")].each do |full_path_filename|
-        scripts_info << {
+      Dir[SCRIPTS_FOLDER.join("*.py")].map do |full_path_filename|
+        {
           name: full_path_filename.split("/").last,
           description: description_from(full_path_filename)
         }
-      end
-      scripts_info.sort_by { |script_info| script_info[:name] }
+      end.sort_by { |script_info| script_info[:name] }
     end
 
     def description_from(script_filename)
-      description = ""
+      description_lines = []
       delimiter = '"""'
       break_line = "<br>"
       comment_found = false
@@ -210,17 +206,17 @@ class MachineLearning
         if line.start_with?(delimiter) && !comment_found
           comment_found = true
           line.slice!(delimiter)
-          description << line.strip.concat(break_line) if line.present?
+          description_lines << line.strip if line.present?
         elsif line.include?(delimiter)
           line.slice!(delimiter)
-          description << line.strip if line.present?
+          description_lines << line.strip if line.present?
           break
         elsif comment_found
-          description << line.strip.concat(break_line)
+          description_lines << line.strip
         end
       end
 
-      description.delete_suffix(break_line)
+      description_lines.join(break_line)
     end
   end
 
@@ -233,7 +229,7 @@ class MachineLearning
     def export_proposals_to_json
       create_data_folder
       filename = data_folder.join(MachineLearning.proposals_filename)
-      Proposal::Exporter.new.to_json_file(filename)
+      Proposal::Exporter.new([]).to_json_file(filename)
     end
 
     def export_budget_investments_to_json
@@ -249,19 +245,29 @@ class MachineLearning
     end
 
     def run_machine_learning_scripts
-      command = if Tenant.default?
-                  "python #{job.script}"
-                else
-                  "CONSUL_TENANT=#{Tenant.current_schema} python #{job.script}"
-                end
-
-      output = `cd #{SCRIPTS_FOLDER} && #{command} 2>&1`
-      result = $?.success?
+      output = `cd #{SCRIPTS_FOLDER} && #{script_command} 2>&1`
+      result = command_success?
       if result == false
         job.update!(finished_at: Time.current, error: output)
         Mailer.machine_learning_error(user).deliver_later
       end
       result
+    end
+
+    def script_command
+      base_command = "python #{job.script}"
+
+      command = if Tenant.default?
+                  base_command
+                else
+                  "CONSUL_TENANT=#{Tenant.current_schema.to_s.shellescape} #{base_command}"
+                end
+
+      self.class.scripts_info.any? { |script| script[:name] == job.script } && command
+    end
+
+    def command_success?
+      $?.success?
     end
 
     def cleanup_proposals_tags!

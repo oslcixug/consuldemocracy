@@ -35,14 +35,11 @@ describe Layout::LocaleSwitcherComponent do
     end
 
     context "missing language names" do
-      let!(:default_enforce) { I18n.enforce_available_locales }
+      before { allow(I18n).to receive(:available_locales).and_return(%i[de en es fr nl wl]) }
 
-      before do
-        I18n.enforce_available_locales = false
-        allow(I18n).to receive(:available_locales).and_return(%i[de en es fr nl wl])
+      around do |example|
+        I18n.with(enforce_available_locales: false) { example.run }
       end
-
-      after { I18n.enforce_available_locales = default_enforce }
 
       it "renders the locale key" do
         render_inline component
@@ -95,6 +92,23 @@ describe Layout::LocaleSwitcherComponent do
       expect(page).to have_css "[href='/?locale=ar'][data-turbolinks=false]"
       expect(page).to have_link "English", href: "/?locale=en"
       expect(page).to have_css "[href='/?locale=en'][data-turbolinks=true]"
+    end
+  end
+
+  context "when not all available locales are enabled" do
+    before do
+      allow(I18n).to receive(:available_locales).and_return(%i[en es fr])
+      Setting["locales.default"] = "es"
+      Setting["locales.enabled"] = "es fr"
+    end
+
+    it "displays the enabled locales" do
+      render_inline component
+
+      expect(page).to have_link count: 2
+      expect(page).to have_link "Español"
+      expect(page).to have_link "Français"
+      expect(page).not_to have_link "English"
     end
   end
 end

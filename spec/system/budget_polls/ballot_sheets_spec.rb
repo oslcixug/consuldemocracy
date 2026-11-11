@@ -18,7 +18,7 @@ describe "Poll budget ballot sheets" do
     scenario "Budget polls are visible" do
       visit root_path
 
-      click_link "Menu"
+      click_summary "Menu"
       click_link "Polling officers"
 
       within("#side_menu") do
@@ -103,7 +103,7 @@ describe "Poll budget ballot sheets" do
     scenario "Ballot sheet is saved" do
       visit new_officing_poll_ballot_sheet_path(poll)
 
-      select booth.name, from: "officer_assignment_id"
+      select booth.name, from: "Booth"
       fill_in "data", with: "1234;5678"
       click_button "Save"
 
@@ -119,7 +119,7 @@ describe "Poll budget ballot sheets" do
     scenario "Ballot sheet is not saved" do
       visit new_officing_poll_ballot_sheet_path(poll)
 
-      select booth.name, from: "officer_assignment_id"
+      select booth.name, from: "Booth"
       click_button "Save"
 
       expect(page).to have_content("CSV data can't be blank")

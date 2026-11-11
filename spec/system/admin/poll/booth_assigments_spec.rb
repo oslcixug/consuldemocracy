@@ -228,7 +228,7 @@ describe "Admin booths assignments", :admin do
       expect(page).not_to have_css "#recounts_list"
     end
 
-    scenario "Results for a booth assignment" do
+    scenario "Recounts for a booth assignment" do
       poll = create(:poll)
       booth_assignment = create(:poll_booth_assignment, poll: poll)
       other_booth_assignment = create(:poll_booth_assignment, poll: poll)
@@ -236,37 +236,37 @@ describe "Admin booths assignments", :admin do
       question_1 = create(:poll_question, :yes_no, poll: poll)
 
       question_2 = create(:poll_question, poll: poll)
-      create(:poll_question_answer, title: "Today", question: question_2)
-      create(:poll_question_answer, title: "Tomorrow", question: question_2)
+      create(:poll_question_option, title: "Today", question: question_2)
+      create(:poll_question_option, title: "Tomorrow", question: question_2)
 
       create(:poll_partial_result,
              booth_assignment: booth_assignment,
              question: question_1,
-             answer: "Yes",
+             option: question_1.option_for("Yes"),
              amount: 11)
 
       create(:poll_partial_result,
              booth_assignment: booth_assignment,
              question: question_1,
-             answer: "No",
+             option: question_1.option_for("No"),
              amount: 4)
 
       create(:poll_partial_result,
              booth_assignment: booth_assignment,
              question: question_2,
-             answer: "Today",
+             option: question_2.option_for("Today"),
              amount: 5)
 
       create(:poll_partial_result,
              booth_assignment: booth_assignment,
              question: question_2,
-             answer: "Tomorrow",
+             option: question_2.option_for("Tomorrow"),
              amount: 6)
 
       create(:poll_partial_result,
              booth_assignment: other_booth_assignment,
              question: question_1,
-             answer: "Yes",
+             option: question_1.option_for("Yes"),
              amount: 9999)
 
       create(:poll_recount,
@@ -284,30 +284,6 @@ describe "Admin booths assignments", :admin do
       visit admin_poll_booth_assignment_path(poll, booth_assignment)
 
       click_link "Results"
-
-      expect(page).to have_content(question_1.title)
-
-      within("#question_#{question_1.id}_0_result") do
-        expect(page).to have_content("Yes")
-        expect(page).to have_content(11)
-      end
-
-      within("#question_#{question_1.id}_1_result") do
-        expect(page).to have_content("No")
-        expect(page).to have_content(4)
-      end
-
-      expect(page).to have_content(question_2.title)
-
-      within("#question_#{question_2.id}_0_result") do
-        expect(page).to have_content("Today")
-        expect(page).to have_content(5)
-      end
-
-      within("#question_#{question_2.id}_1_result") do
-        expect(page).to have_content("Tomorrow")
-        expect(page).to have_content(6)
-      end
 
       within("#white_results") { expect(page).to have_content("21") }
       within("#null_results") { expect(page).to have_content("44") }

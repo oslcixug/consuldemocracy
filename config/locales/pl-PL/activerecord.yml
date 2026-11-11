@@ -139,36 +139,6 @@ pl:
         few: "Wnioski"
         many: "Wnioski"
         other: "Wnioski"
-      legislation/draft_versions:
-        one: "Wersja robocza"
-        few: "Wersje robocze"
-        many: "Wersje robocze"
-        other: "Wersje robocze"
-      legislation/questions:
-        one: "Pytanie"
-        few: "Pytania"
-        many: "Pytania"
-        other: "Pytania"
-      legislation/question_options:
-        one: "Opcja pytania"
-        few: "Opcje pytania"
-        many: "Opcje pytania"
-        other: "Opcje pytania"
-      legislation/answers:
-        one: "Odpowiedź"
-        few: "Odpowiedzi"
-        many: "Odpowiedzi"
-        other: "Odpowiedzi"
-      documents:
-        one: "Dokument"
-        few: "Dokumenty"
-        many: "Dokumenty"
-        other: "Dokumenty"
-      images:
-        one: "Obraz"
-        few: "Obrazy"
-        many: "Obrazy"
-        other: "Obrazy"
       topic:
         one: "Temat"
         few: "Tematy"
@@ -320,7 +290,6 @@ pl:
         public_activity: "Pokazuj publicznie moją listę aktywności"
         recommended_debates: "Pokaż zalecenia debat"
         recommended_proposals: "Pokaż wnioski rekomendacji"
-        redeemable_code: "Kod weryfikacyjny otrzymany za pośrednictwem poczty e-mail"
       direct_message:
         title: "Tytuł"
         body: "Wiadomość"
@@ -379,7 +348,6 @@ pl:
         title: "Tytuł"
       site_customization/page:
         content: Zawartość
-        created_at: Utworzony w
         subtitle: Napis
         slug: Ścieżka
         status: Status
@@ -476,15 +444,6 @@ pl:
       image:
         title: Tytuł
         attachment: "Załącznik"
-      poll/question/answer:
-        title: Odpowiedź
-        description: Opis
-      poll/question/answer/translation:
-        title: Odpowiedź
-        description: "Opis"
-      poll/question/answer/video:
-        title: Tytuł
-        url: Zewnętrzne video
       newsletter:
         segment_recipient: Adresaci
         subject: Temat
@@ -562,8 +521,6 @@ pl:
           attributes:
             document_number:
               not_in_census: "Brak dokumentu w spisie"
-            user_id:
-              has_voted: "Użytkownik już zagłosował"
         legislation/process:
           attributes:
             end_date:

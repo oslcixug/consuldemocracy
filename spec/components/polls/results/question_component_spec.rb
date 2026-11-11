@@ -1,0 +1,52 @@
+require "rails_helper"
+
+describe Polls::Results::QuestionComponent do
+  context "question that accepts options" do
+    let(:question) { create(:poll_question, :yes_no) }
+    let(:option_yes) { question.option_for("Yes") }
+    let(:option_no) { question.option_for("No") }
+    let(:option_other) do
+      create(:poll_question_option, question: question, title: "Other", allow_custom_text: true)
+    end
+
+    it "renders results table content" do
+      create_list(:poll_answer, 2, question: question, option: option_yes)
+      create_list(:poll_answer, 2, question: question, option: option_no)
+      create(:poll_answer, question: question, option: option_other)
+
+      render_inline Polls::Results::QuestionComponent.new(question)
+
+      expect(page).to have_table with_rows: [{ "Most voted answer: Yes" => "2 (40%)",
+                                               "No" => "2 (40%)",
+                                               "Other" => "1 (20%)" }]
+
+      page.find("table") do |table|
+        expect(table).to have_css "th.win", count: 1
+        expect(table).to have_css "td.win", count: 1
+      end
+    end
+  end
+
+  context "question that does not accept options" do
+    let(:open_ended_question) { create(:poll_question_open) }
+
+    it "renders open_ended headers and empty counts when there are no participants" do
+      render_inline Polls::Results::QuestionComponent.new(open_ended_question)
+
+      expect(page).to have_table with_rows: [{ "Valid" => "0 (0%)",
+                                               "Blank" => "0 (0%)" }]
+    end
+
+    it "renders counts and percentages provided by the model metrics" do
+      allow(open_ended_question).to receive_messages(
+        open_ended_valid_answers_count: 3,
+        open_ended_blank_answers_count: 1
+      )
+
+      render_inline Polls::Results::QuestionComponent.new(open_ended_question)
+
+      expect(page).to have_table with_rows: [{ "Valid" => "3 (75%)",
+                                               "Blank" => "1 (25%)" }]
+    end
+  end
+end

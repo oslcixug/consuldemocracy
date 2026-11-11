@@ -91,6 +91,10 @@ sv:
       google_login_description: "Tillåt användare att logga in med sitt Google-konto"
       wordpress_login: "Wordpress-inloggning"
       wordpress_login_description: "Tillåt användare att logga in med sitt Wordpress-konto"
+      oidc_login: "OpenID Connect-inloggning"
+      oidc_login_description: "Tillåt att användare registrerar sig genom OpenID Connect (OIDC)"
+      saml_login: "SAML-inloggning"
+      saml_login_description: "Tillåt att användare registrerar sig genom SAML"
       featured_proposals: "Uppmärksammade förslag"
       featured_proposals_description: "Visar uppmärksammade förslag på indexsidan för förslag"
       signature_sheets: "Namninsamlingar"
@@ -116,8 +120,6 @@ sv:
       allow_attached_documents_description: "Tillåter användare att skicka in dokument när de skapar förslag och investeringsprojekt i medborgarbudgetar"
       guides: "Instruktioner för att skapa förslag och investeringsprojekt"
       guides_description: "Visar en guide över skillnaderna mellan förslag och investeringsprojekt om det finns en aktiv medborgarbudget"
-      public_stats: "Offentlig statistik"
-      public_stats_description: "Visar offentlig statistik i administratörspanelen"
       help_page: "Hjälpsida"
       help_page_description: 'Visar en hjälpmeny som innehåller en sida med ett infoavsnitt om varje aktiverad funktion. Även anpassade sidor och menyer kan skapas under avsnitten "Anpassade sidor" och "Anpassade innehållsblock"'
       remote_translations: "Fjärröversättning"
@@ -136,6 +138,15 @@ sv:
       remove_investments_supports_description: "Tillåt att användare tar bort stöd för medborgarbudgetinvesteringar under projektvalsfasen."
       sdg: Globala målen
       sdg_description: Aktivera delarna Globala mål för hållbar utveckling i administrationsmenyn och i Globala inställningar.
+      cookies_consent: Banner om cookies-samtycke
+      cookies_consent_description: Aktivera bannern om cookies-samtycke för att informera användare om cookies som programvaran använder.
+      gdpr:
+        require_consent_for_notifications: Uttryckligt samtycke för aviseringar
+        require_consent_for_notifications_description: Begär uttryckligt användarsamtycke för att kunna skicka nyhetsbrev och liknande information som krävs enligt allmänna dataskyddsförordningen (DSF).
+        require_consent_for_embedded_videos: Samtycke för inbäddade videor
+        require_consent_for_embedded_videos_description: Visa en varning och kräv användarbekräftelse innan inbäddade videor laddas från externa leverantörer.
+        warning_for_external_links: "Varnar för externa länkar"
+        warning_for_external_links_description: "Aktivera ett popup-fönster som kräver att användare bekräftar innan de går till en extern webbplats."
     remote_census:
       general:
         endpoint: "Slutpunkt"
@@ -228,3 +239,18 @@ sv:
         budgets_description: Tillåt att medborgarbudgetar länkas till Globala mål för hållbar utveckling
         legislation: Relaterade Globala mål i medborgardialoger
         legislation_description: Tillåt att medborgardialoger länkas till Globala mål för hållbar utveckling
+    cookies_consent:
+      more_info_link: Länk till cookies-policy
+      more_info_link_description: Länk som visas i samtyckes-bannern till cookie-policy-sidan.
+      version_name: Versionsnamn
+      version_name_description: Ändra versionsnamnet för att tvinga alla användare att gå genom cookie-samtyckesprocessen igen. Denna funktion kan vara praktisk när införande av drastiska cookie-policy-ändringar kräver bekräftelse av ny användare.
+    llm:
+      title: LLM-inställningar
+      provider: "LLM-leverantör"
+      provider_description: "Leverantörer inaktiveras tills autentiseringsuppgifter har konfigurerats i secrets.yml."
+      use_llm_for_translations: "Innehållsöversättning"
+      use_llm_for_translations_description: "Använd LLM för innehållsöversättningar och med företräde framför Microsoft-översättningstjänster."
+      model: "Modell"
+      model_description: "LLM-modellen som ska användas."
+      use_ai_image_suggestions: "AI-bildförslag"
+      use_ai_image_suggestions_description: "Låt användare använda AI för att föreslå bilder från Pexels, istället för att ladda upp sina egna."

@@ -1,4 +1,6 @@
 class Moderation::Users::IndexComponent < ApplicationComponent
+  include Header
+
   attr_reader :users
 
   def initialize(users)
@@ -6,6 +8,10 @@ class Moderation::Users::IndexComponent < ApplicationComponent
   end
 
   private
+
+    def title
+      t("moderation.users.index.title")
+    end
 
     def status(user)
       t("admin.activity.show.actions.#{activity_action(user)}")

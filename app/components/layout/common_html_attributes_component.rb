@@ -1,21 +1,29 @@
 class Layout::CommonHtmlAttributesComponent < ApplicationComponent
-  use_helpers :rtl?
+  delegate :rtl?, to: :helpers
 
   private
 
     def attributes
-      sanitize([dir, lang, html_class].compact.join(" "))
+      tag.attributes(dir: dir, lang: lang, class: html_class, data: data)
     end
 
     def dir
-      'dir="rtl"' if rtl?
+      "rtl" if rtl?
     end
 
     def lang
-      "lang=\"#{I18n.locale}\""
+      I18n.locale
     end
 
     def html_class
-      "class=\"tenant-#{Tenant.current_schema}\"" if Rails.application.config.multitenancy
+      "tenant-#{Tenant.current_schema}" if Rails.application.config.multitenancy
+    end
+
+    def data
+      { warning_for_external_links: warning_for_external_links_text }
+    end
+
+    def warning_for_external_links_text
+      t("shared.warning_for_external_links") if feature?("gdpr.warning_for_external_links")
     end
 end

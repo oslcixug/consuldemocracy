@@ -11,7 +11,7 @@ el:
           success: "Έχει σταλεί email επιβεβαίωσης στον λογαριασμό σας: %{email}"
       show:
         alert:
-          failure: Ο κωδικός επαλήθευσης είναι λανθασμένος
+          failure: Ο κωδικός επαλήθευσης είναι λανθασμένος 
         flash:
           success: Ο λογαριασμός σας έχει επαληθευτεί
     letter:
@@ -91,6 +91,7 @@ el:
     user_permission_proposal: Δημιουργία νέων προτάσεων
     user_permission_support_proposal: Υποστήριξη προτάσεων
     user_permission_votes: Συμμετοχή στην τελική ψηφοφορία*
+    verification_needed: Απαιτείται πρόσθετη επαλήθευση
     verified_user:
       form:
         submit_button: Αποστολή κωδικού

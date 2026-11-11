@@ -46,17 +46,17 @@ class ApplicationController < ActionController::Base
         current_user.update(locale: locale)
       end
 
-      session[:locale] = locale
+      session[:locale] = locale.to_s
       I18n.with_locale(locale, &action)
     end
 
     def current_locale
-      if I18n.available_locales.include?(params[:locale]&.to_sym)
+      if Setting.enabled_locales.include?(params[:locale]&.to_sym)
         params[:locale]
-      elsif I18n.available_locales.include?(session[:locale]&.to_sym)
+      elsif Setting.enabled_locales.include?(session[:locale]&.to_sym)
         session[:locale]
       else
-        I18n.default_locale
+        Setting.default_locale
       end
     end
 
@@ -66,10 +66,6 @@ class ApplicationController < ActionController::Base
       else
         "application"
       end
-    end
-
-    def set_comment_flags(comments)
-      @comment_flags = current_user ? current_user.comment_flags(comments) : {}
     end
 
     def ensure_signup_complete
@@ -101,9 +97,11 @@ class ApplicationController < ActionController::Base
     end
 
     def redirect_with_query_params_to(options, response_status = {})
-      path_options = { controller: params[:controller] }.merge(options).merge(only_path: true)
-      path = url_for(request.query_parameters.merge(path_options))
+      redirect_to path_with_query_params(options), response_status
+    end
 
-      redirect_to path, response_status
+    def path_with_query_params(options)
+      path_options = { controller: params[:controller] }.merge(options).merge(only_path: true)
+      url_for(request.query_parameters.merge(path_options))
     end
 end

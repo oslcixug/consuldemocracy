@@ -9,9 +9,13 @@ plugins:
   - stylelint-scss
   - "@stylistic/stylelint-plugin"
 rules:
+  at-rule-descriptor-no-unknown: true
+  at-rule-descriptor-value-no-unknown: true
   at-rule-disallowed-list:
     - debug
+  at-rule-no-deprecated: true
   at-rule-no-vendor-prefix: true
+  at-rule-prelude-no-invalid: true
   block-no-empty: true
   color-hex-length: "short"
   color-named: "never"
@@ -24,6 +28,9 @@ rules:
   length-zero-no-unit: true
   max-nesting-depth: 4
   media-feature-name-no-vendor-prefix: true
+  no-invalid-position-declaration: true
+  property-layout-mappings: "physical"
+  property-no-deprecated: true
   property-no-unknown: true
   property-no-vendor-prefix: true
   rule-empty-line-before:
@@ -34,11 +41,13 @@ rules:
   selector-class-pattern: "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$"
   selector-max-compound-selectors: 5
   selector-max-id: 0
+  selector-no-deprecated: true
   selector-no-vendor-prefix: true
   selector-pseudo-element-colon-notation: "double"
   selector-pseudo-element-no-unknown: true
   shorthand-property-no-redundant-values: true
   value-no-vendor-prefix: true
+  order/custom-properties-alphabetical-order: true
   order/order:
     - dollar-variables
     - type: at-rule
@@ -51,17 +60,22 @@ rules:
       name: include
       hasBlock: true
     - rules
+  order/properties-alphabetical-order: true
   scss/at-else-closing-brace-space-after: always-intermediate
   scss/at-else-empty-line-before: never
   scss/at-extend-no-missing-placeholder: true
   scss/at-function-pattern: "^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$"
+  scss/at-mixin-argumentless-call-parentheses: never
   scss/at-if-closing-brace-newline-after: always-last-in-chain
   scss/at-if-closing-brace-space-after: always-intermediate
-  scss/at-import-partial-extension: never
+  scss/at-mixin-no-risky-nesting-selector: true
   scss/at-mixin-pattern: "^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$"
   scss/dollar-variable-colon-space-before: never
+  scss/dollar-variable-no-missing-interpolation: true
   scss/dollar-variable-pattern: "^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$"
+  scss/function-calculation-no-interpolation: true
   scss/load-no-partial-leading-underscore: true
+  scss/load-partial-extension: never
   scss/no-unused-private-members: true
   scss/operator-no-unspaced: true
   scss/percent-placeholder-pattern: "^(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$"
@@ -76,10 +90,13 @@ rules:
   "@stylistic/indentation":
     - 2
     - ignore:
+      - param
       - value
+  "@stylistic/max-empty-lines": 1
   "@stylistic/media-feature-parentheses-space-inside": never
   "@stylistic/no-eol-whitespace": true
   "@stylistic/no-missing-end-of-source-newline": true
+  "@stylistic/no-multiple-whitespaces": true
   "@stylistic/number-no-trailing-zeros": true
   "@stylistic/selector-attribute-brackets-space-inside": never
   "@stylistic/selector-pseudo-class-parentheses-space-inside": never
@@ -89,3 +106,14 @@ rules:
   "@stylistic/color-hex-case": "lower"
   "@stylistic/number-leading-zero": "always"
   "@stylistic/selector-list-comma-newline-after": always
+overrides:
+  - files: app/assets/stylesheets/icons.scss
+    rules:
+      at-rule-descriptor-value-no-unknown: null
+  - files: app/assets/stylesheets/legislation_process.scss
+    rules:
+      max-nesting-depth: 8
+      selector-max-compound-selectors: 8
+  - files: app/assets/stylesheets/shared/social_share.scss
+    rules:
+      selector-class-pattern: "^([a-z][a-z0-9]*)((-|_)[a-z0-9]+)*$"

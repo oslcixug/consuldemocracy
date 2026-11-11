@@ -1,8 +1,6 @@
 class Layout::FooterComponent < ApplicationComponent
-  use_helpers :content_block
-
-  def footer_legal_content_block
-    content_block("footer_legal")
+  def render?
+    !Rails.application.multitenancy_management_mode?
   end
 
   private

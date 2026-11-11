@@ -5,6 +5,8 @@ class Admin::Settings::FeaturesTabComponent < ApplicationComponent
       feature.cas_login
       feature.facebook_login
       feature.google_login
+      feature.oidc_login
+      feature.saml_login
       feature.twitter_login
       feature.wordpress_login
       feature.signature_sheets
@@ -25,6 +27,9 @@ class Admin::Settings::FeaturesTabComponent < ApplicationComponent
       feature.sdg
       feature.machine_learning
       feature.remove_investments_supports
+      feature.gdpr.require_consent_for_notifications
+      feature.gdpr.require_consent_for_embedded_videos
+      feature.gdpr.warning_for_external_links
       feature.dashboard.notification_emails
     ]
   end

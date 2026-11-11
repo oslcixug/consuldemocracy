@@ -1,5 +1,4 @@
 require "rails_helper"
-require "sessions_helper"
 
 describe "Budget Investments" do
   let(:author)  { create(:user, :level_two, username: "Isabel") }
@@ -13,15 +12,6 @@ describe "Budget Investments" do
   context "Concerns" do
     it_behaves_like "notifiable in-app", :budget_investment
     it_behaves_like "relationable", Budget::Investment
-    it_behaves_like "remotely_translatable",
-                    :budget_investment,
-                    "budget_investments_path",
-                    { budget_id: "budget_id" }
-
-    it_behaves_like "remotely_translatable",
-                    :budget_investment,
-                    "budget_investment_path",
-                    { budget_id: "budget_id", id: "id" }
     it_behaves_like "flaggable", :budget_investment
   end
 
@@ -331,7 +321,7 @@ describe "Budget Investments" do
       order = all(".budget-investment h3").map(&:text)
       expect(order).not_to be_empty
 
-      visit budget_investments_path(budget, heading_id: heading.id)
+      refresh
       new_order = all(".budget-investment h3").map(&:text)
 
       expect(order).to eq(new_order)
@@ -440,19 +430,19 @@ describe "Budget Investments" do
       first_user_investments_order = nil
       second_user_investments_order = nil
 
-      in_browser(:one) do
+      using_session(:one) do
         visit budget_investments_path(budget, heading: heading)
         first_user_investments_order = investments_order
       end
 
-      in_browser(:two) do
+      using_session(:two) do
         visit budget_investments_path(budget, heading: heading)
         second_user_investments_order = investments_order
       end
 
       expect(first_user_investments_order).not_to eq(second_user_investments_order)
 
-      in_browser(:one) do
+      using_session(:one) do
         click_link "Next"
         expect(page).to have_css ".pagination .current", text: "2"
 
@@ -462,7 +452,7 @@ describe "Budget Investments" do
         expect(investments_order).to eq(first_user_investments_order)
       end
 
-      in_browser(:two) do
+      using_session(:two) do
         click_link "Next"
         expect(page).to have_css ".pagination .current", text: "2"
 
@@ -479,12 +469,12 @@ describe "Budget Investments" do
       first_user_investments_order = nil
       second_user_investments_order = nil
 
-      in_browser(:one) do
+      using_session(:one) do
         visit budget_investments_path(budget, heading: heading, random_seed: "1")
         first_user_investments_order = investments_order
       end
 
-      in_browser(:two) do
+      using_session(:two) do
         visit budget_investments_path(budget, heading: heading, random_seed: "1")
         second_user_investments_order = investments_order
       end
@@ -522,33 +512,28 @@ describe "Budget Investments" do
       order = all(".budget-investment h3").map(&:text)
       expect(order).not_to be_empty
 
-      visit budget_investments_path(budget, heading_id: heading.id)
+      refresh
       new_order = all(".budget-investment h3").map(&:text)
 
       expect(order).to eq(new_order)
     end
 
     scenario "Order always is random for unfeasible and unselected investments" do
-      Budget::Phase::kind_or_later("valuating").each do |phase|
-        budget.update!(phase: phase)
+      phase = Budget::Phase::kind_or_later("valuating").sample
+      budget.update!(phase: phase)
 
-        visit budget_investments_path(budget, heading_id: heading.id, filter: "unfeasible")
+      filter = if Budget::Phase.kind_or_later("publishing_prices").include?(phase)
+                 "unselected"
+               else
+                 "unfeasible"
+               end
 
-        within(".submenu") do
-          expect(page).to have_content "random"
-          expect(page).not_to have_content "by price"
-          expect(page).not_to have_content "highest rated"
-        end
-      end
+      visit budget_investments_path(budget, heading_id: heading.id, filter: filter)
 
-      Budget::Phase.kind_or_later("publishing_prices").each do |phase|
-        visit budget_investments_path(budget, heading_id: heading.id, filter: "unselected")
-
-        within(".submenu") do
-          expect(page).to have_content "random"
-          expect(page).not_to have_content "price"
-          expect(page).not_to have_content "highest rated"
-        end
+      within(".submenu") do
+        expect(page).to have_content "random"
+        expect(page).not_to have_content "by price"
+        expect(page).not_to have_content "highest rated"
       end
     end
 
@@ -610,7 +595,7 @@ describe "Budget Investments" do
 
       click_button "Create Investment"
 
-      expect(page).to have_content "Investment created successfully"
+      expect(page).to have_content "Budget Investment created successfully"
       expect(page).to have_content "Build a skyscraper"
       expect(page).to have_content "I want to live in a high tower over the clouds"
       expect(page).to have_content "City center"
@@ -678,7 +663,7 @@ describe "Budget Investments" do
 
       click_button "Create Investment"
 
-      expect(page).to have_content "Investment created successfully"
+      expect(page).to have_content "Budget Investment created successfully"
       expect(page).to have_content "Build a skyscraper"
       expect(page).to have_content "I want to live in a high tower over the clouds"
       expect(page).to have_content "City center"
@@ -847,6 +832,72 @@ describe "Budget Investments" do
                                     "Health: More health professionals",
                                     "Health: More hospitals"]
     end
+
+    context "Image suggestions" do
+      let(:llm_response) do
+        double(
+          "ImageSuggestions::Llm::Client::Response",
+          results: double(
+            "Pexels::PhotoSet",
+            photos: [
+              double(
+                "Pexels::Photo",
+                id: "suggested-photo-1",
+                src: { "small" => "https://example.com/suggested.jpg" },
+                user: double(name: "Test Photographer")
+              )
+            ]
+          ),
+          errors: []
+        )
+      end
+
+      before do
+        Setting["llm.provider"] = "OpenAI"
+        Setting["llm.model"] = "gpt-4o"
+        Setting["llm.use_ai_image_suggestions"] = true
+
+        stub_secrets(pexels_access_key: "test_key")
+
+        allow(ImageSuggestions::Llm::Client).to receive(:call).and_return(llm_response)
+        allow(ImageSuggestions::Pexels).to receive(:download)
+          .with("suggested-photo-1")
+          .and_return(fixture_file_upload("clippy.jpg"))
+      end
+
+      scenario "User can suggest images, attach one and create the investment" do
+        login_as(author)
+        visit new_budget_investment_path(budget)
+
+        fill_in_new_investment_title with: "New hospital in the center"
+        fill_in_ckeditor "Description", with: "We need a modern hospital with green areas"
+
+        click_link "Add image"
+
+        expect(page).to have_button "Suggest an image with AI"
+
+        click_button "Suggest an image with AI"
+
+        expect(page).to have_content "Select an image from the suggestions below:"
+
+        within(".suggested-images-container") do
+          click_button "Attach suggested image 1 of 1"
+        end
+
+        expect(page).to have_css ".image-fields.direct-upload img"
+        within(".image-fields.direct-upload") do
+          title_field = find("input[name$='[title]']", match: :first)
+          fill_in title_field[:id], with: "Image by Test Photographer.jpg"
+        end
+
+        check "I agree to the Privacy Policy and the Terms and conditions of use"
+        click_button "Create Investment"
+
+        expect(page).to have_content "Budget Investment created successfully"
+        expect(page).to have_content "New hospital in the center"
+        expect(page).to have_css "img[alt*='Test Photographer']"
+      end
+    end
   end
 
   scenario "Show" do
@@ -872,38 +923,36 @@ describe "Budget Investments" do
 
     context "When investment with price is selected" do
       scenario "Price & explanation is shown when Budget is on published prices phase" do
-        Budget::Phase::PUBLISHED_PRICES_PHASES.each do |phase|
-          budget.update!(phase: phase)
+        phase = Budget::Phase::PUBLISHED_PRICES_PHASES.sample
+        budget.update!(phase: phase)
 
-          if budget.finished?
-            investment.update!(winner: true)
-          end
-
-          visit budget_investment_path(budget, id: investment.id)
-
-          expect(page).to have_content(investment.formatted_price)
-          expect(page).to have_content(investment.price_explanation)
-          expect(page).to have_link("See price explanation")
-
-          visit budget_investments_path(budget)
-
-          expect(page).to have_content(investment.formatted_price)
+        if budget.finished?
+          investment.update!(winner: true)
         end
+
+        visit budget_investment_path(budget, id: investment.id)
+
+        expect(page).to have_content(investment.formatted_price)
+        expect(page).to have_content(investment.price_explanation)
+        expect(page).to have_link("See price explanation")
+
+        visit budget_investments_path(budget)
+
+        expect(page).to have_content(investment.formatted_price)
       end
 
       scenario "Price & explanation isn't shown when Budget is not on published prices phase" do
-        (Budget::Phase::PHASE_KINDS - Budget::Phase::PUBLISHED_PRICES_PHASES).each do |phase|
-          budget.update!(phase: phase)
-          visit budget_investment_path(budget, id: investment.id)
+        phase = (Budget::Phase::PHASE_KINDS - Budget::Phase::PUBLISHED_PRICES_PHASES).sample
+        budget.update!(phase: phase)
+        visit budget_investment_path(budget, id: investment.id)
 
-          expect(page).not_to have_content(investment.formatted_price)
-          expect(page).not_to have_content(investment.price_explanation)
-          expect(page).not_to have_link("See price explanation")
+        expect(page).not_to have_content(investment.formatted_price)
+        expect(page).not_to have_content(investment.price_explanation)
+        expect(page).not_to have_link("See price explanation")
 
-          visit budget_investments_path(budget)
+        visit budget_investments_path(budget)
 
-          expect(page).not_to have_content(investment.formatted_price)
-        end
+        expect(page).not_to have_content(investment.formatted_price)
       end
     end
 
@@ -913,18 +962,17 @@ describe "Budget Investments" do
       end
 
       scenario "Price & explanation isn't shown for any Budget's phase" do
-        Budget::Phase::PHASE_KINDS.each do |phase|
-          budget.update!(phase: phase)
-          visit budget_investment_path(budget, id: investment.id)
+        phase = Budget::Phase::PHASE_KINDS.sample
+        budget.update!(phase: phase)
+        visit budget_investment_path(budget, id: investment.id)
 
-          expect(page).not_to have_content(investment.formatted_price)
-          expect(page).not_to have_content(investment.price_explanation)
-          expect(page).not_to have_link("See price explanation")
+        expect(page).not_to have_content(investment.formatted_price)
+        expect(page).not_to have_content(investment.price_explanation)
+        expect(page).not_to have_link("See price explanation")
 
-          visit budget_investments_path(budget)
+        visit budget_investments_path(budget)
 
-          expect(page).not_to have_content(investment.formatted_price)
-        end
+        expect(page).not_to have_content(investment.formatted_price)
       end
     end
   end
@@ -1113,33 +1161,6 @@ describe "Budget Investments" do
                   "budget_investment_path",
                   { budget_id: "budget_id", id: "id" }
 
-  it_behaves_like "imageable",
-                  "budget_investment",
-                  "budget_investment_path",
-                  { budget_id: "budget_id", id: "id" }
-
-  it_behaves_like "nested imageable",
-                  "budget_investment",
-                  "new_budget_investment_path",
-                  { budget_id: "budget_id" },
-                  "imageable_fill_new_valid_budget_investment",
-                  "Create Investment",
-                  "Budget Investment created successfully."
-
-  it_behaves_like "documentable",
-                  "budget_investment",
-                  "budget_investment_path",
-                  { budget_id: "budget_id", id: "id" }
-
-  it_behaves_like "nested documentable",
-                  "user",
-                  "budget_investment",
-                  "new_budget_investment_path",
-                  { budget_id: "budget_id" },
-                  "documentable_fill_new_valid_budget_investment",
-                  "Create Investment",
-                  "Budget Investment created successfully."
-
   it_behaves_like "mappable",
                   "budget_investment",
                   "investment",
@@ -1170,13 +1191,14 @@ describe "Budget Investments" do
       within("#budget_investment_#{investment1.id}") do
         expect(page).to have_content(investment1.title)
 
-        accept_confirm { click_link("Delete") }
+        accept_confirm { click_button "Delete" }
       end
 
       expect(page).to have_content "Investment project deleted successfully"
 
-      visit user_path(user, tab: :budget_investments)
+      refresh
 
+      expect(page).not_to have_content "Investment project deleted successfully"
       expect(page).to have_content "User has no public activity"
       expect(page).not_to have_content investment1.title
     end
@@ -1666,18 +1688,20 @@ describe "Budget Investments" do
     scenario "Shows the polygon associated to the current heading" do
       triangle = <<~JSON
         {
+          "type": "Feature",
           "geometry": {
             "type": "Polygon",
-            "coordinates": [[-0.1,51.5],[-0.2,51.4],[-0.3,51.6]]
+            "coordinates": [[[-0.1, 51.5], [-0.2, 51.4], [-0.3, 51.6], [-0.1, 51.5]]]
           }
         }
       JSON
 
       rectangle = <<~JSON
         {
+          "type": "Feature",
           "geometry": {
             "type": "Polygon",
-            "coordinates": [[-0.1,51.5],[-0.2,51.5],[-0.2,51.6],[-0.1,51.6]]
+            "coordinates": [[[-0.1, 51.5], [-0.2, 51.5], [-0.2, 51.6], [-0.1, 51.6], [-0.1, 51.5]]]
           }
         }
       JSON
@@ -1728,7 +1752,7 @@ describe "Budget Investments" do
         within("aside") do
           expect(page).not_to have_content "Author"
           expect(page).not_to have_link "Edit"
-          expect(page).not_to have_link "Remove image"
+          expect(page).not_to have_button "Remove image"
         end
       end
 
@@ -1741,7 +1765,7 @@ describe "Budget Investments" do
         within("aside") do
           expect(page).to have_content "AUTHOR"
           expect(page).to have_link "Edit"
-          expect(page).not_to have_link "Remove image"
+          expect(page).not_to have_button "Remove image"
         end
       end
 
@@ -1755,7 +1779,7 @@ describe "Budget Investments" do
         within("aside") do
           expect(page).to have_content "AUTHOR"
           expect(page).not_to have_link "Edit"
-          expect(page).to have_link "Remove image"
+          expect(page).to have_button "Remove image"
         end
       end
     end

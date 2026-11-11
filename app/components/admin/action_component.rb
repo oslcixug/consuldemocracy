@@ -1,5 +1,6 @@
 class Admin::ActionComponent < ApplicationComponent
   include Admin::Namespace
+
   attr_reader :action, :record, :options
 
   def initialize(action, record, **options)
@@ -89,7 +90,7 @@ class Admin::ActionComponent < ApplicationComponent
     end
 
     def default_path
-      if %i[answers configure destroy preview show].include?(action.to_sym)
+      if %i[configure destroy options preview show].include?(action.to_sym)
         namespaced_polymorphic_path(namespace, record)
       else
         namespaced_polymorphic_path(namespace, record, { action: action }.merge(request.query_parameters))

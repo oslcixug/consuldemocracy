@@ -93,24 +93,6 @@ oc:
       legislation/proposal:
         one: "la proposicion"
         other: "de Proposicions ciutadanas"
-      legislation/draft_versions:
-        one: "version borrolhon"
-        other: "de Versions del borrolhon"
-      legislation/questions:
-        one: "question"
-        other: "Demandas de ciutadanas"
-      legislation/question_options:
-        one: "Opcion de responsa barrada"
-        other: "d'Opcions de responsa"
-      legislation/answers:
-        one: "Responsa"
-        other: "de responsas"
-      documents:
-        one: "Document"
-        other: "de Documents"
-      images:
-        one: "Image"
-        other: "d'Images"
       topic:
         one: "Tèma"
         other: "de Tèmas"
@@ -263,7 +245,6 @@ oc:
         public_interests: "Gardatz las etiquetas dels elements que seguissi de publics"
         recommended_debates: "Mòstra de recomandacions de debats"
         recommended_proposals: "Mòstra de recomandacions de proposicions"
-        redeemable_code: "Còdi de verificacion per carta (opcional)"
       direct_message:
         title: "Títol"
         body: "Messatge"
@@ -321,7 +302,6 @@ oc:
         title: "Títol"
       site_customization/page:
         content: contengut
-        created_at: creat
         subtitle: Sostítol
         slug: URL
         status: Estat
@@ -416,15 +396,6 @@ oc:
       image:
         title: Títol
         attachment: "Escuelh l'image"
-      poll/question/answer:
-        title: Responsa
-        description: Descripcion detalhada
-      poll/question/answer/translation:
-        title: Responsa
-        description: "Descripcion detalhada"
-      poll/question/answer/video:
-        title: Títol
-        url: Vidèo extèrne
       newsletter:
         segment_recipient: Destinataris
         subject: Matèria
@@ -515,8 +486,6 @@ oc:
           attributes:
             document_number:
               not_in_census: "Aquel documenti pas aparece en lo censo"
-            user_id:
-              has_voted: "Aquel usuario ya a votado"
         legislation/process:
           attributes:
             end_date:

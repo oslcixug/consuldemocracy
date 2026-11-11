@@ -1,7 +1,5 @@
 class Poll::Question < ApplicationRecord
   include Measurable
-  include Searchable
-  include Questionable
 
   acts_as_paranoid column: :hidden_at
   include ActsAsParanoidAliases
@@ -14,37 +12,26 @@ class Poll::Question < ApplicationRecord
 
   has_many :comments, as: :commentable, inverse_of: :commentable
   has_many :answers, class_name: "Poll::Answer"
-  has_many :question_answers, -> { order "given_order asc" },
-           class_name: "Poll::Question::Answer",
+  has_many :question_options, -> { order :given_order },
+           class_name: "Poll::Question::Option",
            inverse_of: :question,
            dependent: :destroy
   has_many :partial_results
+  has_one :votation_type, as: :questionable, dependent: :destroy
   belongs_to :proposal
 
   validates_translation :title, presence: true, length: { minimum: 4 }
   validates :author, presence: true
   validates :poll_id, presence: true, if: proc { |question| question.poll.nil? }
 
-  accepts_nested_attributes_for :question_answers, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :question_options, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :votation_type
 
-  scope :by_poll_id,    ->(poll_id) { where(poll_id: poll_id) }
+  delegate :multiple?, :open?, :vote_type, to: :votation_type, allow_nil: true
 
   scope :sort_for_list, -> { order(Arel.sql("poll_questions.proposal_id IS NULL"), :created_at) }
   scope :for_render,    -> { includes(:author, :proposal) }
-
-  def self.search(params)
-    results = all
-    results = results.by_poll_id(params[:poll_id]) if params[:poll_id].present?
-    results = results.pg_search(params[:search])   if params[:search].present?
-    results
-  end
-
-  def searchable_values
-    { title => "A",
-      proposal&.title => "A",
-      author.username => "C",
-      author_visible_name => "C" }
-  end
+  scope :for_physical_votes, -> { left_joins(:votation_type).merge(VotationType.accepts_options) }
 
   def copy_attributes_from_proposal(proposal)
     if proposal.present?
@@ -55,31 +42,87 @@ class Poll::Question < ApplicationRecord
     end
   end
 
-  delegate :answerable_by?, to: :poll
-
-  def self.answerable_by(user)
-    return none if user.nil? || user.unverified?
-
-    where(poll_id: Poll.answerable_by(user).pluck(:id))
+  def options_total_votes
+    question_options.reduce(0) { |total, question_option| total + question_option.total_votes }
   end
 
-  def answers_total_votes
-    question_answers.reduce(0) { |total, question_answer| total + question_answer.total_votes }
+  def most_voted_option_id
+    question_options.max_by(&:total_votes)&.id
   end
 
-  def most_voted_answer_id
-    question_answers.max_by(&:total_votes)&.id
+  def options_with_read_more?
+    options_with_read_more.any?
   end
 
-  def possible_answers
-    question_answers.joins(:translations).pluck("poll_question_answer_translations.title")
+  def options_with_read_more
+    question_options.select(&:with_read_more?)
   end
 
-  def answers_with_read_more?
-    answers_with_read_more.any?
+  def unique?
+    votation_type.nil? || votation_type.unique?
   end
 
-  def answers_with_read_more
-    question_answers.select(&:with_read_more?)
+  def accepts_options?
+    votation_type.nil? || votation_type.accepts_options?
   end
+
+  def option_for(title)
+    question_options.find_by(title: title)
+  end
+
+  def max_votes
+    if multiple?
+      votation_type.max_votes
+    else
+      1
+    end
+  end
+
+  def find_or_initialize_user_answer(user, option_id: nil, answer_text: nil)
+    answer = answers.find_or_initialize_by(find_by_attributes(user, option_id))
+
+    if accepts_options?
+      answer.option = question_options.find(option_id)
+      answer.answer = answer_text.presence if answer.option.allow_custom_text?
+    else
+      answer.option = nil
+      answer.answer = answer_text
+    end
+
+    answer
+  end
+
+  def open_ended_valid_answers_count
+    answers.count
+  end
+
+  def open_ended_blank_answers_count
+    poll.voters.count - open_ended_valid_answers_count
+  end
+
+  def open_ended_valid_percentage
+    return 0.0 if open_ended_total_answers.zero?
+
+    (open_ended_valid_answers_count * 100.0) / open_ended_total_answers
+  end
+
+  def open_ended_blank_percentage
+    return 0.0 if open_ended_total_answers.zero?
+
+    (open_ended_blank_answers_count * 100.0) / open_ended_total_answers
+  end
+
+  private
+
+    def find_by_attributes(user, option_id)
+      if multiple?
+        { author: user, option_id: option_id }
+      else
+        { author: user }
+      end
+    end
+
+    def open_ended_total_answers
+      open_ended_valid_answers_count + open_ended_blank_answers_count
+    end
 end

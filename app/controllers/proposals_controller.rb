@@ -10,7 +10,6 @@ class ProposalsController < ApplicationController
   before_action :load_categories, only: [:index, :map, :summary]
   before_action :load_geozones, only: [:edit, :map, :summary]
   before_action :authenticate_user!, except: [:index, :show, :map, :summary]
-  before_action :set_view, only: :index
   before_action :proposals_recommendations, only: :index, if: :current_user
 
   feature_flag :proposals
@@ -28,7 +27,6 @@ class ProposalsController < ApplicationController
 
   def show
     super
-    @notifications = @proposal.notifications
     @notifications = @proposal.notifications.not_moderated
 
     if request.path != proposal_path(@proposal)
@@ -164,17 +162,13 @@ class ProposalsController < ApplicationController
                                       .sort_by_confidence_score
                                       .limit(Setting["featured_proposals_number"])
         if @featured_proposals.present?
-          @resources = @resources.where.not(id: @featured_proposals)
+          @resources = @resources.excluding(@featured_proposals)
         end
       end
     end
 
     def remove_archived_from_order_links
       @valid_orders.delete("archival_date")
-    end
-
-    def set_view
-      @view = (params[:view] == "minimal") ? "minimal" : "default"
     end
 
     def destroy_map_location_association

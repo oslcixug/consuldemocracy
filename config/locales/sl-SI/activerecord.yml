@@ -53,21 +53,6 @@ sl:
         two: "Predlogi"
         few: "Predlogi"
         other: "Predlogi"
-      legislation/questions:
-        one: "Vprašanje"
-        two: "Vprašanja"
-        few: "Vprašanja"
-        other: "Vprašanja"
-      documents:
-        one: "Dokument"
-        two: "Dokumenti"
-        few: "Dokumenti"
-        other: "Dokumenti"
-      images:
-        one: "Slika"
-        two: "Slike"
-        few: "Slike"
-        other: "Slike"
       topic:
         one: "Tema"
         two: "Tematike"
@@ -187,7 +172,6 @@ sl:
         official_position_badge: "Pokaži značko z uradnim položajem"
         phone_number: "Telefonska številka"
         public_activity: "Moj seznam aktivnosti naj bo javen"
-        redeemable_code: "Koda za preverjanje, poslana po e-pošti"
       direct_message:
         title: "Naslov"
         body: "Sporočilo"
@@ -241,7 +225,6 @@ sl:
         title: "Naslov"
       site_customization/page:
         content: Vsebina
-        created_at: Ustvarjeno v
         subtitle: Podnaslov
         status_draft: "Osnutek"
         status_published: "Objavljena"
@@ -325,15 +308,6 @@ sl:
       image:
         title: Naslov
         attachment: "Priponka"
-      poll/question/answer:
-        title: Odgovor
-        description: Opis
-      poll/question/answer/translation:
-        title: Odgovor
-        description: "Opis"
-      poll/question/answer/video:
-        title: Naslov
-        url: Zunanji video
       newsletter:
         segment_recipient: Prejemniki
         subject: Naslov
@@ -397,8 +371,6 @@ sl:
           attributes:
             document_number:
               not_in_census: "Dokumenta ni v popisu"
-            user_id:
-              has_voted: "Uporabnik je že glasoval"
         legislation/process:
           attributes:
             end_date:

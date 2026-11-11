@@ -1,0 +1,7 @@
+# CIXUG: acceso co CAS da UDC (feature.cas_login)
+gl:
+  omniauth:
+    cas:
+      sign_in: Entra co teu usuario da UDC
+      sign_up: Rexístrate co teu usuario da UDC
+      name: Entra co teu usuario da UDC

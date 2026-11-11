@@ -1,4 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_action :verify_authenticity_token, only: :saml
+
   def twitter
     sign_in_with :twitter_login, :twitter
   end
@@ -19,11 +21,19 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in_with :cas_login, :cas
   end
 
+  def saml
+    sign_in_with :saml_login, :saml
+  end
+
+  def oidc
+    sign_in_with :oidc_login, :oidc
+  end
+
   def after_sign_in_path_for(resource)
     if resource.registering_with_oauth
       finish_signup_path
     else
-      super(resource)
+      super
     end
   end
 

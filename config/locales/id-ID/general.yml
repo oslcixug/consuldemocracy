@@ -76,7 +76,6 @@ id:
         confidence_score: nilai tertinggi
         created_at: terbaru
         hot_score: paling aktif
-        most_commented: paling banyak komentar
         relevance: relevansi
         recommendations: rekomendasi
       recommendations:
@@ -108,7 +107,6 @@ id:
       recommendations_title: Rekomendasi untuk membuat topik
       start_new: Memulai debat
     show:
-      author_deleted: Pengguna dihapus
       comments_title: Komentar
       edit_debate_link: Sunting
       flag: Perdebatan ini telah ditandai sebagai tidak pantas oleh beberapa pengguna.
@@ -135,7 +133,6 @@ id:
     budget/investment: Investasi
     budget/heading: Anggaran judul
     poll/shift: Regu
-    poll/question/answer: Jawaban
     user: Akun
     verification/sms: telepon
     signature_sheet: Lembar tanda tangan
@@ -324,10 +321,8 @@ id:
         zero: Tidak ada suara
         other: "1 bulan\n\n%{count} bulan"
       supports_necessary: "%{number} mendukung diperlukan"
-      total_percent: 100%
       archived: "Proposal ini telah Diarsipkan dan tidak dapat mengumpulkan mendukung."
     show:
-      author_deleted: Pengguna dihapus
       code: "Proposal kode:"
       comments_tab: Komentar
       flag: Perdebatan ini telah ditandai sebagai tidak pantas oleh beberapa pengguna.
@@ -392,8 +387,6 @@ id:
       forward:
         support_button: Mendukung proyek ini
   polls:
-    all: "Semua"
-    no_dates: "tidak ada tanggal yang ditetapkan"
     dates: "Dari %{open_at} untuk %{closed_at}"
     final_date: "Final menceritakan/Hasil"
     index:
@@ -445,10 +438,6 @@ id:
       results:
         title: "Pertanyaan"
         most_voted_answer: "Jawaban paling banyak suara: "
-  poll_questions:
-    show:
-      vote_answer: "Suara %{answer}"
-      voted: "Anda telah suara %{answer}"
   proposal_notifications:
     new:
       title: "Kirim pesan"
@@ -481,7 +470,6 @@ id:
     author_info:
       author_deleted: Pengguna dihapus
     back: Kembali
-    check: Pilih
     check_all: Semua
     check_none: Tidak ada
     collective: Kolektif
@@ -531,18 +519,6 @@ id:
     youtube: "%{org} YouTube"
     telegram: "%{org} Telegram"
     instagram: "%{org} Instagram"
-  stats:
-    index:
-      visits: Mengunjungi
-      debates: Perdebatan
-      proposals: Proposal
-      comments: Komentar
-      proposal_votes: Suara pada proposal
-      debate_votes: Suara pada perdebatan
-      comment_votes: Suara pada komentar
-      votes: Total suara
-      verified_users: Pengguna diverifikasi
-      unverified_users: Pengguna yang belum diverifikasi
   unauthorized:
     default: Anda tidak memiliki izin untuk mengakses halaman ini.
     manage:

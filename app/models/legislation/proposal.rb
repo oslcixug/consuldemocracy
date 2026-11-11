@@ -4,12 +4,12 @@ class Legislation::Proposal < ApplicationRecord
   include Taggable
   include Conflictable
   include Measurable
-  include Sanitizable
   include Searchable
   include Filterable
   include Followable
   include Communitable
   include Documentable
+  include Videoable
   include Notifiable
   include Imageable
   include Randomizable
@@ -39,16 +39,13 @@ class Legislation::Proposal < ApplicationRecord
 
   before_save :calculate_hot_score, :calculate_confidence_score
 
-  scope :for_render, -> { includes(:tags) }
-  scope :sort_by_hot_score, -> { reorder(hot_score: :desc) }
   scope :sort_by_confidence_score, -> { reorder(confidence_score: :desc) }
   scope :sort_by_created_at,       -> { reorder(created_at: :desc) }
-  scope :sort_by_most_commented,   -> { reorder(comments_count: :desc) }
   scope :sort_by_title,            -> { reorder(title: :asc) }
   scope :sort_by_id,               -> { reorder(id: :asc) }
   scope :sort_by_supports,         -> { reorder(cached_votes_score: :desc) }
   scope :sort_by_flags,            -> { order(flags_count: :desc, updated_at: :desc) }
-  scope :last_week,                -> { where("proposals.created_at >= ?", 7.days.ago) }
+  scope :last_week,                -> { where(created_at: 7.days.ago..) }
   scope :selected,                 -> { where(selected: true) }
   scope :winners,                  -> { selected.sort_by_confidence_score }
 

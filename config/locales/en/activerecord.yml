@@ -1,5 +1,6 @@
 en:
   attributes:
+    created_at: Created at
     geozone_id: "Scope of operation"
     results_enabled: "Show results"
     stats_enabled: "Show stats"
@@ -106,22 +107,19 @@ en:
       legislation/proposal:
         one: "Proposal"
         other: "Proposals"
-      legislation/draft_versions:
+      legislation/draft_version:
         one: "Draft version"
         other: "Draft versions"
-      legislation/questions:
+      legislation/question:
         one: "Question"
         other: "Questions"
-      legislation/question_options:
+      legislation/question_option:
         one: "Question option"
         other: "Question options"
-      legislation/answers:
+      legislation/answer:
         one: "Answer"
         other: "Answers"
-      documents:
-        one: "Document"
-        other: "Documents"
-      images:
+      image:
         one: "Image"
         other: "Images"
       tenant:
@@ -151,6 +149,9 @@ en:
       votation_type:
         one: Votation type
         other: Votation types
+      cookies/vendor:
+        one: cookie vendor
+        other: cookie vendors
     attributes:
       budget:
         name: "Name"
@@ -248,6 +249,7 @@ en:
         main_link_url: "The link takes you to (add a link)"
       comment:
         body: "Comment"
+        parent_id: "Parent"
         user: "User"
       debate:
         author: "Author"
@@ -293,7 +295,6 @@ en:
         public_interests: "Keep the elements I follow public"
         recommended_debates: "Recommend debates to me"
         recommended_proposals: "Recommend proposals to me"
-        redeemable_code: "Verification code received via email"
       direct_message:
         title: "Title"
         body: "Message"
@@ -359,7 +360,6 @@ en:
         title: "Title"
       site_customization/page:
         content: Content
-        created_at: Created at
         subtitle: Subtitle
         slug: Slug
         status: Status
@@ -459,13 +459,14 @@ en:
       image:
         title: Title
         attachment: "Choose image"
-      poll/question/answer:
+      poll/question/option:
         title: Answer
         description: Description
-      poll/question/answer/translation:
+        allow_custom_text: "Allow custom text"
+      poll/question/option/translation:
         title: Answer
         description: "Description (optional)"
-      poll/question/answer/video:
+      poll/question/option/video:
         title: Title
         url: External video
       newsletter:
@@ -532,8 +533,13 @@ en:
         max_votes: Maximum number of votes
         vote_type: Votation type
       votation_type/vote_type:
+        open: Open-ended
         unique: Unique answer
         multiple: Multiple answers
+      cookies/vendor:
+        name: Vendor name
+        cookie: Cookie name
+        script: Javascript code
     errors:
       models:
         user:
@@ -551,7 +557,8 @@ en:
         geozone:
           attributes:
             geojson:
-              invalid: "The GeoJSON provided does not follow the correct format. It must follow the \"Polygon\" or \"MultiPolygon\" type format."
+              invalid: "The GeoJSON provided does not follow the correct format. It must follow the RFC 7946 standard format"
+              invalid_coordinates: "The GeoJSON provided contains invalid coordinates; the coordinates must be in the required \"Longitude, Latitude\" format and follow the RFC 7946 standard format"
         image:
           attributes:
             attachment:
@@ -569,8 +576,6 @@ en:
           attributes:
             document_number:
               not_in_census: "Document not in census"
-            user_id:
-              has_voted: "User has already voted"
         legislation/process:
           attributes:
             end_date:
@@ -623,8 +628,12 @@ en:
           attributes:
             code:
               invalid: "must start with the same code as its target followed by a dot and end with a number"
+        votation_type:
+          attributes:
+            vote_type:
+              cannot_change_to_open_ended: "can't change to open-ended type because you've already defined possible valid answers for this question"
       messages:
-        translations_too_short: Is mandatory to provide one translation at least
+        translations_too_short: It's mandatory to provide at least one translation
         record_invalid: "Validation failed: %{errors}"
         another_poll_active: There is another poll active for the given period
         restrict_dependent_destroy:

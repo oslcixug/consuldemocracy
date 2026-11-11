@@ -6,9 +6,9 @@
       align-items: center;
       color: $sdg-text;
       display: flex;
-      margin: calc(#{$line-height} / 2) 0;
-      text-shadow: 0 0 1px $black;
+      margin: calc($line-height / 2) 0;
       min-width: fit-content;
+      text-shadow: 0 0 1px $black;
 
       &::after {
         align-self: stretch;

@@ -12,13 +12,14 @@ state_path "#{rails_root}/tmp/pids/puma.state"
 
 bind "unix://#{rails_root}/tmp/sockets/puma.sock"
 
-threads 0, 16
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
+threads threads_count, threads_count
 workers 2
 preload_app!
 
 plugin :tmp_restart
 
-on_restart do
+before_restart do
   puts "Refreshing Gemfile"
   ENV["BUNDLE_GEMFILE"] = ""
 end

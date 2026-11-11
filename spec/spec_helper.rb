@@ -10,7 +10,7 @@ Dir["./spec/shared/**/*.rb"].sort.each  { |f| require f }
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
-  config.fixture_path = "spec/fixtures/files"
+  config.fixture_paths = ["spec/fixtures/files"]
 
   config.filter_run_when_matching :focus
   config.include RequestSpecHelper, type: :request
@@ -21,6 +21,7 @@ RSpec.configure do |config|
   config.include(EmailSpec::Matchers)
   config.include(CommonActions)
   config.include(ActiveSupport::Testing::TimeHelpers)
+  config.include GraphQL::Testing::Helpers.for(ConsulSchema)
 
   config.define_derived_metadata(file_path: Regexp.new("/spec/components/")) do |metadata|
     metadata[:type] = :component
@@ -33,6 +34,7 @@ RSpec.configure do |config|
   config.before do |example|
     Globalize.set_fallbacks_to_all_available_locales
     Setting["feature.user.skip_verification"] = nil
+    Setting["feature.gdpr.require_consent_for_notifications"] = nil
   end
 
   config.around do |example|
@@ -50,14 +52,6 @@ RSpec.configure do |config|
     Rails.application.load_seed
   end
 
-  config.before(:each, type: :system) do
-    Capybara::Webmock.start
-  end
-
-  config.after(:suite) do
-    Capybara::Webmock.stop
-  end
-
   config.before(:each, type: :system) do |example|
     driven_by :headless_chrome
     Capybara.default_set_options = { clear: :backspace }
@@ -69,13 +63,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system) do
-    Bullet.start_request
     allow(InvisibleCaptcha).to receive(:timestamp_threshold).and_return(0)
-  end
-
-  config.after(:each, type: :system) do
-    Bullet.perform_out_of_channel_notifications if Bullet.notification?
-    Bullet.end_request
   end
 
   config.before(:each, :admin, type: :system) do
@@ -107,7 +95,7 @@ RSpec.configure do |config|
 
     allow(Rails.application).to receive(:env_config) do
       config.merge(
-        "action_dispatch.show_exceptions" => true,
+        "action_dispatch.show_exceptions" => :all,
         "action_dispatch.show_detailed_exceptions" => false,
         "consider_all_requests_local" => false
       )
@@ -132,7 +120,7 @@ RSpec.configure do |config|
 
   config.before(:each, :small_window) do
     @window_size = Capybara.current_window.size
-    Capybara.current_window.resize_to(639, 479)
+    Capybara.current_window.resize_to(320, 640)
   end
 
   config.after(:each, :small_window) do
@@ -191,6 +179,17 @@ RSpec.configure do |config|
 
   config.after(:each, :remote_census) do
     savon.unmock!
+  end
+
+  config.around(:each, :with_cache) do |example|
+    ActionController::Base.with(perform_caching: true) do
+      example.run
+    end
+  end
+
+  config.before(:each, :with_cache) do
+    allow(Rails).to receive(:cache).and_return(ActiveSupport::Cache.lookup_store(:memory_store))
+    Rails.cache.clear
   end
 
   # Allows RSpec to persist some state between runs in order to support

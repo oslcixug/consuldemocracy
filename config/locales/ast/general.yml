@@ -69,7 +69,6 @@ ast:
         confidence_score: meyor valoraes
         created_at: Nuevas
         hot_score: Más activas hoy
-        most_commented: Más comentadas
         relevance: Más relevantes
       search_form:
         button: Atopar
@@ -90,7 +89,6 @@ ast:
       recommendations_title: Recomendaciones para crear un debate
       start_new: Empezar un debate
     show:
-      author_deleted: Usuariu esaniciáu
       comments_title: Comentarios
       edit_debate_link: Editar propuesta
       flag: Este debate ha sido marcado como inapropiado por varios usuarios.
@@ -114,7 +112,6 @@ ast:
     proposal: la propuesta
     proposal_notification: "la notificación"
     budget/investment: Proyectu de inversión
-    poll/question/answer: Respuesta
     user: la cuenta
     verification/sms: el teléfono
     signature_sheet: la hoja de firmas
@@ -288,10 +285,8 @@ ast:
         one: 1 voto
         other: "%{count} votos"
       supports_necessary: "%{number} apoyos necesarios"
-      total_percent: 100%
       archived: "Esta propuesta ha sido archivada y ya no puede recoger apoyos."
     show:
-      author_deleted: Usuariu esaniciáu
       code: "Código de la propuesta:"
       comments_tab: Comentarios
       flag: Esta propuesta ha sido marcada como inapropiada por varios usuarios.
@@ -339,8 +334,6 @@ ast:
       forward:
         support_button: Apoyar esta propuesta
   polls:
-    all: "Toes"
-    no_dates: "sin fecha asignada"
     dates: "Desde el %{open_at} hasta el %{closed_at}"
     final_date: "Recuento final/Resultados"
     index:
@@ -370,10 +363,6 @@ ast:
       info_menu: "Información"
       results:
         title: "Entruges"
-  poll_questions:
-    show:
-      vote_answer: "Votar %{answer}"
-      voted: "Has votado %{answer}"
   proposal_notifications:
     new:
       title: "Enviar mensaje"
@@ -406,7 +395,6 @@ ast:
     author_info:
       author_deleted: Usuariu esaniciáu
     back: Volver
-    check: Escoyer
     check_all: Toes
     check_none: Ninguno
     collective: Colectivo
@@ -452,18 +440,6 @@ ast:
     youtube: "YouTube de %{org}"
     telegram: "Telegram de %{org}"
     instagram: "Instagram de %{org}"
-  stats:
-    index:
-      visits: Visitas
-      debates: Alderique
-      proposals: Propuestes
-      comments: Comentarios
-      proposal_votes: Votos en propuestas
-      debate_votes: Votos en debates
-      comment_votes: Votos en comentarios
-      votes: Votos
-      verified_users: Usuarios verificados
-      unverified_users: Usuarios sin verificar
   unauthorized:
     default: No tienes permiso para acceder a esta página.
     manage:

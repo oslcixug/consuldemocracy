@@ -33,28 +33,6 @@ describe User do
     end
   end
 
-  describe "#comment_flags" do
-    let(:user) { create(:user) }
-
-    it "returns {} if no comment" do
-      expect(user.comment_flags([])).to eq({})
-    end
-
-    it "returns a hash of flaggable_ids with 'true' if they were flagged by the user" do
-      comment1 = create(:comment)
-      comment2 = create(:comment)
-      comment3 = create(:comment)
-      Flag.flag(user, comment1)
-      Flag.flag(user, comment3)
-
-      flagged = user.comment_flags([comment1, comment2, comment3])
-
-      expect(flagged[comment1.id]).to be
-      expect(flagged[comment2.id]).not_to be
-      expect(flagged[comment3.id]).to be
-    end
-  end
-
   subject { build(:user) }
 
   it "is valid" do
@@ -81,38 +59,114 @@ describe User do
     end
   end
 
+  describe "#locale" do
+    it "defaults to the default locale setting" do
+      Setting["locales.default"] = "nl"
+
+      user = build(:user, locale: nil)
+
+      expect(user.locale).to eq "nl"
+    end
+  end
+
   describe "preferences" do
-    describe "email_on_comment" do
+    describe "#email_on_comment" do
       it "is false by default" do
         expect(subject.email_on_comment).to be false
       end
     end
 
-    describe "email_on_comment_reply" do
+    describe "#email_on_comment_reply" do
       it "is false by default" do
         expect(subject.email_on_comment_reply).to be false
       end
     end
 
-    describe "subscription_to_website_newsletter" do
-      it "is true by default" do
-        expect(subject.newsletter).to be true
+    describe "#newsletter" do
+      it "is true by default when the consent for notifications setting is disabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = false
+
+        expect(build(:user).newsletter).to be true
+      end
+
+      it "is false by default when the consent for notifications setting is enabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = true
+
+        expect(build(:user).newsletter).to be false
       end
     end
 
-    describe "email_digest" do
-      it "is true by default" do
-        expect(subject.email_digest).to be true
+    describe "#email_digest" do
+      it "is true by default when the consent for notifications setting is disabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = false
+
+        expect(build(:user).email_digest).to be true
+      end
+
+      it "is false by default when the consent for notifications setting is enabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = true
+
+        expect(build(:user).email_digest).to be false
       end
     end
 
-    describe "email_on_direct_message" do
-      it "is true by default" do
-        expect(subject.email_on_direct_message).to be true
+    describe "#email_on_direct_message" do
+      it "is true by default when the consent for notifications setting is disabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = false
+
+        expect(build(:user).email_on_direct_message).to be true
+      end
+
+      it "is false by default when the consent for notifications setting is enabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = true
+
+        expect(build(:user).email_on_direct_message).to be false
       end
     end
 
-    describe "official_position_badge" do
+    describe "#public_activity" do
+      it "is true by default when the consent for notifications setting is disabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = false
+
+        expect(build(:user).public_activity).to be true
+      end
+
+      it "is false by default when the consent for notifications setting is enabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = true
+
+        expect(build(:user).public_activity).to be false
+      end
+    end
+
+    describe "#recommended_debates" do
+      it "is true by default when the consent for notifications setting is disabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = false
+
+        expect(build(:user).recommended_debates).to be true
+      end
+
+      it "is false by default when the consent for notifications setting is enabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = true
+
+        expect(build(:user).recommended_debates).to be false
+      end
+    end
+
+    describe "#recommended_proposals" do
+      it "is true by default when the consent for notifications setting is disabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = false
+
+        expect(build(:user).recommended_proposals).to be true
+      end
+
+      it "is false by default when the consent for notifications setting is enabled" do
+        Setting["feature.gdpr.require_consent_for_notifications"] = true
+
+        expect(build(:user).recommended_proposals).to be false
+      end
+    end
+
+    describe "#official_position_badge" do
       it "is false by default" do
         expect(subject.official_position_badge).to be false
       end
@@ -392,6 +446,26 @@ describe User do
       end
     end
 
+    describe ".newsletter" do
+      it "returns users subscribed to the newsletter" do
+        create(:user, newsletter: true, username: "Subscriber1")
+        create(:user, newsletter: true, username: "Subscriber2")
+        create(:user, newsletter: false, username: "NonSubscriber")
+
+        expect(User.newsletter.pluck(:username)).to match_array ["Subscriber1", "Subscriber2"]
+      end
+    end
+
+    describe ".email_digest" do
+      it "returns users subscribed to email digests" do
+        create(:user, email_digest: true, username: "Digester1")
+        create(:user, email_digest: true, username: "Digester2")
+        create(:user, email_digest: false, username: "NonDigester")
+
+        expect(User.email_digest.pluck(:username)).to match_array ["Digester1", "Digester2"]
+      end
+    end
+
     describe ".by_username_email_or_document_number" do
       let!(:larry) do
         create(:user, email: "larry@consul.dev", username: "Larry Bird", document_number: "12345678Z")
@@ -421,6 +495,115 @@ describe User do
 
       it "finds users by document_number with whitespaces" do
         expect(User.by_username_email_or_document_number(" 12345678Z ")).to eq [larry]
+      end
+    end
+
+    describe ".between_ages" do
+      it "returns users between certain ages, including both" do
+        [21, 22, 23, 23, 42, 43, 44, 51].each do |age|
+          create(:user, date_of_birth: age.years.ago)
+        end
+
+        expect(User.between_ages(0, 20).count).to eq 0
+        expect(User.between_ages(0, 21).count).to eq 1
+        expect(User.between_ages(21, 23).count).to eq 4
+        expect(User.between_ages(24, 41).count).to eq 0
+        expect(User.between_ages(41, 45).count).to eq 3
+        expect(User.between_ages(51, 100).count).to eq 1
+      end
+
+      it "does not consider that people born in the same year share the same age" do
+        april_1st_user = create(:user, date_of_birth: Time.zone.local(2001, 4, 1))
+        april_2nd_user = create(:user, date_of_birth: Time.zone.local(2001, 4, 2))
+        april_3rd_user = create(:user, date_of_birth: Time.zone.local(2001, 4, 3))
+
+        travel_to "2021-04-02" do
+          expect(User.between_ages(18, 19)).to eq [april_3rd_user]
+          expect(User.between_ages(20, 21)).to match_array [april_1st_user, april_2nd_user]
+          expect(User.between_ages(19, 20)).to match_array [april_1st_user, april_2nd_user, april_3rd_user]
+        end
+      end
+
+      it "works on leap years with users born on leap years" do
+        leap_day_user = create(:user, date_of_birth: Time.zone.local(2000, 2, 29))
+        march_1st_user = create(:user, date_of_birth: Time.zone.local(2000, 3, 1))
+
+        travel_to "2024-02-28" do
+          expect(User.between_ages(22, 23)).to match_array [leap_day_user, march_1st_user]
+          expect(User.between_ages(23, 24)).to match_array [leap_day_user, march_1st_user]
+          expect(User.between_ages(24, 25)).to eq []
+        end
+
+        travel_to "2024-02-29" do
+          expect(User.between_ages(22, 23)).to eq [march_1st_user]
+          expect(User.between_ages(23, 24)).to match_array [leap_day_user, march_1st_user]
+          expect(User.between_ages(24, 25)).to eq [leap_day_user]
+        end
+
+        travel_to "2024-03-01" do
+          expect(User.between_ages(22, 23)).to eq []
+          expect(User.between_ages(23, 24)).to match_array [leap_day_user, march_1st_user]
+          expect(User.between_ages(24, 25)).to match_array [leap_day_user, march_1st_user]
+        end
+      end
+
+      it "works on non-leap years with users born on leap years" do
+        leap_day_user = create(:user, date_of_birth: Time.zone.local(2000, 2, 29))
+        march_1st_user = create(:user, date_of_birth: Time.zone.local(2000, 3, 1))
+
+        travel_to "2023-02-28" do
+          expect(User.between_ages(21, 22)).to match_array [leap_day_user, march_1st_user]
+          expect(User.between_ages(22, 23)).to match_array [leap_day_user, march_1st_user]
+          expect(User.between_ages(23, 24)).to eq []
+        end
+
+        travel_to "2023-03-01" do
+          expect(User.between_ages(21, 22)).to eq []
+          expect(User.between_ages(22, 23)).to match_array [leap_day_user, march_1st_user]
+          expect(User.between_ages(23, 24)).to match_array [leap_day_user, march_1st_user]
+        end
+      end
+
+      it "works on leap years with users born on non-leap years" do
+        march_1st_user = create(:user, date_of_birth: Time.zone.local(2001, 3, 1))
+
+        travel_to "2024-02-28" do
+          expect(User.between_ages(21, 22)).to eq [march_1st_user]
+          expect(User.between_ages(22, 23)).to eq [march_1st_user]
+          expect(User.between_ages(23, 24)).to eq []
+        end
+
+        travel_to "2024-02-29" do
+          expect(User.between_ages(21, 22)).to eq [march_1st_user]
+          expect(User.between_ages(22, 23)).to eq [march_1st_user]
+          expect(User.between_ages(23, 24)).to eq []
+        end
+
+        travel_to "2024-03-01" do
+          expect(User.between_ages(21, 22)).to eq []
+          expect(User.between_ages(22, 23)).to match_array [march_1st_user]
+          expect(User.between_ages(23, 24)).to match_array [march_1st_user]
+        end
+      end
+
+      it "returns users between certain ages on a reference date" do
+        reference_date = 20.years.ago
+
+        travel_to(reference_date) do
+          [21, 22, 23, 23, 34, 42, 43, 44, 50, 51].each do |age|
+            create(:user, date_of_birth: age.years.ago)
+          end
+        end
+
+        expect(User.between_ages(0, 20, at_time: reference_date).count).to eq 0
+        expect(User.between_ages(21, 25, at_time: reference_date).count).to eq 4
+        expect(User.between_ages(25, 30, at_time: reference_date).count).to eq 0
+        expect(User.between_ages(30, 34, at_time: reference_date).count).to eq 1
+        expect(User.between_ages(35, 39, at_time: reference_date).count).to eq 0
+        expect(User.between_ages(40, 44, at_time: reference_date).count).to eq 3
+        expect(User.between_ages(45, 49, at_time: reference_date).count).to eq 0
+        expect(User.between_ages(50, 54, at_time: reference_date).count).to eq 2
+        expect(User.between_ages(55, 100, at_time: reference_date).count).to eq 0
       end
     end
   end
@@ -477,13 +660,11 @@ describe User do
   describe "document_number" do
     it "upcases document number" do
       user = User.new(document_number: "x1234567z")
-      user.valid?
       expect(user.document_number).to eq("X1234567Z")
     end
 
     it "removes all characters except numbers and letters" do
       user = User.new(document_number: " 12.345.678 - B")
-      user.valid?
       expect(user.document_number).to eq("12345678B")
     end
   end
@@ -625,6 +806,60 @@ describe User do
       expect(Poll::Voter.where(user: other_user).count).to eq(0)
       expect(Poll::Voter.where(user: user)).to match_array [v1, v2]
     end
+
+    it "does not reassign poll voters if the user has already voted" do
+      poll = create(:poll)
+      user = create(:user, :level_three)
+      other_user = create(:user, :level_three)
+
+      voter = create(:poll_voter, poll: poll, user: user)
+      other_voter = create(:poll_voter, poll: poll, user: other_user)
+      other_poll_voter = create(:poll_voter, poll: create(:poll), user: other_user)
+
+      expect(Poll::Voter.where(user: user)).to eq [voter]
+      expect(Poll::Voter.where(user: other_user)).to match_array [other_voter, other_poll_voter]
+
+      user.take_votes_from(other_user)
+
+      expect(Poll::Voter.where(user: user)).to match_array [voter, other_poll_voter]
+      expect(Poll::Voter.where(user: other_user)).to eq []
+    end
+
+    it "does not reassign votes if the user has already voted" do
+      proposal = create(:proposal)
+      debate = create(:debate)
+      user = create(:user, :level_three)
+      other_user = create(:user, :level_three)
+
+      vote = create(:vote, voter: user, votable: proposal)
+      other_vote = create(:vote, voter: other_user, votable: proposal)
+      other_debate_vote = create(:vote, voter: other_user, votable: debate)
+
+      expect(Vote.where(voter: user)).to eq [vote]
+      expect(Vote.where(voter: other_user)).to match_array [other_vote, other_debate_vote]
+
+      user.take_votes_from(other_user)
+
+      expect(Vote.where(voter: user)).to match_array [vote, other_debate_vote]
+      expect(Vote.where(voter: other_user)).to eq []
+      expect(Vote.find_by(id: other_vote.id)).to be nil
+    end
+
+    it "updates cached vote counters when deleting duplicate votes" do
+      proposal = create(:proposal, cached_votes_up: 0)
+      user = create(:user, :level_three)
+      other_user = create(:user, :level_three)
+
+      create(:vote, voter: user, votable: proposal)
+      create(:vote, voter: other_user, votable: proposal)
+
+      expect(proposal.reload.cached_votes_up).to eq 2
+
+      user.take_votes_from(other_user)
+
+      expect(proposal.reload.cached_votes_up).to eq 1
+      expect(Vote.where(voter: user, votable: proposal).count).to eq 1
+    end
   end
 
   describe "#take_votes_if_erased_document" do
@@ -736,19 +971,6 @@ describe User do
     end
   end
 
-  describe ".find_by_manager_login" do
-    it "works with a low ID" do
-      user = create(:user)
-      expect(User.find_by_manager_login("admin_user_#{user.id}")).to eq user
-    end
-
-    it "works with a high ID" do
-      10.times { create(:user) }
-      user = User.last
-      expect(User.find_by_manager_login("admin_user_#{user.id}")).to eq user
-    end
-  end
-
   describe "#block" do
     it "hides legislation proposals created by the user" do
       user = create(:user)
@@ -857,7 +1079,7 @@ describe User do
 
     context "when secrets are configured" do
       before do
-        allow(Rails.application).to receive(:secrets).and_return(ActiveSupport::OrderedOptions.new.merge(
+        stub_secrets(
           security: {
             password_complexity: true
           },
@@ -868,7 +1090,7 @@ describe User do
               }
             }
           }
-        ))
+        )
       end
 
       it "uses the general secrets for the main tenant" do
@@ -883,6 +1105,32 @@ describe User do
     end
   end
 
+  describe ".random_password" do
+    it "generates passwords at least 2 characters longer than the minimum required size" do
+      10.times do
+        expect(User.random_password.length).to be >= User.password_length.min + 2
+      end
+    end
+
+    it "follows the password complexity requirements" do
+      stub_secrets(security: { password_complexity: true })
+
+      10.times do
+        password = User.random_password
+
+        expect(password).to match(/\p{Lower}/)
+        expect(password).to match(/\p{Upper}/)
+        expect(password).to match(/\p{Digit}/)
+      end
+    end
+
+    it "generates different passwords each time" do
+      10.times do
+        expect(User.random_password).not_to eq User.random_password
+      end
+    end
+  end
+
   describe ".maximum_attempts" do
     it "returns 20 as default when the secrets aren't configured" do
       expect(User.maximum_attempts).to eq 20
@@ -890,7 +1138,7 @@ describe User do
 
     context "when secrets are configured" do
       before do
-        allow(Rails.application).to receive(:secrets).and_return(ActiveSupport::OrderedOptions.new.merge(
+        stub_secrets(
           security: {
             lockable: { maximum_attempts: "14" }
           },
@@ -901,7 +1149,7 @@ describe User do
               }
             }
           }
-        ))
+        )
       end
 
       it "uses the general secrets for the main tenant" do
@@ -923,7 +1171,7 @@ describe User do
 
     context "when secrets are configured" do
       before do
-        allow(Rails.application).to receive(:secrets).and_return(ActiveSupport::OrderedOptions.new.merge(
+        stub_secrets(
           security: {
             lockable: { unlock_in: "2" }
           },
@@ -934,7 +1182,7 @@ describe User do
               }
             }
           }
-        ))
+        )
       end
 
       it "uses the general secrets for the main tenant" do

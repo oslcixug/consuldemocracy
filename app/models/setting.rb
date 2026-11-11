@@ -35,8 +35,7 @@ class Setting < ApplicationRecord
     end
 
     def remove(key)
-      setting = find_by(key: key)
-      setting.destroy if setting.present?
+      find_by(key: key).presence&.destroy
     end
 
     def accepted_content_types_for(group)
@@ -85,9 +84,15 @@ class Setting < ApplicationRecord
         "feature.remote_census": nil,
         "feature.valuation_comment_notification": true,
         "feature.graphql_api": true,
+        "feature.oidc_login": false,
+        "feature.saml_login": false,
         "feature.sdg": true,
         "feature.machine_learning": false,
         "feature.remove_investments_supports": true,
+        "feature.cookies_consent": false,
+        "feature.gdpr.require_consent_for_notifications": true,
+        "feature.gdpr.require_consent_for_embedded_videos": false,
+        "feature.gdpr.warning_for_external_links": false,
         "homepage.widgets.feeds.debates": true,
         "homepage.widgets.feeds.processes": true,
         "homepage.widgets.feeds.proposals": true,
@@ -95,6 +100,8 @@ class Setting < ApplicationRecord
         "html.per_page_code_body": "",
         # Code to be included at the top (inside <head>) of every page (useful for tracking)
         "html.per_page_code_head": "",
+        "locales.enabled": nil,
+        "locales.default": nil,
         "map.latitude": 51.48,
         "map.longitude": 0.0,
         "map.zoom": 10,
@@ -158,6 +165,8 @@ class Setting < ApplicationRecord
         "related_content_score_threshold": -0.3,
         "featured_proposals_number": 3,
         "feature.dashboard.notification_emails": nil,
+        "cookies_consent.more_info_link": "",
+        "cookies_consent.version_name": "v1",
         "machine_learning.comments_summary": false,
         "machine_learning.related_content": false,
         "machine_learning.tags": false,
@@ -180,7 +189,11 @@ class Setting < ApplicationRecord
         "sdg.process.proposals": true,
         "sdg.process.polls": true,
         "sdg.process.budgets": true,
-        "sdg.process.legislation": true
+        "sdg.process.legislation": true,
+        "llm.provider": nil,
+        "llm.model": nil,
+        "llm.use_llm_for_translations": false,
+        "llm.use_ai_image_suggestions": false
       }
     end
 
@@ -218,6 +231,21 @@ class Setting < ApplicationRecord
 
     def archived_proposals_date_limit
       Setting["months_to_archive_proposals"].to_i.months.ago
+    end
+
+    def enabled_locales
+      locales = Setting["locales.enabled"].to_s.split.map(&:to_sym)
+
+      [
+        default_locale,
+        *((locales & I18n.available_locales).presence || I18n.available_locales)
+      ].uniq
+    end
+
+    def default_locale
+      locale = Setting["locales.default"].to_s.strip.to_sym
+
+      ([locale] & I18n.available_locales).first || I18n.default_locale
     end
   end
 end

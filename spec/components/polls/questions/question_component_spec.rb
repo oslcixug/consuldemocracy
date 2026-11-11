@@ -1,18 +1,135 @@
 require "rails_helper"
 
 describe Polls::Questions::QuestionComponent do
-  it "renders more information links when any question answer has additional information" do
-    question = create(:poll_question)
-    answer_a = create(:poll_question_answer, question: question, title: "Answer A")
-    answer_b = create(:poll_question_answer, question: question, title: "Answer B")
-    allow_any_instance_of(Poll::Question::Answer).to receive(:with_read_more?).and_return(true)
+  let(:poll) { create(:poll) }
+  let(:question) { create(:poll_question, :yes_no, poll: poll) }
+  let(:option_yes) { question.option_for("Yes") }
+  let(:option_no) { question.option_for("No") }
+  let(:user) { User.new }
+  let(:web_vote) { Poll::WebVote.new(poll, user) }
+  let(:form) { ConsulFormBuilder.new(:web_vote, web_vote, ApplicationController.new.view_context, {}) }
 
-    render_inline Polls::Questions::QuestionComponent.new(question: question)
+  it "renders more information links when any question option has additional information" do
+    allow_any_instance_of(Poll::Question::Option).to receive(:with_read_more?).and_return(true)
 
-    poll_question = page.find("#poll_question_#{question.id}")
-    expect(poll_question).to have_content("Read more about")
-    expect(poll_question).to have_link("Answer A", href: "#answer_#{answer_a.id}")
-    expect(poll_question).to have_link("Answer B", href: "#answer_#{answer_b.id}")
-    expect(poll_question).to have_content("Answer A, Answer B")
+    render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+    page.find("#poll_question_#{question.id}") do |poll_question|
+      expect(poll_question).to have_content "Read more about"
+      expect(poll_question).to have_link "Yes", href: "#option_#{option_yes.id}"
+      expect(poll_question).to have_link "No", href: "#option_#{option_no.id}"
+      expect(poll_question).to have_content "Yes, No"
+    end
+  end
+
+  it "renders answers in given order" do
+    render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+    expect("Yes").to appear_before("No")
+  end
+
+  it "renders disabled answers when given the disabled parameter" do
+    render_inline Polls::Questions::QuestionComponent.new(question, form: form, disabled: true)
+
+    page.find("fieldset[disabled]") do |fieldset|
+      expect(fieldset).to have_field "Yes"
+      expect(fieldset).to have_field "No"
+    end
+  end
+
+  context "Verified user" do
+    let(:user) { create(:user, :level_two) }
+    before { sign_in(user) }
+
+    it "renders radio buttons for single-choice questions" do
+      option_yes.update!(allow_custom_text: true)
+
+      render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+      expect(page).to have_field "Yes", type: :radio
+      expect(page).to have_field "Answer for Yes", type: :textarea
+      expect(page).to have_field "No", type: :radio
+      expect(page).not_to have_field "Answer for No", type: :textarea
+      expect(page).to have_field type: :radio, checked: false, count: 2
+    end
+
+    it "does not render a help text for single-choice questions" do
+      render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+      expect(page).not_to have_content "maximum"
+      expect(page).not_to have_css ".help-text"
+      expect(page.find("fieldset")["aria-labelledby"]).to eq page.find("legend")[:id]
+    end
+
+    it "renders checkboxes for multiple-choice questions" do
+      question = create(:poll_question_multiple, :abc, poll: poll)
+
+      render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+      expect(page).to have_field "Answer A", type: :checkbox
+      expect(page).to have_field "Answer B", type: :checkbox
+      expect(page).to have_field "Answer C", type: :checkbox
+      expect(page).to have_field type: :checkbox, checked: false, count: 3
+      expect(page).not_to have_field type: :checkbox, checked: true
+    end
+
+    it "renders a help text for multiple-choice questions" do
+      question = create(:poll_question_multiple, :abc, poll: poll, max_votes: 2)
+
+      render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+      legend_id = page.find("legend")[:id]
+      help_id = page.find(".help-text")[:id]
+      expect(page.find("fieldset")["aria-labelledby"]).to eq "#{legend_id} #{help_id}"
+    end
+
+    it "selects the option when users have already voted" do
+      option_yes.update!(allow_custom_text: true)
+      create(:poll_answer, author: user, question: question, option: option_yes, answer: "because")
+
+      render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+      expect(page).to have_field "Yes", type: :radio, checked: true
+      expect(page).to have_field "Answer for Yes", type: :textarea, with: "because"
+      expect(page).to have_field "No", type: :radio, checked: false
+    end
+
+    context "question with errors" do
+      it "shows the errors and makes them accessible" do
+        question = create(:poll_question_multiple, :abc, poll: poll, max_votes: 2)
+        web_vote.update(question.id.to_s => { option_id: question.question_options.map(&:id) })
+
+        render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+        legend_id = page.find("legend")[:id]
+        help_id = page.find(".help-text")[:id]
+        error_id = page.find("[id*=error]")[:id]
+        expect(page.find("fieldset")["aria-labelledby"]).to eq "#{legend_id} #{help_id} #{error_id}"
+        expect(page).to have_css "##{error_id}",
+                                 exact_text: "you've selected 3 answers, but the " \
+                                             "maximum you can select is 2"
+      end
+    end
+
+    context "Open-ended question" do
+      let(:question) { create(:poll_question_open, poll: poll, title: "What do you want?") }
+      before { create(:poll_answer, author: user, question: question, answer: "I don't know") }
+
+      it "renders text area with persisted answer" do
+        render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+        expect(page).to have_field "What do you want?", type: :textarea, with: "I don't know"
+      end
+
+      it "renders unsaved form text over the persisted value" do
+        web_vote.answers[question.id] = [
+          build(:poll_answer, question: question, author: user, answer: "Typed (unsaved)")
+        ]
+
+        render_inline Polls::Questions::QuestionComponent.new(question, form: form)
+
+        expect(page).to have_field "What do you want?", type: :textarea, with: "Typed (unsaved)"
+      end
+    end
   end
 end

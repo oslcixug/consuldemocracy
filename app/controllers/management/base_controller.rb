@@ -1,24 +1,41 @@
 class Management::BaseController < ActionController::Base
   include TenantVariants
   include GlobalizeFallbacks
+  include AccessDeniedHandler
+
   layout "management"
   default_form_builder ConsulFormBuilder
 
+  before_action :authenticate_user!
   before_action :verify_manager
   around_action :switch_locale
 
   helper_method :managed_user
   helper_method :current_user
-  helper_method :manager_logged_in
+  helper_method :current_manager
 
   private
 
     def verify_manager
-      raise ActionController::RoutingError, "Not Found" if current_manager.blank?
+      raise CanCan::AccessDenied if current_manager.blank?
     end
 
     def current_manager
-      session[:manager]
+      @current_manager ||= manager_user
+    end
+
+    def current_manager_login
+      if current_manager.administrator?
+        "admin_user_#{current_manager.id}"
+      else
+        "manager_user_#{current_manager.id}"
+      end
+    end
+
+    def manager_user
+      user = warden.authenticate!(scope: :user)
+
+      user if user.administrator? || user.manager?
     end
 
     def current_user
@@ -40,22 +57,16 @@ class Management::BaseController < ActionController::Base
     end
 
     def switch_locale(&action)
-      if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)
-        session[:locale] = params[:locale]
+      if params[:locale] && Setting.enabled_locales.include?(params[:locale].to_sym)
+        session[:locale] = params[:locale].to_s
       end
 
-      session[:locale] ||= I18n.default_locale
+      session[:locale] ||= Setting.default_locale.to_s
 
       I18n.with_locale(session[:locale], &action)
     end
 
     def clear_password
       session[:new_password] = nil
-    end
-
-    def manager_logged_in
-      if current_manager
-        @manager_logged_in = User.find_by_manager_login(session[:manager]["login"])
-      end
     end
 end

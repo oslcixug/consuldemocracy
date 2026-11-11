@@ -18,6 +18,7 @@ cs:
           reseted: Heslo bylo úspěšně resetováno
           random: Vytvořit náhodné heslo
           save: Uložit heslo
+          show: Zobrazit heslo
           print: Tisknout heslo
           print_help: Když je heslo uložené, můžete ho vytisknout.
     account_info:
@@ -95,6 +96,8 @@ cs:
         unfeasible: Nerealizovatelná investuce
       print:
         print_button: Tisk
+      search:
+        label: "Hledat investice"
       search_results:
         one: " obsahující výraz %{search_term}'"
         few: " obsahující výraz %{search_term}'"
@@ -102,7 +105,6 @@ cs:
         other: " obsahující výraz %{search_term}'"
     sessions:
       need_managed_user: Chcete-li provést tuto akci, musíte vybrat uživatele
-      signed_out: Odhlášení bylo úspěšné.
       signed_out_managed_user: Uživatelská relace byla úspěšně odhlášená.
     username_label: Uživatelské jméno
     users:

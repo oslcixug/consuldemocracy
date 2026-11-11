@@ -1,5 +1,6 @@
 class Poll::Stats
   include Statisticable
+
   alias_method :poll, :resource
 
   CHANNELS = Poll::Voter::VALID_ORIGINS
@@ -21,6 +22,10 @@ class Poll::Stats
     total_participants_web + total_participants_booth
   end
 
+  def participation_date
+    poll.ends_at
+  end
+
   def channels
     CHANNELS.select { |channel| send(:"total_participants_#{channel}") > 0 }
   end
@@ -38,11 +43,11 @@ class Poll::Stats
   end
 
   def total_web_valid
-    voters.where(origin: "web").count - total_web_white
+    voters.where(origin: "web", user_id: poll.answers.select(:author_id).distinct).count
   end
 
   def total_web_white
-    0
+    voters.where(origin: "web").count - total_web_valid
   end
 
   def total_web_null
@@ -117,7 +122,7 @@ class Poll::Stats
 
     stats_cache(*stats_methods)
 
-    def stats_cache(key, &)
-      Rails.cache.fetch("polls_stats/#{poll.id}/#{key}/#{version}", &)
+    def full_cache_key_for(key)
+      "polls_stats/#{poll.id}/#{key}"
     end
 end

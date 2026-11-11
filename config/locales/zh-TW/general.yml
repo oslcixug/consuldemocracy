@@ -77,7 +77,6 @@ zh-TW:
         confidence_score: 最高評分
         created_at: 最新
         hot_score: 最活躍
-        most_commented: 最多評論
         relevance: 具相關性
         recommendations: 推薦
       recommendations:
@@ -113,7 +112,6 @@ zh-TW:
       recommendations_title: 創建一個辯論的推薦
       start_new: 開始一個辯論
     show:
-      author_deleted: 用戶已刪除
       comments_title: 評論
       edit_debate_link: 編輯
       flag: 此辯論已被一些用戶標記為不適當。
@@ -140,7 +138,6 @@ zh-TW:
     budget/investment: 投資
     budget/heading: 預算標題
     poll/shift: 輪班
-    poll/question/answer: 回答
     user: 帳戶
     verification/sms: 電話
     signature_sheet: 簽名表
@@ -338,11 +335,9 @@ zh-TW:
         zero: 沒有投票
         other: "%{count} 個投票"
       supports_necessary: "需要%{number} 個支持"
-      total_percent: 100%
       archived: "此建議已存檔，無法再收集支持。"
       successful: "此建議已得到所需的支持。"
     show:
-      author_deleted: 用戶已刪除
       code: "建議編號："
       comments_tab: 評論
       flag: 此建議已被一些用戶標記為不適當。
@@ -407,8 +402,6 @@ zh-TW:
       forward:
         support_button: 支持此建議
   polls:
-    all: "所有"
-    no_dates: "未分配日期"
     dates: "從%{open_at} 到%{closed_at}"
     final_date: "最終驗票/結果"
     index:
@@ -464,10 +457,6 @@ zh-TW:
       results:
         title: "問題"
         most_voted_answer: "得最多投票的答案： "
-  poll_questions:
-    show:
-      vote_answer: "投票%{answer}"
-      voted: "您已投票%{answer}"
   proposal_notifications:
     new:
       title: "發送消息"
@@ -500,7 +489,6 @@ zh-TW:
     author_info:
       author_deleted: 用戶已刪除
     back: 返回
-    check: 選擇
     check_all: 所有
     check_none: 無
     collective: 集體
@@ -562,18 +550,6 @@ zh-TW:
     youtube: "%{org} YouTube"
     telegram: "%{org} Telegram"
     instagram: "%{org} Instagram"
-  stats:
-    index:
-      visits: 訪問
-      debates: 辯論
-      proposals: 建議
-      comments: 評論
-      proposal_votes: 對建議的投票數
-      debate_votes: 對辯論的投票數
-      comment_votes: 對評論的投票數
-      votes: 投票總數
-      verified_users: 已核實的用戶
-      unverified_users: 未經核實的用戶
   unauthorized:
     default: 您沒有權限訪問此頁面。
     manage:

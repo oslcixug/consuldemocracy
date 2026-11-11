@@ -13,21 +13,25 @@ describe Abilities::Administrator do
   let(:debate) { create(:debate) }
   let(:comment) { create(:comment) }
   let(:proposal) { create(:proposal, author: user) }
+  let(:other_user_proposal) { create(:proposal, author: other_user) }
   let(:budget_investment) { create(:budget_investment) }
   let(:finished_investment) { create(:budget_investment, budget: create(:budget, :finished)) }
   let(:legislation_question) { create(:legislation_question) }
+  let(:legislation_proposal) { create(:legislation_proposal, author: user) }
   let(:current_poll) { create(:poll) }
   let(:future_poll) { create(:poll, :future) }
   let(:current_poll_question) { create(:poll_question) }
   let(:future_poll_question) { create(:poll_question, poll: future_poll) }
-  let(:current_poll_question_answer) { create(:poll_question_answer) }
-  let(:future_poll_question_answer) { create(:poll_question_answer, poll: future_poll) }
-  let(:current_poll_answer_video) { create(:poll_answer_video, answer: current_poll_question_answer) }
-  let(:future_poll_answer_video) { create(:poll_answer_video, answer: future_poll_question_answer) }
-  let(:current_poll_answer_image) { build(:image, imageable: current_poll_question_answer) }
-  let(:future_poll_answer_image) { build(:image, imageable: future_poll_question_answer) }
-  let(:current_poll_answer_document) { build(:document, documentable: current_poll_question_answer) }
-  let(:future_poll_answer_document) { build(:document, documentable: future_poll_question_answer) }
+  let(:future_poll_question_open) { create(:poll_question_open, poll: future_poll) }
+  let(:future_poll_question_option_open) { future_poll_question_open.question_options.new }
+  let(:current_poll_question_option) { create(:poll_question_option) }
+  let(:future_poll_question_option) { create(:poll_question_option, poll: future_poll) }
+  let(:current_poll_option_video) { create(:poll_option_video, option: current_poll_question_option) }
+  let(:future_poll_option_video) { create(:poll_option_video, option: future_poll_question_option) }
+  let(:current_poll_option_image) { build(:image, imageable: current_poll_question_option) }
+  let(:future_poll_option_image) { build(:image, imageable: future_poll_question_option) }
+  let(:current_poll_option_document) { build(:document, documentable: current_poll_question_option) }
+  let(:future_poll_option_document) { build(:document, documentable: future_poll_question_option) }
 
   let(:past_process) { create(:legislation_process, :past) }
   let(:past_draft_process) { create(:legislation_process, :past, :not_published) }
@@ -72,6 +76,12 @@ describe Abilities::Administrator do
   it { should be_able_to(:confirm_hide, hidden_proposal) }
   it { should be_able_to(:confirm_hide, hidden_user) }
 
+  it { should be_able_to(:hide, proposal) }
+  it { should be_able_to(:hide, other_user_proposal) }
+
+  it { should_not be_able_to(:flag, legislation_proposal)   }
+  it { should_not be_able_to(:unflag, legislation_proposal) }
+
   it { should be_able_to(:comment_as_administrator, debate) }
   it { should_not be_able_to(:comment_as_moderator, debate) }
 
@@ -115,7 +125,11 @@ describe Abilities::Administrator do
   it { should_not be_able_to(:admin_update, finished_investment) }
   it { should_not be_able_to(:valuate, finished_investment) }
   it { should_not be_able_to(:comment_valuation, finished_investment) }
-  it { should_not be_able_to(:toggle_selection, finished_investment) }
+
+  it { should be_able_to([:select, :deselect], create(:budget_investment, :feasible, :finished)) }
+  it { should_not be_able_to([:select, :deselect], create(:budget_investment, :feasible, :open)) }
+  it { should_not be_able_to([:select, :deselect], create(:budget_investment, :unfeasible, :finished)) }
+  it { should_not be_able_to([:select, :deselect], finished_investment) }
 
   it { should be_able_to(:destroy, proposal_image) }
   it { should be_able_to(:destroy, proposal_document) }
@@ -131,27 +145,30 @@ describe Abilities::Administrator do
   it { should_not be_able_to(:update, current_poll_question) }
   it { should_not be_able_to(:destroy, current_poll_question) }
 
-  it { should be_able_to(:read, Poll::Question::Answer) }
-  it { should be_able_to(:order_answers, Poll::Question::Answer) }
-  it { should be_able_to(:create, future_poll_question_answer) }
-  it { should be_able_to(:update, future_poll_question_answer) }
-  it { should be_able_to(:destroy, future_poll_question_answer) }
-  it { should_not be_able_to(:create, current_poll_question_answer) }
-  it { should_not be_able_to(:update, current_poll_question_answer) }
-  it { should_not be_able_to(:destroy, current_poll_question_answer) }
+  it { should be_able_to(:read, Poll::Question::Option) }
+  it { should be_able_to(:order_options, Poll::Question::Option) }
+  it { should be_able_to(:create, future_poll_question_option) }
+  it { should be_able_to(:update, future_poll_question_option) }
+  it { should be_able_to(:destroy, future_poll_question_option) }
+  it { should_not be_able_to(:create, current_poll_question_option) }
+  it { should_not be_able_to(:update, current_poll_question_option) }
+  it { should_not be_able_to(:destroy, current_poll_question_option) }
+  it { should_not be_able_to(:create,  future_poll_question_option_open) }
+  it { should_not be_able_to(:update,  future_poll_question_option_open) }
+  it { should_not be_able_to(:destroy, future_poll_question_option_open) }
 
-  it { should be_able_to(:create, future_poll_answer_video) }
-  it { should be_able_to(:update, future_poll_answer_video) }
-  it { should be_able_to(:destroy, future_poll_answer_video) }
-  it { should_not be_able_to(:create, current_poll_answer_video) }
-  it { should_not be_able_to(:update, current_poll_answer_video) }
-  it { should_not be_able_to(:destroy, current_poll_answer_video) }
+  it { should be_able_to(:create, future_poll_option_video) }
+  it { should be_able_to(:update, future_poll_option_video) }
+  it { should be_able_to(:destroy, future_poll_option_video) }
+  it { should_not be_able_to(:create, current_poll_option_video) }
+  it { should_not be_able_to(:update, current_poll_option_video) }
+  it { should_not be_able_to(:destroy, current_poll_option_video) }
 
-  it { should be_able_to(:destroy, future_poll_answer_image) }
-  it { should_not be_able_to(:destroy, current_poll_answer_image) }
+  it { should be_able_to(:destroy, future_poll_option_image) }
+  it { should_not be_able_to(:destroy, current_poll_option_image) }
 
-  it { should be_able_to(:destroy, future_poll_answer_document) }
-  it { should_not be_able_to(:destroy, current_poll_answer_document) }
+  it { should be_able_to(:destroy, future_poll_option_document) }
+  it { should_not be_able_to(:destroy, current_poll_option_document) }
 
   it { is_expected.to be_able_to :manage, Dashboard::AdministratorTask }
   it { is_expected.to be_able_to :manage, dashboard_administrator_task }
@@ -167,6 +184,10 @@ describe Abilities::Administrator do
   it { should be_able_to(:destroy, SDG::Manager) }
 
   it { should be_able_to(:manage, Widget::Card) }
+
+  it { should be_able_to(:create, Cookies::Vendor) }
+  it { should be_able_to(:update, Cookies::Vendor) }
+  it { should be_able_to(:destroy, Cookies::Vendor) }
 
   describe "tenants" do
     context "with multitenancy disabled" do

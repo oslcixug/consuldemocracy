@@ -1,5 +1,4 @@
 require "rails_helper"
-require "sessions_helper"
 
 describe "Poll Officing" do
   let(:user) { create(:user) }
@@ -76,7 +75,7 @@ describe "Poll Officing" do
     login_as(user)
     visit root_path
 
-    click_link "Menu"
+    click_summary "Menu"
     click_link "Polling officers"
 
     expect(page).to have_current_path(officing_root_path)
@@ -88,7 +87,7 @@ describe "Poll Officing" do
     login_as(user)
     visit root_path
 
-    click_link "Menu"
+    click_summary "Menu"
     click_link "Polling officers"
 
     expect(page).to have_current_path(officing_root_path)
@@ -114,60 +113,39 @@ describe "Poll Officing" do
     create(:poll_officer_assignment, booth_assignment: booth_assignment, officer: officer1)
     create(:poll_officer_assignment, booth_assignment: booth_assignment, officer: officer2)
 
-    in_browser(:one) do
+    using_session(:one) do
       login_as officer1.user
       visit officing_root_path
+
+      expect(page).to have_content "Here you can validate user documents and store voting results"
     end
 
-    in_browser(:two) do
+    using_session(:two) do
       login_as officer2.user
       visit officing_root_path
+
+      expect(page).to have_content "Here you can validate user documents and store voting results"
     end
 
-    in_browser(:one) do
-      expect(page).to have_content("Here you can validate user documents and store voting results")
-
+    using_session(:one) do
       visit new_officing_residence_path
-      expect(page).to have_css "#residence_document_type"
+      officing_verify_residence(document_number: "12345678Z")
 
-      select "DNI", from: "residence_document_type"
-      fill_in "residence_document_number", with: "12345678Z"
-      fill_in "residence_year_of_birth", with: "1980"
-      click_button "Validate document"
-      expect(page).to have_content "Document verified with Census"
       click_button "Confirm vote"
       expect(page).to have_content "Vote introduced!"
-      expect(Poll::Voter.where(document_number: "12345678Z",
-                               poll_id: poll,
-                               origin: "booth",
-                               officer_id: officer1)
-                        .count).to be(1)
-
-      visit final_officing_polls_path
-      expect(page).to have_content("Polls ready for final recounting")
     end
 
-    in_browser(:two) do
-      expect(page).to have_content("Here you can validate user documents and store voting results")
-
+    using_session(:two) do
       visit new_officing_residence_path
-      expect(page).to have_css "#residence_document_type"
+      officing_verify_residence(document_number: "12345678Y")
 
-      select "DNI", from: "residence_document_type"
-      fill_in "residence_document_number", with: "12345678Y"
-      fill_in "residence_year_of_birth", with: "1980"
-      click_button "Validate document"
-      expect(page).to have_content "Document verified with Census"
       click_button "Confirm vote"
       expect(page).to have_content "Vote introduced!"
-      expect(Poll::Voter.where(document_number: "12345678Y",
-                               poll_id: poll,
-                               origin: "booth",
-                               officer_id: officer2)
-                        .count).to be(1)
 
-      visit final_officing_polls_path
-      expect(page).to have_content("Polls ready for final recounting")
+      visit new_officing_residence_path
+      officing_verify_residence(document_number: "12345678Z")
+
+      expect(page).to have_content "Has already participated in this poll"
     end
   end
 end

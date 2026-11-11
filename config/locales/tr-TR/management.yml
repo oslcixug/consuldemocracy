@@ -18,6 +18,7 @@ tr:
           reseted: Parola sıfırlandı
           random: Rastgele parola oluştur
           save: Parolayı kaydet
+          show: Parolayı görüntüle
           print: Parolayı yazdır
           print_help: Kaydedildiğinde parolayı yazdırabileceksiniz.
     account_info:
@@ -95,12 +96,13 @@ tr:
         unfeasible: Uygulanabilir bulunmayan yatırım
       print:
         print_button: Yazdır
+      search:
+        label: "Yatırım ara"
       search_results:
         one: " '%{search_term} terimi geçen"
         other: " '%{search_term} terimi geçen"
     sessions:
       need_managed_user: Bu işlemi yapmak için bir kullanıcı seçmelisiniz
-      signed_out: Oturumunuz kapatıldı.
       signed_out_managed_user: Kullanıcı oturumu kapatıldı.
     username_label: Kullanıcı adı
     users:

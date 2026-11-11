@@ -1,0 +1,34 @@
+.admin .poll-question-options-table {
+  margin-top: $line-height;
+
+  td {
+    &:not(:last-child) {
+      vertical-align: top;
+    }
+
+    &.description {
+      overflow-wrap: anywhere;
+    }
+  }
+
+  th {
+    &.description {
+      @include breakpoint(medium) {
+        width: calc(100% * 7 / 12);
+      }
+    }
+
+    &.allow-custom-text {
+      @include breakpoint(medium) {
+        width: calc(100% * 2 / 12);
+      }
+    }
+  }
+
+  td,
+  th {
+    &.association-count {
+      text-align: center;
+    }
+  }
+}

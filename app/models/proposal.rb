@@ -3,7 +3,6 @@ class Proposal < ApplicationRecord
   include Taggable
   include Conflictable
   include Measurable
-  include Sanitizable
   include Searchable
   include Filterable
   include HasPublicAuthor
@@ -14,7 +13,7 @@ class Proposal < ApplicationRecord
   include Mappable
   include Notifiable
   include Documentable
-  include EmbedVideosHelper
+  include Videoable
   include Relationable
   include Milestoneable
   include Randomizable
@@ -31,6 +30,7 @@ class Proposal < ApplicationRecord
   translates :summary, touch: true
   translates :retired_explanation, touch: true
   include Globalizable
+
   translation_class_delegate :retired_at
 
   belongs_to :author, -> { with_hidden }, class_name: "User", inverse_of: :proposals
@@ -59,13 +59,11 @@ class Proposal < ApplicationRecord
 
   validates :terms_of_service, acceptance: { allow_nil: false }, on: :create
 
-  validate :valid_video_url?
-
   before_validation :set_responsible_name
 
   before_save :calculate_hot_score, :calculate_confidence_score
 
-  after_create :send_new_actions_notification_on_create
+  after_commit :send_new_actions_notification_on_create, on: :create
 
   scope :for_render,               -> { includes(:tags) }
   scope :sort_by_hot_score,        -> { reorder(hot_score: :desc) }
@@ -77,13 +75,13 @@ class Proposal < ApplicationRecord
   scope :sort_by_archival_date,    -> { archived.sort_by_confidence_score }
   scope :sort_by_recommendations,  -> { order(cached_votes_up: :desc) }
 
-  scope :archived,       -> { where("proposals.created_at <= ?", Setting.archived_proposals_date_limit) }
-  scope :not_archived,   -> { where("proposals.created_at > ?", Setting.archived_proposals_date_limit) }
-  scope :last_week,      -> { where("proposals.created_at >= ?", 7.days.ago) }
+  scope :archived,       -> { where(created_at: ...Setting.archived_proposals_date_limit) }
+  scope :not_archived,   -> { where(created_at: Setting.archived_proposals_date_limit..) }
+  scope :last_week,      -> { where(created_at: 7.days.ago..) }
   scope :retired,        -> { where.not(retired_at: nil) }
   scope :not_retired,    -> { where(retired_at: nil) }
-  scope :successful,     -> { where("cached_votes_up >= ?", Proposal.votes_needed_for_success) }
-  scope :unsuccessful,   -> { where("cached_votes_up < ?", Proposal.votes_needed_for_success) }
+  scope :successful,     -> { where(cached_votes_up: Proposal.votes_needed_for_success..) }
+  scope :unsuccessful,   -> { where(cached_votes_up: ...Proposal.votes_needed_for_success) }
   scope :public_for_api, -> { all }
   scope :selected,       -> { where(selected: true) }
   scope :not_selected,   -> { where(selected: false) }
@@ -91,7 +89,6 @@ class Proposal < ApplicationRecord
   scope :draft,          -> { where(published_at: nil) }
 
   scope :not_supported_by_user, ->(user) { where.not(id: user.find_voted_items(votable_type: "Proposal")) }
-  scope :created_by,            ->(author) { where(author: author) }
 
   def publish
     update!(published_at: Time.current)
@@ -110,13 +107,9 @@ class Proposal < ApplicationRecord
     tagged_with(user.interests, any: true)
       .where.not(author_id: user.id)
       .unsuccessful
-      .not_followed_by_user(user)
+      .excluding(followed_by_user(user))
       .not_archived
       .not_supported_by_user(user)
-  end
-
-  def self.not_followed_by_user(user)
-    where.not(id: followed_by_user(user).ids)
   end
 
   def to_param
@@ -190,7 +183,7 @@ class Proposal < ApplicationRecord
 
   def register_vote(user, vote_value)
     if votable_by?(user) && !archived?
-      vote_by(voter: user, vote: vote_value)
+      user.with_lock { vote_by(voter: user, vote: vote_value) }
     end
   end
 
@@ -236,6 +229,12 @@ class Proposal < ApplicationRecord
 
   def users_to_notify
     followers - [author]
+  end
+
+  def notify_users(notification)
+    users_to_notify.each do |user|
+      Notification.add(user, notification)
+    end
   end
 
   def self.proposals_orders(user)

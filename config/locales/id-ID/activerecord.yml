@@ -65,18 +65,6 @@ id:
         other: "Proses"
       legislation/proposal:
         other: "Proposal"
-      legislation/draft_versions:
-        other: "Versi rancangan"
-      legislation/questions:
-        other: "Pertanyaan"
-      legislation/question_options:
-        other: "Pilihan pertanyaan"
-      legislation/answers:
-        other: "Jawaban"
-      documents:
-        other: "Dokumen"
-      images:
-        other: "Gambar"
       topic:
         other: "Topik"
       poll:
@@ -211,7 +199,6 @@ id:
         official_level: "Tingkat resmi"
         phone_number: "Nomor telepon"
         public_activity: "Menjaga daftar kegiatan Umum"
-        redeemable_code: "Kode verifikasi diterima melalui surel"
       direct_message:
         title: "Judul"
         body: "Pesan"
@@ -269,7 +256,6 @@ id:
         title: "Judul"
       site_customization/page:
         content: Konten
-        created_at: Dibuat di
         subtitle: Subtitle
         slug: Siput
         status: Status
@@ -363,15 +349,6 @@ id:
       image:
         title: Judul
         attachment: "Lampiran"
-      poll/question/answer:
-        title: Jawaban
-        description: Deskripsi
-      poll/question/answer/translation:
-        title: Jawaban
-        description: "Deskripsi"
-      poll/question/answer/video:
-        title: Judul
-        url: Video eksternal
       newsletter:
         segment_recipient: Penerima
         subject: Subyek
@@ -455,8 +432,6 @@ id:
           attributes:
             document_number:
               not_in_census: "Dokumen tidak dalam sensus"
-            user_id:
-              has_voted: "Pengguna yang telah terpilih"
         legislation/process:
           attributes:
             end_date:

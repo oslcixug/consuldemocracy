@@ -60,18 +60,6 @@ zh-CN:
         other: "进程"
       legislation/proposal:
         other: "提议"
-      legislation/draft_versions:
-        other: "草稿版本"
-      legislation/questions:
-        other: "问题"
-      legislation/question_options:
-        other: "问题选项"
-      legislation/answers:
-        other: "回答"
-      documents:
-        other: "文档"
-      images:
-        other: "图像"
       topic:
         other: "主题"
       poll:
@@ -195,7 +183,6 @@ zh-CN:
         public_activity: "将我的活动列表公开"
         recommended_debates: "显示辩论推荐"
         recommended_proposals: "显示提议推荐"
-        redeemable_code: "通过电子邮件接收到的验证码"
       direct_message:
         title: "标题"
         body: "信息"
@@ -251,7 +238,6 @@ zh-CN:
         title: "标题"
       site_customization/page:
         content: 内容
-        created_at: 创建于
         subtitle: 副标题
         slug: Slug
         status: 状态
@@ -341,15 +327,6 @@ zh-CN:
       image:
         title: 标题
         attachment: "附件"
-      poll/question/answer:
-        title: 回答
-        description: 说明
-      poll/question/answer/translation:
-        title: 回答
-        description: "说明"
-      poll/question/answer/video:
-        title: 标题
-        url: 外部视频
       newsletter:
         segment_recipient: 收件人
         subject: 主题
@@ -422,8 +399,6 @@ zh-CN:
           attributes:
             document_number:
               not_in_census: "不在人口普查中的文档"
-            user_id:
-              has_voted: "用户已经投票"
         legislation/process:
           attributes:
             end_date:

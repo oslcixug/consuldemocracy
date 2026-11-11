@@ -24,7 +24,6 @@ class Legislation::AnnotationsController < Legislation::BaseController
     end
 
     @comment_tree = MergedCommentTree.new(annotations, params[:page], @current_order)
-    set_comment_flags(@comment_tree.comments)
   end
 
   def create
@@ -45,7 +44,7 @@ class Legislation::AnnotationsController < Legislation::BaseController
       if comment.save
         render json: @annotation.to_json
       else
-        render json: comment.errors.full_messages, status: :unprocessable_entity
+        render json: comment.errors.full_messages, status: :unprocessable_content
       end
     else
       @annotation = @draft_version.annotations.new(annotation_params)
@@ -53,7 +52,7 @@ class Legislation::AnnotationsController < Legislation::BaseController
       if @annotation.save
         render json: @annotation.to_json
       else
-        render json: @annotation.errors.full_messages, status: :unprocessable_entity
+        render json: @annotation.errors.full_messages, status: :unprocessable_content
       end
     end
   end
@@ -101,7 +100,7 @@ class Legislation::AnnotationsController < Legislation::BaseController
 
     def convert_ranges_parameters
       annotation = params[:legislation_annotation]
-      if annotation && annotation[:ranges] && annotation[:ranges].is_a?(String)
+      if annotation && annotation[:ranges].is_a?(String)
         params[:legislation_annotation][:ranges] = JSON.parse(annotation[:ranges])
       end
     rescue JSON::ParserError

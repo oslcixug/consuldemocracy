@@ -20,6 +20,9 @@ he:
     close: סגירה
     menu: תפריט
   comments:
+    actions:
+      confirm_delete: "אתה בטוח? פעולה זו תמחק את התגובה. לא ניתן לשחזר פעולה זו."
+      delete: "מחיקת תגובה"
     comments_closed: לא ניתן להגיב
     verified_only: בכדי להשתתף %{verify_account}
     comment:
@@ -31,26 +34,22 @@ he:
         zero: אין תגובות
         one: תגובה אחת
         two: "%{count} תגובות"
-        many: "%{count} תגובות"
         other: "%{count} תגובות"
       responses_show:
         zero: אין תגובות
         one: "תגובה אחת (הצג)"
         two: "%{count} תגובות (הצג)"
-        many: "%{count} תגובות (הצג)"
         other: "%{count} תגובות (הצג)"
       responses_collapse:
         zero: אין תגובות
         one: "תגובה אחת (collapse)"
         two: "%{count} תגובות (collapse)"
-        many: "%{count} תגובות (collapse)"
         other: "%{count} תגובות (collapse)"
       user_deleted: משתמש/ת זה/ו נמחק/ה
       votes:
         zero: אין הצבעות
         one: הצבעה אחת
         two: "%{count} הצבעות"
-        many: "%{count} הצבעות"
         other: "%{count} הצבעות"
     form:
       comment_as_admin: הגב/י כמנהל/ת מערכת
@@ -78,7 +77,6 @@ he:
         zero: אין הצבעות
         one: הצבעה אחת
         two: "%{count} הצבעות"
-        many: "%{count} הצבעות"
         other: "%{count} הצבעות"
     edit:
       editing: עריכת הדיון
@@ -94,7 +92,6 @@ he:
         confidence_score: הכי מדורג גבוה
         created_at: הכי חדשה
         hot_score: הכי פעילה
-        most_commented: עם הכי הרבה תגובות
         relevance: נוגעת לעניין
         recommendations: המלצות
       recommendations:
@@ -130,7 +127,6 @@ he:
       recommendations_title: המלצות ליצירת דיון
       start_new: פתיחת דיון חדש
     show:
-      author_deleted: משתמש/ת זה/ו נמחק/ה
       comments_title: הערות
       edit_debate_link: ערוך
       flag: דיון זה סומן כבלתי-ראוי על ידי מספר משתמשים
@@ -143,6 +139,10 @@ he:
     messages:
       user_not_found: משתמש/ת לא נמצא/ה
       invalid_date_range: "טווח תאריכים לא חוקי"
+      past_date: "אסור שיהיה תאריך בעבר"
+      cannot_change_date:
+        poll_started: "לא ניתן לשינוי אם הצבעה כבר החלה"
+        poll_ended: "לא ניתן לשינוי אם הצבעה כבר הסתיימה"
   form:
     accept_terms: אני מאשר/ת את %{policy} ואת %{conditions}
     conditions: כללים ותנאי שימוש
@@ -152,13 +152,17 @@ he:
     errors: שגיאות אלו מונעות
     not_saved: "מנעו מ %{resource} להישמר. <br>בדוק את השדות המסומנים בכדי לתקן אותם:"
     policy: מדיניות הפרטיות
+    banner: באנר
     proposal: הצעה
     proposal_notification: "התראות"
     budget/investment: השקעה
     budget/group: תקציב הקבוצה
     budget/heading: כותרת התקציב
+    legislation/draft_version: טיוטה
+    legislation/process: תהליך
+    legislation/question: שאלה
     poll/shift: משמרת
-    poll/question/answer: תשובה
+    poll/question/option: תשובה
     user: חשבון משתמש/ת
     verification/sms: מספר טלפון
     signature_sheet: גיליון חתימה
@@ -183,7 +187,6 @@ he:
           zero: אין תומכים
           one: תומך אחד
           two: "תומכים"
-          many: "תומכים"
           other: "תומכים"
     footer:
       accessibility: נגישות
@@ -219,7 +222,6 @@ he:
           zero: "אין לך התראות חדשות"
           one: . יש לך התרעה חדשה
           two: יש לך %{count} התרעות חדשות
-          many: יש לך %{count} התרעות חדשות
           other: יש לך %{count} התרעות חדשות
         notifications: התראות
   notifications:
@@ -234,17 +236,14 @@ he:
         comments_on:
           one: מישהו הגיב על
           two: ישנם %{count} תגובות חדשות על
-          many: ישנם %{count} תגובות חדשות על
           other: ישנם %{count} תגובות חדשות על
         proposal_notification:
           one: יש התרעה חדשה אחת על
           two: ישנם %{count} התרעות חדשות על
-          many: ישנם %{count} התרעות חדשות על
           other: ישנם %{count} התרעות חדשות על
         replies_to:
           one: מישהו הגיב על ההערה שלך
           two: ישנם %{count} תגובות חדשות על ההערה שלך
-          many: ישנם %{count} תגובות חדשות על ההערה שלך
           other: ישנם %{count} תגובות חדשות על ההערה שלך
       mark_as_read: סמן כנקרא
       mark_as_unread: סמן כלא נקרא
@@ -353,7 +352,6 @@ he:
       search_results:
         one: " המכיל את המונחים <strong>'%{search_term}'</strong>"
         two: " המכיל את המונחים <strong>'%{search_term}'</strong>"
-        many: " המכיל את המונחים <strong>'%{search_term}'</strong>"
         other: " המכיל את המונחים <strong>'%{search_term}'</strong>"
       select_order_long: "ההצעות מוצגות לך על-פי סדר:"
       start_proposal: העל/י הצעה חדשה
@@ -391,21 +389,17 @@ he:
         zero: אין תומכים
         one: תמיכה 1
         two: "%{count} תומכים"
-        many: "%{count} תומכים"
         other: "%{count} תומכים"
       votes:
         zero: אין הצבעות
         one: הצבעה אחת
         two: "%{count} הצבעות"
-        many: "%{count} הצבעות"
         other: "%{count} הצבעות"
       supports_necessary: "“נדרשים %{number} תומכים\""
-      total_percent: 100%
       archived: "הצעה זו נגנזה ולא תוכל לצבור עוד תמיכה."
       successful: "הצעה זו הגיעה לתמיכה הנדרשת."
       selected: "הצעה נבחרת"
     show:
-      author_deleted: משתמש/ת זה/ו נמחק/ה
       code: "קוד ההצעה:"
       comments_tab: הערות
       dashboard_proposal_link: לוח ניהול
@@ -485,12 +479,10 @@ he:
       target_supports:
         one: קבל %{count} תמיכה בהצעה שלך
         two: קבל %{count} תמיכות בהצעה שלך
-        many: קבל %{count} תמיכות בהצעה שלך
         other: קבל %{count} תמיכות בהצעה שלך
       days:
         one: "%{count} יום"
         two: "%{count} ימים"
-        many: "%{count} ימים"
         other: "%{count} ימים"
       locked_resource: משאב נעול
       ideal_time: זמן אידיאלי
@@ -511,7 +503,6 @@ he:
         count:
           one: יצרת %{count} סקר.
           two: יצרת %{count} סקרים.
-          many: יצרת %{count} סקרים.
           other: יצרת %{count} סקרים.
         links: קישורים
         additiontal_information: מידע נוסף
@@ -524,7 +515,6 @@ he:
         responses:
           one: "%{count} תגובה"
           two: "%{count} תגובות"
-          many: "%{count} תגובות"
           other: "%{count} תגובות"
         view_results: הצג תוצאות
         edit_poll: ערוך סקר
@@ -573,8 +563,6 @@ he:
         support: "עליך פשוט ללחוץ על הכפתור למטה 'תמוך בהצעה זו', אתה יכול לדווח לעצמך. לפני קידום. רק ההצעות שישיגו את התמיכה המרבית יקודמו על ידי מועצת העיר, וחשבתי עליך, אני בטוח. שאתה תעזור לי לקדם אותה!"
         share: "ואם תסייע לי לשתף את ההצעה שלי עם חברים, משפחה ואנשי קשר, זה יהיה מושלם!"
   polls:
-    all: "כולם"
-    no_dates: "לא הוקצה תאריך"
     dates: "מ %{open_at} עד %{closed_at}"
     final_date: "סיכום תוצאות סופיות"
     index:
@@ -633,10 +621,6 @@ he:
         most_voted_answer: "התשובות הכי מוצבעות: "
     poll_header:
       back_to_proposal: חזור להצעה
-  poll_questions:
-    show:
-      vote_answer: "הצבעה %{answer}"
-      voted: "עליך להצביע %{answer}"
   proposal_notifications:
     new:
       title: "שלח הודעה"
@@ -670,8 +654,7 @@ he:
       author_deleted: משתמש/ת זה/ו נמחק/ה
       email_deleted: האימייל נמחק
     back: חזרה
-    check: בחר
-    check_all: כולם
+    check_all: הכל
     check_none: כלום
     collective: קבוצתי
     flag: סמן כתוכן לא ראוי
@@ -687,7 +670,6 @@ he:
         found:
           one: "יש דיון עם המונח '%{query}', אתה יכול להשתתף בו במקום לפתוח אחד חדש."
           two: "יש דיונים עם המונחים '%{query}', אתה יכול להשתתף בהם במקום לפתוח חדשים."
-          many: "יש דיונים עם המונחים '%{query}', אתה יכול להשתתף בהם במקום לפתוח חדשים."
           other: "יש דיונים עם המונחים '%{query}', אתה יכול להשתתף בהם במקום לפתוח חדשים."
         message: "“מציג %{limit} מתוך %{count} דיונים הכוללים את המונח '%{query}'\""
         see_all: "הצג הכל"
@@ -695,7 +677,6 @@ he:
         found:
           one: "יש השקעה עם המונח '%{query}', אתה יכול להשתתף בה במקום לפתוח אחת חדשה."
           two: "יש השקעות עם המונח '%{query}', אתה יכול להשתתף בהן במקום לפתוח חדשות."
-          many: "יש השקעות עם המונח '%{query}', אתה יכול להשתתף בהן במקום לפתוח חדשות."
           other: "יש השקעות עם המונח '%{query}', אתה יכול להשתתף בהן במקום לפתוח חדשות."
         message: "“מציג %{limit} מתוך %{count} דיונים הכוללים את המונח '%{query}'\""
         see_all: "הצג הכל"
@@ -703,7 +684,6 @@ he:
         found:
           one: "יש הצעה עם המונח '%{query}', אתה יכול להשתתף בה במקום לפתוח אחת חדשה"
           two: "יש הצעות עם המונחים '%{query}', אתה יכול להשתתף בהם במקום לפתוח חדשים"
-          many: "יש הצעות עם המונחים '%{query}', אתה יכול להשתתף בהם במקום לפתוח חדשים"
           other: "יש הצעות עם המונחים '%{query}', אתה יכול להשתתף בהם במקום לפתוח חדשים"
         message: "“מציג %{limit} מתוך %{count} הצעות הכוללות את המונח '%{query}'\""
         see_all: "הצג הכל"
@@ -735,24 +715,17 @@ he:
     translations:
       remove_language: הסרת שפה
       add_language: הוספת שפה
+    comments:
+      zero: "אין תגובות"
+      one: "1 תגובה"
+      two: "%{count} תגובות"
+      other: "%{count} תגובות"
   social:
     facebook: "%{org} פייסבוק"
     twitter: "%{org} טוויטר"
     youtube: "%{org} יוטיוב YouTube"
     telegram: "%{org} טלגרם Telegram"
     instagram: "%{org} אינסטגרם Instagram"
-  stats:
-    index:
-      visits: ביקורים
-      debates: דיונים
-      proposals: הצעות
-      comments: הערות
-      proposal_votes: הצבעות על הצעות
-      debate_votes: הצבעות על דיונים
-      comment_votes: הצבעות על תגובות
-      votes: סך הכל הצבעות
-      verified_users: משתמשים מאושרים
-      unverified_users: משתמשים שלא נבדקו
   unauthorized:
     default: אין לך הרשאה להיכנס לדף זה.
     manage:
@@ -786,27 +759,22 @@ he:
         comments:
           one: תגובה אחת
           two: "%{count} תגובות"
-          many: "%{count} תגובות"
           other: "%{count} תגובות"
         debates:
           one: דיון אחד
           two: "%{count} דיונים"
-          many: "%{count} דיונים"
           other: "%{count} דיונים"
         proposals:
           one: הצעה אחת
           two: "%{count} הצעות"
-          many: "%{count} הצעות"
           other: "%{count} הצעות"
         budget_investments:
           one: השקעה אחת
           two: "%{count} השקעות"
-          many: "%{count} השקעות"
           other: "%{count} השקעות"
         follows:
           one: עוקב אחד
           two: "%{count} עוקבים"
-          many: "%{count} עוקבים"
           other: "%{count} עוקבים"
       no_activity: למשתמש/ת זה/ו אין פעילות ציבורית
       no_private_messages: "משתמש/ת זה/זו אינו/ה מקבל/ת הודעות פרטיות"
@@ -834,7 +802,6 @@ he:
       different_heading_assigned:
         one: "תוכל לתמוך רק בפרויקט להשקעה ברובע %{count}. כבר תמכת בהשקעות ב-%{supported_headings}."
         two: "תוכל לתמוך רק בפרויקטים להשקעה ברובעים %{count}. כבר תמכת בהשקעות ב-%{supported_headings}."
-        many: "תוכל לתמוך רק בפרויקטים להשקעה ברובעים %{count}. כבר תמכת בהשקעות ב-%{supported_headings}."
         other: "תוכל לתמוך רק בפרויקטים להשקעה ברובעים %{count}. כבר תמכת בהשקעות ב-%{supported_headings}."
   welcome:
     feed:
@@ -913,3 +880,5 @@ he:
       surveys: סקרים
     poll:
       take_part: קח חלק מ- %{from} ל- %{to}
+  machine_learning:
+    comments_summary: "סיכום תגובות"

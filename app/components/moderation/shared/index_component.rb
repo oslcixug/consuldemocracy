@@ -1,4 +1,6 @@
 class Moderation::Shared::IndexComponent < ApplicationComponent
+  include Header
+
   attr_reader :records
 
   def initialize(records)
@@ -7,12 +9,16 @@ class Moderation::Shared::IndexComponent < ApplicationComponent
 
   private
 
-    def i18n_namespace
-      table_name
+    def title
+      t("moderation.#{i18n_namespace}.index.title")
     end
 
-    def field_name
-      "#{records.model.model_name.singular}_ids[]"
+    def i18n_namespace
+      if table_name == "legislation_proposals"
+        "proposals"
+      else
+        table_name
+      end
     end
 
     def form_path
@@ -32,6 +38,8 @@ class Moderation::Shared::IndexComponent < ApplicationComponent
     def section_name
       if table_name == "budget_investments"
         "budgets/investments"
+      elsif table_name == "legislation_proposals"
+        "legislation/proposals"
       else
         table_name
       end

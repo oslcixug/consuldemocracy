@@ -1,5 +1,6 @@
 es:
   attributes:
+    created_at: Fecha de creación
     geozone_id: "Ámbito de actuación"
     results_enabled: "Mostrar resultados"
     stats_enabled: "Mostrar estadísticas"
@@ -106,22 +107,19 @@ es:
       legislation/proposal:
         one: "Propuesta"
         other: "Propuestas"
-      legislation/draft_versions:
+      legislation/draft_version:
         one: "Versión del borrador"
         other: "Versiones del borrador"
-      legislation/questions:
+      legislation/question:
         one: "Pregunta"
         other: "Preguntas"
-      legislation/question_options:
+      legislation/question_option:
         one: "Opción de respuesta cerrada"
         other: "Opciones de respuesta cerrada"
-      legislation/answers:
+      legislation/answer:
         one: "Respuesta"
         other: "Respuestas"
-      documents:
-        one: "Documento"
-        other: "Documentos"
-      images:
+      image:
         one: "Imagen"
         other: "Imágenes"
       tenant:
@@ -151,6 +149,9 @@ es:
       votation_type:
         one: Tipo de votación
         other: Tipos de votación
+      cookies/vendor:
+        one: proveedor de cookies
+        other: proveedores de cookies
     attributes:
       budget:
         name: "Nombre"
@@ -248,6 +249,7 @@ es:
         main_link_url: "El enlace te lleva a (añade un enlace)"
       comment:
         body: "Comentario"
+        parent_id: "Padre"
         user: "Usuario"
       debate:
         author: "Autor"
@@ -293,7 +295,6 @@ es:
         public_interests: "Mostrar públicamente los elementos que sigo"
         recommended_debates: "Mostrar recomendaciones en el listado de debates"
         recommended_proposals: "Mostrar recomendaciones en el listado de propuestas"
-        redeemable_code: "Código de verificación por carta (opcional)"
       direct_message:
         title: "Título"
         body: "Mensaje"
@@ -359,7 +360,6 @@ es:
         document_numbers: "Números de documentos"
       site_customization/page:
         content: Contenido
-        created_at: Creada
         subtitle: Subtítulo
         slug: Slug
         status: Estado
@@ -459,13 +459,14 @@ es:
       image:
         title: Título
         attachment: "Selecciona una imagen"
-      poll/question/answer:
+      poll/question/option:
         title: Respuesta
         description: Descripción
-      poll/question/answer/translation:
+        allow_custom_text: "Permitir texto libre"
+      poll/question/option/translation:
         title: Respuesta
         description: "Descripción (opcional)"
-      poll/question/answer/video:
+      poll/question/option/video:
         title: Título
         url: Vídeo externo
       newsletter:
@@ -532,8 +533,13 @@ es:
         max_votes: Número máximo de votos
         vote_type: Tipo de votación
       votation_type/vote_type:
+        open: Respuesta abierta
         unique: Respuesta única
         multiple: Respuesta múltiple
+      cookies/vendor:
+        name: Nombre del proveedor
+        cookie: Nombre de la cookie
+        script: Código javascript
     errors:
       models:
         user:
@@ -551,7 +557,8 @@ es:
         geozone:
           attributes:
             geojson:
-              invalid: "Los datos GeoJSON proporcionados no tienen el formato correcto. Deben tener un tipo del formato \"Polygon\" o \"MultiPolygon\"."
+              invalid: "Los datos GeoJSON proporcionados no tienen el formato correcto. Deben seguir el formato estándar RFC 7946"
+              invalid_coordinates: "Los datos GeoJSON proporcionados contienen coordenadas inválidas; las coordenadas deben utilizar el formato \"Longitud, Latitud\" y seguir el formato estándar RFC 7946"
         image:
           attributes:
             attachment:
@@ -569,8 +576,6 @@ es:
           attributes:
             document_number:
               not_in_census: "Este documento no aparece en el censo"
-            user_id:
-              has_voted: "Este usuario ya ha votado"
         legislation/process:
           attributes:
             end_date:
@@ -623,6 +628,10 @@ es:
           attributes:
             code:
               invalid: "debe empezar con el código de su meta seguido de un punto y terminar con un número"
+        votation_type:
+          attributes:
+            vote_type:
+              cannot_change_to_open_ended: "no se puede cambiar a respuesta abierta el tipo de votación porque ya has definido posibles respuestas válidas para esta pregunta"
       messages:
         translations_too_short: El obligatorio proporcionar una traducción como mínimo
         record_invalid: "Error de validación: %{errors}"

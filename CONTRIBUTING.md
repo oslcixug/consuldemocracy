@@ -10,9 +10,9 @@ The prefered way to report any bug is [opening an issue in the project's repo](h
 
 * Try to use a descriptive and to-the-point title
 * It's a good idea to include some of these sections:
-   * Steps to reproduce the bug
-   * Expected behaviour/response
-   * Actual response
+  * Steps to reproduce the bug
+  * Expected behaviour/response
+  * Actual response
 * Sometimes it is also helpful if you mention your operating system, browser version and installed plugins.
 
 Thanks! :heart: :heart: :heart:
@@ -26,7 +26,7 @@ If you want to contribute code to solve an issue:
 * Add a comment to tell everyone you are working on the issue.
 * Open a *pull request* to the main repository describing what issue you are addressing and following our [coding conventions](#coding-conventions)
 
-**Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github)
+**Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github)
 
 ## Coding conventions
 
@@ -37,6 +37,7 @@ If you'd like us to review your pull request in good spirits, please follow our 
 * Run `bundle exec pronto run` and fix any issues it reports; these issues will also be automatically reported on the pull request
 * Follow [the seven rules of a great commit message](https://chris.beams.io/posts/git-commit/)
 * Add or modify i18n translations only in the base languages, English (en) and Spanish (es); we manage all other languages through the [Crowdin integration](https://translate.consuldemocracy.org/).
+* Check the [coding conventions documentation file](docs/en/open_source/coding_conventions.md) for more information.
 
 When we review your pull request and ask for changes, if you're proficient using `git rebase` edit existing commits instead of adding new ones. If you aren't proficient with `git rebase`, ignore this point.
 
@@ -45,9 +46,7 @@ When we review your pull request and ask for changes, if you're proficient using
 ### Core team members
 
 * [Javi Martín](https://github.com/javierm)
-* [Raimond García](https://github.com/voodoorai2000)
 * [Sebastià Roig](https://github.com/taitus)
-* [Senén Rodero](https://github.com/Senen)
 
 ### All other contributors
 
@@ -55,4 +54,4 @@ In addition to the formal team, there are [over a hundred contributors](https://
 
 Finally a special thanks to the former core team members. Lovingly known as The Alumni:
 
-[Juanjo Bazán](https://github.com/xuanxu), [Enrique García Cota](https://github.com/kikito), [Alberto Calderón](https://github.com/bertocq), [María Checa](https://github.com/mariacheca), [Alberto García](https://github.com/decabeza), [Julián Herrero](https://github.com/microweb10)
+[Juanjo Bazán](https://github.com/xuanxu), [Enrique García Cota](https://github.com/kikito), [Alberto Calderón](https://github.com/bertocq), [María Checa](https://github.com/mariacheca), [Alberto García](https://github.com/decabeza), [Julián Herrero](https://github.com/microweb10), [Senén Rodero](https://github.com/Senen) and [Raimond García](https://github.com/voodoorai2000).

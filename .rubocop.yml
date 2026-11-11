@@ -1,9 +1,10 @@
-require:
+plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   DisplayCopNames: true
@@ -11,6 +12,7 @@ AllCops:
   Exclude:
     - "db/schema.rb"
     - "app/lib/ckeditor/backend/active_storage.rb"
+    - "vendor/**/*"
   DisabledByDefault: true
 
 Bundler/DuplicatedGem:
@@ -20,24 +22,23 @@ Bundler/OrderedGems:
   Enabled: true
   ConsiderPunctuation: true
 
-Capybara/ClickLinkOrButtonStyle:
-  Enabled: true
-  EnforcedStyle: strict
-
-Capybara/CurrentPathExpectation:
+Capybara/AmbiguousClick:
   Enabled: true
 
-Capybara/NegationMatcher:
+Capybara/RSpec/CurrentPathExpectation:
   Enabled: true
-  EnforcedStyle: not_to
 
 Capybara/RSpec/HaveSelector:
   Enabled: true
 
-Capybara/SpecificActions:
+Capybara/RSpec/NegationMatcher:
+  Enabled: true
+  EnforcedStyle: not_to
+
+Capybara/RSpec/VisibilityMatcher:
   Enabled: true
 
-Capybara/VisibilityMatcher:
+Capybara/SpecificActions:
   Enabled: true
 
 FactoryBot/AssociationStyle:
@@ -99,6 +100,9 @@ Layout/EmptyLineBetweenDefs:
 Layout/EmptyLines:
   Enabled: true
 
+Layout/EmptyLinesAfterModuleInclusion:
+  Enabled: true
+
 Layout/EmptyLinesAroundAccessModifier:
   Enabled: true
 
@@ -157,13 +161,11 @@ Layout/LineEndStringConcatenationIndentation:
 
 Layout/LineLength:
   Max: 110
+  AllowHeredoc: false
+  AllowQualifiedName: false
   Exclude:
     - "Gemfile"
-    - "config/environments/production.rb"
-    - "config/environments/staging.rb"
     - "config/initializers/devise.rb"
-    - "config/initializers/backtrace_silencers.rb"
-    - "config/initializers/active_storage_message_and_cookie_rotator.rb"
     - "db/migrate/*create_delayed_jobs.rb"
     - "db/migrate/*create_active_storage_variant_records.active_storage.rb"
     - "app/models/budget/stats.rb"
@@ -181,9 +183,6 @@ Layout/MultilineHashKeyLineBreaks:
   Enabled: true
 
 Layout/MultilineMethodCallBraceLayout:
-  Enabled: true
-
-Layout/MultilineMethodCallIndentation:
   Enabled: true
 
 Layout/MultilineOperationIndentation:
@@ -283,6 +282,12 @@ Lint/BooleanSymbol:
 Lint/ConstantDefinitionInBlock:
   Enabled: true
 
+Lint/ConstantReassignment:
+  Enabled: true
+
+Lint/CircularArgumentReference:
+  Enabled: true
+
 Lint/DeprecatedClassMethods:
   Enabled: true
 
@@ -298,6 +303,9 @@ Lint/EmptyBlock:
 Lint/EmptyFile:
   Enabled: true
 
+Lint/HashNewWithKeywordArgumentsAsDefault:
+  Enabled: true
+
 Lint/LiteralAsCondition:
   Enabled: true
 
@@ -305,6 +313,9 @@ Lint/NonAtomicFileOperation:
   Enabled: true
 
 Lint/ParenthesesAsGroupedExpression:
+  Enabled: true
+
+Lint/RedundantSafeNavigation:
   Enabled: true
 
 Lint/RedundantStringCoercion:
@@ -316,13 +327,28 @@ Lint/SafeNavigationChain:
 Lint/ShadowingOuterLocalVariable:
   Enabled: true
 
+Lint/SharedMutableDefault:
+  Enabled: true
+
 Lint/SymbolConversion:
   Enabled: true
   Exclude:
     - "app/models/setting.rb"
     - "db/dev_seeds/settings.rb"
 
+Lint/UnreachableCode:
+  Enabled: true
+
+Lint/UnreachableLoop:
+  Enabled: true
+
+Lint/UnreachablePatternBranch:
+  Enabled: true
+
 Lint/UselessAssignment:
+  Enabled: true
+
+Lint/UselessDefined:
   Enabled: true
 
 Lint/Void:
@@ -334,6 +360,17 @@ Naming/BlockForwarding:
     - "app/controllers/application_controller.rb"
     - "app/controllers/management/base_controller.rb"
     - "app/controllers/subscriptions_controller.rb"
+
+Naming/PredicateMethod:
+  Enabled: true
+  Exclude:
+    - "app/models/local_census_records/import.rb"
+    - "app/models/user.rb"
+    - "app/models/verification/management/email.rb"
+    - "config/initializers/foundation_form_builder.rb"
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: true
 
 Naming/VariableName:
   Enabled: true
@@ -356,6 +393,9 @@ Performance/StartWith:
 Performance/Sum:
   Enabled: true
 
+Performance/ZipWithoutBlock:
+  Enabled: true
+
 Rails/ActionControllerFlashBeforeRender:
   Enabled: true
 
@@ -363,6 +403,9 @@ Rails/ActiveRecordCallbacksOrder:
   Enabled: true
 
 Rails/AddColumnIndex:
+  Enabled: true
+
+Rails/CompactBlank:
   Enabled: true
 
 Rails/CreateTableWithTimestamps:
@@ -384,7 +427,12 @@ Rails/DynamicFindBy:
     - find_by_domain
     - find_by_slug_or_id
     - find_by_slug_or_id!
-    - find_by_manager_login
+
+Rails/EnumHash:
+  Enabled: true
+
+Rails/EnumSyntax:
+  Enabled: true
 
 Rails/EnumUniqueness:
   Enabled: true
@@ -396,6 +444,11 @@ Rails/FindBy:
   Enabled: true
   Include:
     - "**/*.rb"
+  Exclude:
+    - "config/initializers/ahoy.rb"
+
+Rails/FindByOrAssignmentMemoization:
+  Enabled: true
 
 Rails/FindEach:
   Enabled: true
@@ -408,6 +461,9 @@ Rails/HasManyOrHasOneDependent:
   Severity: refactor
 
 Rails/HttpStatus:
+  Enabled: true
+
+Rails/HttpStatusNameConsistency:
   Enabled: true
 
 Rails/I18nLocaleAssignment:
@@ -425,6 +481,9 @@ Rails/NotNullColumn:
   Exclude:
     - "db/migrate/201[5-7]*"
 
+Rails/OrderArguments:
+  Enabled: true
+
 Rails/OutputSafety:
   Enabled: true
   Severity: warning
@@ -441,6 +500,9 @@ Rails/PluralizationGrammar:
   Enabled: true
 
 Rails/Presence:
+  Enabled: true
+
+Rails/RedirectBackOrTo:
   Enabled: true
 
 Rails/RedundantActiveRecordAllMethod:
@@ -514,6 +576,9 @@ Rails/WhereNot:
 Rails/WhereNotWithMultipleConditions:
   Enabled: true
 
+Rails/WhereRange:
+  Enabled: true
+
 RSpec/AroundBlock:
   Enabled: true
 
@@ -527,11 +592,8 @@ RSpec/BeNil:
   Enabled: true
   EnforcedStyle: be
 
-RSpec/Capybara/FeatureMethods:
+RSpec/ChangeByZero:
   Enabled: true
-  EnabledMethods:
-    - scenario
-    - xscenario
 
 RSpec/ContextMethod:
   Enabled: true
@@ -539,6 +601,14 @@ RSpec/ContextMethod:
 RSpec/DescribedClass:
   Enabled: true
   EnforcedStyle: explicit
+
+RSpec/Dialect:
+  Enabled: true
+  PreferredMethods:
+    background: :before
+    given:      :let
+    given!:     :let!
+    feature:    :describe
 
 RSpec/EmptyExampleGroup:
   Enabled: true
@@ -556,10 +626,16 @@ RSpec/EmptyLineAfterExampleGroup:
   Exclude:
     - spec/factories/**/*
 
+RSpec/EmptyOutput:
+  Enabled: true
+
 RSpec/ExampleWording:
   Enabled: true
 
 RSpec/ExcessiveDocstringSpacing:
+  Enabled: true
+
+RSpec/ExpectInLet:
   Enabled: true
 
 RSpec/Focus:
@@ -568,10 +644,14 @@ RSpec/Focus:
 RSpec/HookArgument:
   Enabled: true
 
+RSpec/IncludeExamples:
+  Enabled: true
+
 RSpec/InstanceVariable:
   Enabled: true
   Exclude:
     - spec/controllers/concerns/has_orders_spec.rb
+    - spec/form_builders/translatable_form_builder_spec.rb
 
 RSpec/LetBeforeExamples:
   Enabled: true
@@ -579,28 +659,28 @@ RSpec/LetBeforeExamples:
 RSpec/LetSetup:
   Enabled: true
 
+RSpec/MatchWithSimpleRegex:
+  Enabled: true
+
 RSpec/MetadataStyle:
+  Enabled: true
+
+RSpec/MissingExpectationTargetMethod:
   Enabled: true
 
 RSpec/NotToNot:
   Enabled: true
 
+RSpec/Output:
+  Enabled: true
+
 RSpec/OverwritingSetup:
   Enabled: true
 
-RSpec/Rails/HaveHttpStatus:
-  Enabled: true
-
-RSpec/Rails/InferredSpecType:
-  Enabled: true
-
-RSpec/Rails/NegationBeValid:
-  Enabled: true
-
-RSpec/Rails/TravelAround:
-  Enabled: true
-
 RSpec/ReceiveMessages:
+  Enabled: true
+
+RSpec/RepeatedDescription:
   Enabled: true
 
 RSpec/RepeatedExample:
@@ -624,7 +704,25 @@ RSpec/SpecFilePathFormat:
 RSpec/SpecFilePathSuffix:
   Enabled: true
 
+RSpec/UndescriptiveLiteralsDescription:
+  Enabled: true
+
+RSpec/VerifiedDoubleReference:
+  Enabled: true
+
 RSpec/VoidExpect:
+  Enabled: true
+
+RSpecRails/HaveHttpStatus:
+  Enabled: true
+
+RSpecRails/InferredSpecType:
+  Enabled: true
+
+RSpecRails/NegationBeValid:
+  Enabled: true
+
+RSpecRails/TravelAround:
   Enabled: true
 
 Security/Eval:
@@ -647,6 +745,8 @@ Style/AndOr:
 
 Style/ArgumentsForwarding:
   Enabled: true
+  Exclude:
+    - "bin/setup"
 
 Style/ArrayCoercion:
   Enabled: true
@@ -654,7 +754,13 @@ Style/ArrayCoercion:
 Style/ArrayIntersect:
   Enabled: true
 
+Style/ArrayIntersectWithSingleElement:
+  Enabled: true
+
 Style/BlockDelimiters:
+  Enabled: true
+
+Style/CaseLikeIf:
   Enabled: true
 
 Style/ClassCheck:
@@ -664,6 +770,24 @@ Style/ClassVars:
   Enabled: true
 
 Style/CollectionMethods:
+  Enabled: true
+
+Style/CollectionQuerying:
+  Enabled: true
+
+Style/ComparableBetween:
+  Enabled: true
+
+Style/DigChain:
+  Enabled: true
+
+Style/EmptyClassDefinition:
+  Enabled: true
+
+Style/EmptyStringInsideInterpolation:
+  Enabled: true
+
+Style/FileOpen:
   Enabled: true
 
 Style/FileRead:
@@ -678,9 +802,11 @@ Style/HashConversion:
 Style/HashExcept:
   Enabled: true
 
+Style/HashSlice:
+  Enabled: true
+
 Style/HashSyntax:
   Enabled: true
-  EnforcedShorthandSyntax: either
 
 Style/HashTransformKeys:
   Enabled: true
@@ -705,7 +831,16 @@ Style/InvertibleUnlessCondition:
     :present?: :blank?
     :zero?: ~
 
+Style/KeywordArgumentsMerging:
+  Enabled: true
+
 Style/LineEndConcatenation:
+  Enabled: true
+
+Style/MapIntoArray:
+  Enabled: true
+
+Style/MapJoin:
   Enabled: true
 
 Style/MapToHash:
@@ -719,8 +854,13 @@ Style/MinMaxComparison:
 
 Style/MutableConstant:
   Enabled: true
+  Exclude:
+    - "bin/setup"
 
 Style/NegatedIfElseCondition:
+  Enabled: true
+
+Style/NegativeArrayIndex:
   Enabled: true
 
 Style/Not:
@@ -738,7 +878,16 @@ Style/Proc:
 Style/RaiseArgs:
   Enabled: true
 
+Style/ReduceToHash:
+  Enabled: true
+
 Style/RedundantArgument:
+  Enabled: true
+
+Style/RedundantArrayFlatten:
+  Enabled: true
+
+Style/RedundantBegin:
   Enabled: true
 
 Style/RedundantCondition:
@@ -750,10 +899,19 @@ Style/RedundantFileExtensionInRequire:
 Style/RedundantFreeze:
   Enabled: true
 
+Style/RedundantMinMaxBy:
+  Enabled: true
+
 Style/RedundantInterpolation:
   Enabled: true
 
 Style/RedundantParentheses:
+  Enabled: true
+
+Style/RedundantRegexpArgument:
+  Enabled: true
+
+Style/RedundantRegexpCharacterClass:
   Enabled: true
 
 Style/RedundantReturn:
@@ -785,6 +943,11 @@ Style/StringLiterals:
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
+
+Style/SuperArguments:
+  Enabled: true
+  Exclude:
+    - "config/initializers/ahoy.rb"
 
 Style/SymbolProc:
   Enabled: true

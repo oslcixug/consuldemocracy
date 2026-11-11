@@ -13,7 +13,32 @@ describe "Stats", :admin do
       expect(page).to have_content "DEBATES\n1"
       expect(page).to have_content "PROPOSALS\n2"
       expect(page).to have_content "COMMENTS\n3"
-      expect(page).to have_content "VISITS\n4"
+      expect(page).to have_content "VISITS\n5"
+    end
+
+    scenario "Visits" do
+      visit admin_stats_path
+      refresh
+
+      expect(page).to have_content "VISITS\n1"
+
+      allow_any_instance_of(ActionDispatch::Request).to receive(:user_agent).and_return("Different")
+
+      using_session(:different) do
+        visit root_path
+
+        click_link "Debates"
+        expect(page).to have_link "Start a debate"
+
+        click_link "Proposals"
+        expect(page).to have_link "Create a proposal"
+      end
+
+      allow_any_instance_of(ActionDispatch::Request).to receive(:user_agent).and_call_original
+
+      refresh
+
+      expect(page).to have_content "VISITS\n2"
     end
 
     scenario "Votes" do
@@ -99,6 +124,33 @@ describe "Stats", :admin do
         expect(page).to have_link "Go back", count: 1
       end
 
+      scenario "Don't use the cache for supports", :with_cache do
+        budget.update!(phase: :selecting)
+        investment = create(:budget_investment, heading: heading_all_city)
+        create(:user, :level_two, votables: [investment])
+
+        supporter = create(:user, :level_two)
+
+        visit budget_supporting_admin_stats_path(budget_id: budget)
+
+        expect(page).to have_content "VOTES\n1"
+        expect(page).to have_content "PARTICIPANTS\n1"
+
+        using_session(:supporter) do
+          login_as(supporter)
+
+          visit budget_investment_path(budget, investment)
+          click_button "Support"
+
+          expect(page).to have_button "Remove your support"
+        end
+
+        refresh
+
+        expect(page).to have_content "VOTES\n2"
+        expect(page).to have_content "PARTICIPANTS\n2"
+      end
+
       scenario "hide final voting link" do
         visit admin_stats_path
         click_link "Participatory Budgets"
@@ -133,6 +185,32 @@ describe "Stats", :admin do
         end
 
         expect(page).to have_content "VOTES\n3"
+        expect(page).to have_content "PARTICIPANTS\n2"
+      end
+
+      scenario "Don't use the cache for votes", :with_cache do
+        budget.update!(phase: :balloting)
+        create(:user, ballot_lines: [investment])
+
+        balloter = create(:user, :level_two)
+
+        visit budget_balloting_admin_stats_path(budget_id: budget.id)
+
+        expect(page).to have_content "VOTES\n1"
+        expect(page).to have_content "PARTICIPANTS\n1"
+
+        using_session(:balloter) do
+          login_as(balloter)
+
+          visit budget_investment_path(budget, investment)
+          click_button "Vote"
+
+          expect(page).to have_button "Remove vote"
+        end
+
+        refresh
+
+        expect(page).to have_content "VOTES\n2"
         expect(page).to have_content "PARTICIPANTS\n2"
       end
     end

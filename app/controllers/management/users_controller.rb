@@ -25,7 +25,7 @@ class Management::UsersController < Management::BaseController
 
   def erase
     if current_manager.present?
-      managed_user.erase(t("management.users.erased_by_manager", manager: current_manager["login"]))
+      managed_user.erase(t("management.users.erased_by_manager", manager: current_manager_login))
     end
 
     destroy_session
@@ -54,7 +54,7 @@ class Management::UsersController < Management::BaseController
     end
 
     def user_without_email
-      new_password = "aAbcdeEfghiJkmnpqrstuUvwxyz23456789$!".chars.sample(10).join
+      new_password = User.random_password
       @user.password = new_password
       @user.password_confirmation = new_password
 

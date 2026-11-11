@@ -38,19 +38,17 @@ class Officing::ResultsController < Officing::BaseController
 
       params[:questions].each_pair do |question_id, results|
         question = @poll.questions.find(question_id)
-        go_back_to_new if question.blank?
 
-        results.each_pair do |answer_index, count|
+        results.each_pair do |option_id, count|
           next if count.blank?
 
-          answer = question.question_answers.find_by(given_order: answer_index.to_i + 1).title
-          go_back_to_new if question.blank?
+          option = question.question_options.find_by(id: option_id)
 
           partial_result = ::Poll::PartialResult.find_or_initialize_by(
             booth_assignment_id: @officer_assignment.booth_assignment_id,
             date: Date.current,
             question_id: question_id,
-            answer: answer
+            option_id: option.id
           )
           partial_result.officer_assignment_id = @officer_assignment.id
           partial_result.amount = count.to_i
@@ -79,10 +77,10 @@ class Officing::ResultsController < Officing::BaseController
       @results << recount
     end
 
-    def go_back_to_new(alert = nil)
+    def go_back_to_new(alert)
       params[:d] = Date.current
       params[:oa] = results_params[:officer_assignment_id]
-      flash.now[:alert] = (alert || t("officing.results.flash.error_create"))
+      flash.now[:alert] = alert
       load_officer_assignments
       load_partial_results
       render :new
@@ -122,5 +120,11 @@ class Officing::ResultsController < Officing::BaseController
 
     def index_params
       params.permit(:booth_assignment_id, :date)
+    end
+
+    def check_officer_assignment
+      if @officer_assignment.blank?
+        go_back_to_new(t("officing.results.flash.error_wrong_booth"))
+      end
     end
 end

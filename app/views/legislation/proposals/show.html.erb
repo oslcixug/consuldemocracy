@@ -1,10 +1,10 @@
 <% provide :title, @proposal.title %>
 <% content_for :meta_description do %><%= @proposal.summary %><% end %>
 <% provide :social_media_meta_tags do %>
-<%= render "shared/social_media_meta_tags",
-           social_url: legislation_process_proposal_url(process_id: @process),
-           social_title: @proposal.title,
-           social_description: @proposal.summary %>
+  <%= render "shared/social_media_meta_tags",
+             social_url: legislation_process_proposal_url(process_id: @process),
+             social_title: @proposal.title,
+             social_description: @proposal.summary %>
 <% end %>
 <% content_for :canonical do %>
   <%= render "shared/canonical", href: legislation_process_proposal_url(process_id: @process) %>
@@ -25,6 +25,7 @@
           @proposal,
           @proposal.author,
           Flag.flagged?(current_user, @proposal),
+          feature?("gdpr.require_consent_for_embedded_videos"),
           current_user&.voted_as_when_voted_for(@proposal)] do %>
   <div class="proposal-show legislation-proposal-show">
     <div id="<%= dom_id(@proposal) %>" class="row">
@@ -38,22 +39,7 @@
           </div>
         <% end %>
 
-        <div class="proposal-info">
-          <%= render "/shared/author_info", resource: @proposal %>
-
-          <span class="bullet">&nbsp;&bull;&nbsp;</span>
-          <%= l @proposal.created_at.to_date %>
-          <span class="bullet">&nbsp;&bull;&nbsp;</span>
-          <%= render Shared::CommentsCountComponent.new(@proposal.comments_count, url: "#comments") %>
-
-          <% if current_user %>
-            <span class="bullet">&nbsp;&bull;&nbsp;</span>
-            <span class="js-flag-actions">
-              <%= render "shared/flag_actions", flaggable: @proposal %>
-            </span>
-          <% end %>
-
-        </div>
+        <%= render Shared::DetailedInfoComponent.new(@proposal) %>
 
         <%= render_image(@proposal.image, :large, true) if @proposal.image.present? %>
 
@@ -65,13 +51,7 @@
 
         <blockquote><%= @proposal.summary %></blockquote>
 
-        <% if @proposal.video_url.present? %>
-          <div class="small-12 medium-7 small-centered">
-            <div class="flex-video">
-              <div id="js-embedded-video" data-video-code="<%= embedded_video_code(@proposal) %>"></div>
-            </div>
-          </div>
-        <% end %>
+        <%= render Shared::EmbeddedVideoComponent.new(@proposal) %>
 
         <%= auto_link_already_sanitized_html wysiwyg(@proposal.description) %>
 
@@ -94,8 +74,8 @@
 
         <%= render Shared::GeozoneLinkComponent.new(@proposal, legislation_process_proposals_path(@process, search: geozone_name(@proposal))) %>
 
-        <div class="js-moderator-proposal-actions margin">
-          <%= render "legislation/proposals/actions", proposal: @proposal %>
+        <div class="margin">
+          <%= render Shared::ModerationActionsComponent.new(@proposal) %>
         </div>
       </div>
 

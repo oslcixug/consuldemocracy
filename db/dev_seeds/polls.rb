@@ -1,6 +1,3 @@
-require_dependency "poll/answer"
-require_dependency "poll/question/answer"
-
 section "Creating polls" do
   def create_poll!(attributes)
     poll = Poll.create!(attributes.merge(starts_at: 1.day.from_now, ends_at: 2.days.from_now))
@@ -41,7 +38,7 @@ section "Creating polls" do
 
   Poll.find_each do |poll|
     name = poll.name
-    I18n.available_locales.map do |locale|
+    Setting.enabled_locales.map do |locale|
       Globalize.with_locale(locale) do
         poll.name = "#{name} (#{locale})"
         poll.summary = "Summary for locale #{locale}"
@@ -52,43 +49,40 @@ section "Creating polls" do
   end
 end
 
-section "Creating Poll Questions & Answers" do
+section "Creating Poll Questions & Options" do
   Poll.find_each do |poll|
     (3..5).to_a.sample.times do
+      vote_type = VotationType.vote_types.keys.sample
       question_title = Faker::Lorem.sentence(word_count: 3).truncate(60) + "?"
       question = Poll::Question.new(author: User.sample,
                                     title: question_title,
                                     poll: poll)
-      I18n.available_locales.map do |locale|
+      Setting.enabled_locales.map do |locale|
         Globalize.with_locale(locale) do
           question.title = "#{question_title} (#{locale})"
         end
       end
       question.save!
-      Faker::Lorem.words(number: (2..4).to_a.sample).each_with_index do |title, index|
-        description = "<p>#{Faker::Lorem.paragraphs.join("</p><p>")}</p>"
-        answer = Poll::Question::Answer.new(question: question,
-                                            title: title.capitalize,
-                                            description: description,
-                                            given_order: index + 1)
-        I18n.available_locales.map do |locale|
-          Globalize.with_locale(locale) do
-            answer.title = "#{title} (#{locale})"
-            answer.description = "#{description} (#{locale})"
+
+      question.create_votation_type!(vote_type: vote_type, max_votes: (3 if vote_type == "multiple"))
+
+      if question.accepts_options?
+        Faker::Lorem.words(number: (2..4).to_a.sample).each_with_index do |title, index|
+          description = "<p>#{Faker::Lorem.paragraphs.join("</p><p>")}</p>"
+          option = Poll::Question::Option.new(question: question,
+                                              title: title.capitalize,
+                                              description: description,
+                                              given_order: index + 1)
+          Setting.enabled_locales.map do |locale|
+            Globalize.with_locale(locale) do
+              option.title = "#{title} (#{locale})"
+              option.description = "#{description} (#{locale})"
+            end
           end
+          option.save!
         end
-        answer.save!
       end
     end
-  end
-end
-
-section "Creating Poll Votation types" do
-  poll = Poll.first
-
-  poll.questions.each do |question|
-    vote_type = VotationType.vote_types.keys.sample
-    question.create_votation_type!(vote_type: vote_type, max_votes: (3 unless vote_type == "unique"))
   end
 end
 
@@ -161,9 +155,15 @@ section "Creating Poll Voters" do
     poll.questions.each do |question|
       next unless [true, false].sample
 
-      Poll::Answer.create!(question_id: question.id,
-                           author: user,
-                           answer: question.question_answers.sample.title)
+      if question.accepts_options?
+        option = question.question_options.sample
+        Poll::Answer.create!(question_id: question.id,
+                             author: user,
+                             option: option)
+      else
+        text = Faker::Lorem.sentence(word_count: (6..14).to_a.sample)
+        Poll::Answer.create!(question_id: question.id, author: user, answer: text)
+      end
     end
   end
 
@@ -213,12 +213,12 @@ section "Creating Poll Results" do
       author = Poll::Officer.first.user
 
       poll.questions.each do |question|
-        question.question_answers.each do |answer|
+        question.question_options.each do |option|
           Poll::PartialResult.create!(officer_assignment: officer_assignment,
                                       booth_assignment: booth_assignment,
                                       date: Date.current,
                                       question: question,
-                                      answer: answer.title,
+                                      option: option,
                                       author: author,
                                       amount: rand(999),
                                       origin: "booth")
@@ -235,7 +235,7 @@ section "Creating Poll Questions from Proposals" do
     question = Poll::Question.new(poll: poll)
     question.copy_attributes_from_proposal(proposal)
     question_title = question.title
-    I18n.available_locales.map do |locale|
+    Setting.enabled_locales.map do |locale|
       Globalize.with_locale(locale) do
         question.title = "#{question_title} (#{locale})"
       end
@@ -243,18 +243,19 @@ section "Creating Poll Questions from Proposals" do
     question.save!
     Faker::Lorem.words(number: (2..4).to_a.sample).each_with_index do |title, index|
       description = "<p>#{Faker::ChuckNorris.fact}</p>"
-      answer = Poll::Question::Answer.new(question: question,
+      option = Poll::Question::Option.new(question: question,
                                           title: title.capitalize,
                                           description: description,
                                           given_order: index + 1)
-      I18n.available_locales.map do |locale|
+      Setting.enabled_locales.map do |locale|
         Globalize.with_locale(locale) do
-          answer.title = "#{title} (#{locale})"
-          answer.description = "#{description} (#{locale})"
+          option.title = "#{title} (#{locale})"
+          option.description = "#{description} (#{locale})"
         end
       end
-      answer.save!
+      option.save!
     end
+    question.create_votation_type!(vote_type: "unique")
   end
 end
 
@@ -265,7 +266,7 @@ section "Creating Successful Proposals" do
     question = Poll::Question.new(poll: poll)
     question.copy_attributes_from_proposal(proposal)
     question_title = question.title
-    I18n.available_locales.map do |locale|
+    Setting.enabled_locales.map do |locale|
       Globalize.with_locale(locale) do
         question.title = "#{question_title} (#{locale})"
       end
@@ -273,17 +274,17 @@ section "Creating Successful Proposals" do
     question.save!
     Faker::Lorem.words(number: (2..4).to_a.sample).each_with_index do |title, index|
       description = "<p>#{Faker::ChuckNorris.fact}</p>"
-      answer = Poll::Question::Answer.new(question: question,
+      option = Poll::Question::Option.new(question: question,
                                           title: title.capitalize,
                                           description: description,
                                           given_order: index + 1)
-      I18n.available_locales.map do |locale|
+      Setting.enabled_locales.map do |locale|
         Globalize.with_locale(locale) do
-          answer.title = "#{title} (#{locale})"
-          answer.description = "#{description} (#{locale})"
+          option.title = "#{title} (#{locale})"
+          option.description = "#{description} (#{locale})"
         end
       end
-      answer.save!
+      option.save!
     end
   end
 end

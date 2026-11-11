@@ -1,6 +1,11 @@
 class User < ApplicationRecord
   include Verification
+
   attribute :registering_from_web, default: false
+  %i[newsletter email_digest email_on_direct_message public_activity recommended_debates
+     recommended_proposals].each do |field|
+    attribute field, :boolean, default: -> { !Setting["feature.gdpr.require_consent_for_notifications"] }
+  end
 
   devise :database_authenticatable, :recoverable, :rememberable,
          :trackable, :validatable, :omniauthable, :password_expirable, :secure_validatable,
@@ -25,6 +30,9 @@ class User < ApplicationRecord
   has_many :identities, dependent: :destroy
   has_many :debates, -> { with_hidden }, foreign_key: :author_id, inverse_of: :author
   has_many :proposals, -> { with_hidden }, foreign_key: :author_id, inverse_of: :author
+  has_many :proposal_notifications, -> { with_hidden },
+           foreign_key: :author_id,
+           inverse_of: :author
   has_many :activities
   has_many :budget_investments, -> { with_hidden },
            class_name: "Budget::Investment",
@@ -60,10 +68,6 @@ class User < ApplicationRecord
            class_name: "Poll::Answer",
            foreign_key: :author_id,
            inverse_of: :author
-  has_many :poll_pair_answers,
-           class_name: "Poll::PairAnswer",
-           foreign_key: :author_id,
-           inverse_of: :author
   has_many :poll_partial_results,
            class_name: "Poll::PartialResult",
            foreign_key: :author_id,
@@ -91,15 +95,17 @@ class User < ApplicationRecord
 
   validates_associated :organization, message: false
 
+  normalizes :document_number, with: ->(document_number) { document_number.gsub(/[^a-z0-9]+/i, "").upcase }
+
   accepts_nested_attributes_for :organization, update_only: true
 
-  attr_accessor :skip_password_validation, :use_redeemable_code, :login
+  attr_accessor :skip_password_validation, :login
 
   scope :administrators, -> { joins(:administrator) }
   scope :moderators,     -> { joins(:moderator) }
   scope :organizations,  -> { joins(:organization) }
   scope :sdg_managers,   -> { joins(:sdg_manager) }
-  scope :officials,      -> { where("official_level > 0") }
+  scope :officials,      -> { where(official_level: 1..) }
   scope :male,           -> { where(gender: "male") }
   scope :female,         -> { where(gender: "female") }
   scope :newsletter,     -> { where(newsletter: true) }
@@ -111,7 +117,7 @@ class User < ApplicationRecord
   scope :active,         -> { where(erased_at: nil) }
   scope :erased,         -> { where.not(erased_at: nil) }
   scope :public_for_api, -> { all }
-  scope :by_authors,     ->(author_ids) { where(id: author_ids) }
+  scope :with_ids,       ->(ids) { where(id: ids) }
   scope :by_comments,    ->(commentables) do
     joins(:comments).where("comments.commentable": commentables).distinct
   end
@@ -119,15 +125,12 @@ class User < ApplicationRecord
     search = "%#{search_string.strip}%"
     where("username ILIKE ? OR email ILIKE ? OR document_number ILIKE ?", search, search, search)
   end
-  scope :between_ages, ->(from, to) do
-    where(
-      "date_of_birth > ? AND date_of_birth < ?",
-      to.years.ago.beginning_of_year,
-      from.years.ago.end_of_year
-    )
-  end
+  scope :between_ages, ->(from, to, at_time: Time.current) do
+    start_date = at_time - (to + 1).years + 1.day
+    end_date = at_time - from.years
 
-  before_validation :clean_document_number
+    where(date_of_birth: start_date.beginning_of_day..end_date.end_of_day)
+  end
 
   # Get the existing user by email if the provider gives us a verified email.
   def self.first_or_initialize_for_oauth(auth)
@@ -146,13 +149,21 @@ class User < ApplicationRecord
     )
   end
 
-  def name
-    organization? ? organization.name : username
+  def self.create_from_census_response!(response, params = {})
+    create!({
+      verified_at: Time.current,
+      erased_at: Time.current,
+      password: random_password,
+      terms_of_service: "1",
+      email: nil,
+      gender: response.gender,
+      date_of_birth: response.date_of_birth.in_time_zone.to_datetime,
+      geozone: Geozone.find_by(census_code: response.district_code)
+    }.merge(params))
   end
 
-  def comment_flags(comments)
-    comment_flags = flags.for_comments(comments)
-    comment_flags.each_with_object({}) { |f, h| h[f.flaggable_id] = true }
+  def name
+    organization? ? organization.name : username
   end
 
   def voted_in_group?(group)
@@ -238,13 +249,13 @@ class User < ApplicationRecord
 
   def full_restore
     ActiveRecord::Base.transaction do
-      Debate.restore_all debates.where("hidden_at >= ?", hidden_at)
-      Comment.restore_all comments.where("hidden_at >= ?", hidden_at)
-      Legislation::Proposal.restore_all legislation_proposals.only_hidden.where("hidden_at >= ?", hidden_at)
-      Proposal.restore_all proposals.where("hidden_at >= ?", hidden_at)
-      Budget::Investment.restore_all budget_investments.where("hidden_at >= ?", hidden_at)
+      Debate.restore_all debates.where(hidden_at: hidden_at..)
+      Comment.restore_all comments.where(hidden_at: hidden_at..)
+      Legislation::Proposal.restore_all legislation_proposals.only_hidden.where(hidden_at: hidden_at..)
+      Proposal.restore_all proposals.where(hidden_at: hidden_at..)
+      Budget::Investment.restore_all budget_investments.where(hidden_at: hidden_at..)
       ProposalNotification.restore_all(
-        ProposalNotification.only_hidden.where("hidden_at >= ?", hidden_at).where(author_id: id)
+        ProposalNotification.only_hidden.where(hidden_at: hidden_at..).where(author_id: id)
       )
 
       restore
@@ -294,9 +305,26 @@ class User < ApplicationRecord
   def take_votes_from(other_user)
     return if other_user.blank?
 
-    Poll::Voter.where(user_id: other_user.id).update_all(user_id: id)
+    Poll::Voter.where(user_id: other_user.id).find_each do |poll_voter|
+      transaction(requires_new: true) { poll_voter.update_column(:user_id, id) }
+    rescue ActiveRecord::RecordNotUnique
+      poll_voter.delete
+    end
+
     Budget::Ballot.where(user_id: other_user.id).update_all(user_id: id)
-    Vote.where("voter_id = ? AND voter_type = ?", other_user.id, "User").update_all(voter_id: id)
+
+    with_lock do
+      Vote.where(voter_id: other_user.id, voter_type: "User").find_each do |vote|
+        votable = vote.votable
+        if Vote.where(voter_id: id, voter_type: "User", votable: votable).any?
+          vote.delete
+          votable&.update_cached_votes
+        else
+          vote.update_column(:voter_id, id)
+        end
+      end
+    end
+
     data_log = "id: #{other_user.id} - #{Time.current.strftime("%Y-%m-%d %H:%M:%S")}"
     update!(former_users_data_log: "#{former_users_data_log} | #{data_log}")
   end
@@ -321,7 +349,7 @@ class User < ApplicationRecord
   end
 
   def show_welcome_screen?
-    verification = Setting["feature.user.skip_verification"].present? ? true : unverified?
+    verification = Setting["feature.user.skip_verification"].present? || unverified?
     sign_in_count == 1 && verification && !organization && !administrator?
   end
 
@@ -340,7 +368,7 @@ class User < ApplicationRecord
   end
 
   def locale
-    self[:locale] || I18n.default_locale.to_s
+    self[:locale] || Setting.default_locale.to_s
   end
 
   def confirmation_required?
@@ -400,10 +428,6 @@ class User < ApplicationRecord
       where(conditions.to_hash).find_by(["username = ?", login])
   end
 
-  def self.find_by_manager_login(manager_login)
-    find_by(id: manager_login.split("_").last)
-  end
-
   def interests
     followables = follows.map(&:followable)
     followables.compact.map { |followable| followable.tags.map(&:name) }.flatten.compact.uniq
@@ -425,6 +449,22 @@ class User < ApplicationRecord
     end
   end
 
+  def self.random_password
+    lowercase = ("a".."z").to_a
+    uppercase = ("A".."Z").to_a
+    digits    = ("0".."9").to_a
+    symbols   = %w[- _ . , : ; ! @ # $ % & *]
+    all_chars = lowercase + uppercase + digits + symbols
+
+    characters = Array.new(password_complexity[:lower]) { lowercase.sample } +
+                 Array.new(password_complexity[:upper]) { uppercase.sample } +
+                 Array.new(password_complexity[:digit]) { digits.sample } +
+                 Array.new(password_complexity[:symbol]) { symbols.sample } +
+                 Array.new(password_length.min + rand(2..4)) { all_chars.sample }
+
+    characters.shuffle.join
+  end
+
   def self.maximum_attempts
     (Tenant.current_secrets.dig(:security, :lockable, :maximum_attempts) || 20).to_i
   end
@@ -442,12 +482,6 @@ class User < ApplicationRecord
   end
 
   private
-
-    def clean_document_number
-      return if document_number.blank?
-
-      self.document_number = document_number.gsub(/[^a-z0-9]+/i, "").upcase
-    end
 
     def validate_username_length
       validator = ActiveModel::Validations::LengthValidator.new(

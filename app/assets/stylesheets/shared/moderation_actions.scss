@@ -1,0 +1,14 @@
+.moderation-actions {
+  &,
+  form {
+    display: inline;
+  }
+
+  button {
+    @include link;
+  }
+
+  > * + *::before {
+    @include vertical-separator;
+  }
+}

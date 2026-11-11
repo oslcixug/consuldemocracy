@@ -1,13 +1,11 @@
 class Poll < ApplicationRecord
-  require_dependency "poll/answer"
-
   include Imageable
+
   acts_as_paranoid column: :hidden_at
   include ActsAsParanoidAliases
   include Notifiable
   include Searchable
   include Sluggable
-  include StatsVersionable
   include Reportable
   include SDG::Relatable
 
@@ -26,6 +24,7 @@ class Poll < ApplicationRecord
   has_many :officer_assignments, through: :booth_assignments
   has_many :officers, through: :officer_assignments
   has_many :questions, inverse_of: :poll, dependent: :destroy
+  has_many :answers, through: :questions
   has_many :comments, as: :commentable, inverse_of: :commentable
   has_many :ballot_sheets
 
@@ -36,21 +35,43 @@ class Poll < ApplicationRecord
   belongs_to :budget
 
   validates_translation :name, presence: true
-  validate :date_range
-  validate :start_date_is_not_past_date, on: :create
+
+  validates :starts_at, presence: true
+  validates :ends_at, presence: true
+
+  validates :starts_at,
+            comparison: {
+              less_than_or_equal_to: :ends_at,
+              message: ->(*) { I18n.t("errors.messages.invalid_date_range") }
+            },
+            allow_blank: true,
+            if: -> { ends_at }
+  validates :starts_at,
+            comparison: {
+              greater_than_or_equal_to: ->(*) { Time.current },
+              message: ->(*) { I18n.t("errors.messages.past_date") }
+            },
+            allow_blank: true,
+            on: :create
+  validates :ends_at,
+            comparison: {
+              greater_than_or_equal_to: ->(*) { Time.current },
+              message: ->(*) { I18n.t("errors.messages.past_date") }
+            },
+            on: :update,
+            if: -> { will_save_change_to_ends_at? }
+
   validate :start_date_change, on: :update
-  validate :end_date_is_not_past_date, on: :update
   validate :end_date_change, on: :update
   validate :only_one_active, unless: :public?
 
   accepts_nested_attributes_for :questions, reject_if: :all_blank, allow_destroy: true
 
   scope :for, ->(element) { where(related: element) }
-  scope :current, -> { where("starts_at <= :time and ends_at >= :time", time: Time.current) }
-  scope :expired, -> { where("ends_at < ?", Time.current) }
+  scope :current, -> { where(starts_at: ..Time.current, ends_at: Time.current..) }
+  scope :expired, -> { where(ends_at: ...Time.current) }
   scope :recounting, -> { where(ends_at: (RECOUNT_DURATION.ago)...Time.current) }
   scope :published, -> { where(published: true) }
-  scope :by_geozone_id, ->(geozone_id) { where(geozones: { id: geozone_id }.joins(:geozones)) }
   scope :public_for_api, -> { all }
   scope :not_budget, -> { where(budget_id: nil) }
   scope :created_by_admin, -> { where(related_type: nil) }
@@ -83,7 +104,7 @@ class Poll < ApplicationRecord
     where("? < ends_at and ? >= starts_at",
           poll.starts_at.beginning_of_day,
           poll.ends_at.end_of_day)
-      .where.not(id: poll.id)
+      .excluding(poll)
       .where(related: poll.related)
   end
 
@@ -96,7 +117,7 @@ class Poll < ApplicationRecord
   end
 
   def current?(timestamp = Time.current)
-    starts_at <= timestamp && timestamp <= ends_at
+    timestamp.between?(starts_at, ends_at)
   end
 
   def expired?(timestamp = Time.current)
@@ -165,18 +186,6 @@ class Poll < ApplicationRecord
     Poll::Voter.where(poll: self, user: user, origin: "web").exists?
   end
 
-  def date_range
-    if starts_at.blank? || ends_at.blank? || starts_at > ends_at
-      errors.add(:starts_at, I18n.t("errors.messages.invalid_date_range"))
-    end
-  end
-
-  def start_date_is_not_past_date
-    if starts_at.present? && starts_at < Time.current
-      errors.add(:starts_at, I18n.t("errors.messages.past_date"))
-    end
-  end
-
   def start_date_change
     if will_save_change_to_starts_at?
       if starts_at_in_database < Time.current
@@ -184,12 +193,6 @@ class Poll < ApplicationRecord
       elsif starts_at < Time.current
         errors.add(:starts_at, I18n.t("errors.messages.past_date"))
       end
-    end
-  end
-
-  def end_date_is_not_past_date
-    if will_save_change_to_ends_at? && ends_at < Time.current
-      errors.add(:ends_at, I18n.t("errors.messages.past_date"))
     end
   end
 

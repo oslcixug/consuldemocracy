@@ -24,3 +24,6 @@
 ###### Other gems ######
 #
 # Add your custom gem dependencies here
+
+# CIXUG: acceso co CAS da UDC (cas-saml.udc.es)
+gem "omniauth-cas", "~> 3.0.0"

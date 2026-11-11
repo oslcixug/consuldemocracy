@@ -1,6 +1,7 @@
 module Budgets
   class StatsController < ApplicationController
     include FeatureFlags
+
     feature_flag :budgets
 
     before_action :load_budget
@@ -8,8 +9,7 @@ module Budgets
 
     def show
       authorize! :read_stats, @budget
-      @stats = Budget::Stats.new(@budget)
-      @headings = @budget.headings.sort_by_name
+      @stats = Budget::Stats.new(@budget).tap(&:generate)
     end
 
     private

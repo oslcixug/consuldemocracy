@@ -18,6 +18,7 @@ en:
           reseted: Password reseted successfully
           random: Generate random password
           save: Save password
+          show: Show password
           print: Print password
           print_help: You will be able to print the password when it is saved.
     account_info:
@@ -95,12 +96,13 @@ en:
         unfeasible: Unfeasible investment
       print:
         print_button: Print
+      search:
+        label: "Search investments"
       search_results:
         one: " containing the term '%{search_term}'"
         other: " containing the term '%{search_term}'"
     sessions:
       need_managed_user: To perform this action you must select a user
-      signed_out: Signed out successfully.
       signed_out_managed_user: User session signed out successfully.
     username_label: Username
     users:

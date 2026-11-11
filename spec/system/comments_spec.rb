@@ -267,7 +267,7 @@ describe "Comments" do
   scenario "Sanitizes comment body for security" do
     create(:comment, commentable: resource,
                      body: "<script>alert('hola')</script> " \
-                           "<a href=\"javascript:alert('sorpresa!')\">click me<a/> " \
+                           "<a href=\"javascript:alert('sorpresa!')\">click me</a> " \
                            "http://www.url.com")
 
     visit polymorphic_path(resource)
@@ -336,16 +336,18 @@ describe "Comments" do
       visit polymorphic_path(resource)
 
       accept_confirm("Are you sure? This action will delete this comment. You can't undo this action.") do
-        within(".comment-body", text: "This was a mistake") { click_link "Delete comment" }
+        within(".comment-body", text: "This was a mistake") { click_button "Delete comment" }
       end
 
       expect(page).not_to have_content "This was a mistake"
-      expect(page).not_to have_link "Delete comment"
+      expect(page).not_to have_button "Delete comment"
+      expect(page).not_to have_content "This comment has been deleted"
 
       refresh
 
       expect(page).not_to have_content "This was a mistake"
-      expect(page).not_to have_link "Delete comment"
+      expect(page).not_to have_button "Delete comment"
+      expect(page).not_to have_content "This comment has been deleted"
 
       logout
       login_as(admin)
@@ -363,7 +365,7 @@ describe "Comments" do
       visit polymorphic_path(resource)
 
       accept_confirm("Are you sure? This action will delete this comment. You can't undo this action.") do
-        within(".comment-body", text: "Wrong comment") { click_link "Delete comment" }
+        within(".comment-body", text: "Wrong comment") { click_button "Delete comment" }
       end
 
       within "#comments > .comment-list > li", text: "Right reply" do
@@ -383,21 +385,7 @@ describe "Comments" do
   scenario "Reply" do
     comment = create(:comment, commentable: resource)
 
-    login_as(user)
-    visit polymorphic_path(resource)
-
-    within "#comment_#{comment.id}" do
-      click_link "Reply"
-    end
-
-    within "#js-comment-form-comment_#{comment.id}" do
-      fill_in fill_text, with: "It will be done next week."
-      click_button "Publish reply"
-    end
-
-    within "#comment_#{comment.id}" do
-      expect(page).to have_content "It will be done next week."
-    end
+    reply_to(comment, with: "It will be done next week.", replier: user)
 
     expect(page).not_to have_css "#js-comment-form-comment_#{comment.id}"
   end
@@ -472,7 +460,10 @@ describe "Comments" do
 
     within "#js-comment-form-comment_#{comment.id}" do
       click_button "Publish reply"
-      expect(page).to have_content "Can't be blank"
+
+      error_message_id = "comment_#{comment.id}_error"
+      expect(page).to have_css "[aria-invalid][aria-errormessage='#{error_message_id}']"
+      expect(page).to have_css "##{error_message_id}", exact_text: "Can't be blank"
     end
   end
 
@@ -720,5 +711,16 @@ describe "Comments" do
     click_button button_text
 
     expect(page).to have_content "Can't be blank"
+
+    error_message_id = "#{ActionView::RecordIdentifier.dom_id(resource)}_error"
+    expect(page).to have_css "[aria-invalid][aria-errormessage='#{error_message_id}']"
+    expect(page).to have_css "##{error_message_id}", exact_text: "Can't be blank"
+
+    fill_in fill_text, with: "This comment isn't blank"
+    click_button button_text
+
+    expect(page).not_to have_content "Can't be blank"
+    expect(page).not_to have_css "[aria-invalid]"
+    expect(page).not_to have_css "[aria-errormessage]"
   end
 end

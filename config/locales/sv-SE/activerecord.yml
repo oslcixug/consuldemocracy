@@ -1,5 +1,6 @@
 sv:
   attributes:
+    created_at: Skapad kl.
     geozone_id: "Område"
     results_enabled: "Visa resultat"
     stats_enabled: "Visa statistik"
@@ -106,22 +107,19 @@ sv:
       legislation/proposal:
         one: "Förslag"
         other: "Förslag"
-      legislation/draft_versions:
+      legislation/draft_version:
         one: "Utkastversion"
-        other: "Versioner av utkast"
-      legislation/questions:
+        other: "Utkastversioner"
+      legislation/question:
         one: "Fråga"
         other: "Frågor"
-      legislation/question_options:
+      legislation/question_option:
         one: "Frågealternativ"
-        other: "Svarsalternativ"
-      legislation/answers:
+        other: "Frågealternativ"
+      legislation/answer:
         one: "Svar"
         other: "Svar"
-      documents:
-        one: "Dokument"
-        other: "Dokument"
-      images:
+      image:
         one: "Bild"
         other: "Bilder"
       tenant:
@@ -151,6 +149,9 @@ sv:
       votation_type:
         one: Omröstningstyp
         other: Omröstningstyper
+      cookies/vendor:
+        one: cookie-leverantör
+        other: cookie-leverantörer
     attributes:
       budget:
         name: "Namn"
@@ -248,6 +249,7 @@ sv:
         main_link_url: "Länken leder till (lägg till en länk)"
       comment:
         body: "Kommentar"
+        parent_id: "Överordnad"
         user: "Användare"
       debate:
         author: "Skribent"
@@ -293,7 +295,6 @@ sv:
         public_interests: "Visa etiketterna för de element jag följer offentligt"
         recommended_debates: "Visa rekommenderade debatter"
         recommended_proposals: "Visa rekommenderade förslag"
-        redeemable_code: "Bekräftelsekod mottagen via e-post"
       direct_message:
         title: "Titel"
         body: "Meddelande"
@@ -359,7 +360,6 @@ sv:
         title: "Titel"
       site_customization/page:
         content: Innehåll
-        created_at: Skapad kl.
         subtitle: Underrubrik
         slug: URL
         status: Status
@@ -459,13 +459,14 @@ sv:
       image:
         title: Titel
         attachment: "Välj bild"
-      poll/question/answer:
+      poll/question/option:
         title: Svar
         description: Beskrivning
-      poll/question/answer/translation:
+        allow_custom_text: "Tillåt anpassad text"
+      poll/question/option/translation:
         title: Svar
         description: "Beskrivning (valfritt)"
-      poll/question/answer/video:
+      poll/question/option/video:
         title: Titel
         url: Extern video
       newsletter:
@@ -488,6 +489,7 @@ sv:
         link_text: Länktext
         link_url: Länk-URL
         columns: Antal kolumner
+        order: Position
       widget/card/translation:
         label: Etikett (valfritt)
         title: Titel
@@ -531,8 +533,13 @@ sv:
         max_votes: Högsta antalet röster
         vote_type: Omröstningstyp
       votation_type/vote_type:
+        open: Öppen fråga
         unique: Unikt svar
         multiple: Flera svar
+      cookies/vendor:
+        name: Leverantörsnamn
+        cookie: Cookie-namn
+        script: Javascript-kod
     errors:
       models:
         user:
@@ -551,6 +558,7 @@ sv:
           attributes:
             geojson:
               invalid: "Angiven GeoJSON följer inte korrekt format. Den måste följa ett format av typen \"Polygon\" eller \"MultiPolygon\"."
+              invalid_coordinates: "Tillhandahållen GeoJSON innehåller ogiltiga koordinater; koordinaterna måste ha erfordrat format för \"Longitud, latitud\" och följa standardformatet RFC 7946"
         image:
           attributes:
             attachment:
@@ -568,8 +576,6 @@ sv:
           attributes:
             document_number:
               not_in_census: "Finns inte i adressregistret"
-            user_id:
-              has_voted: "Användaren har redan röstat"
         legislation/process:
           attributes:
             end_date:
@@ -622,6 +628,10 @@ sv:
           attributes:
             code:
               invalid: "måste börja med samma kod som sitt delmål, följt av en punkt, och sluta med ett tal"
+        votation_type:
+          attributes:
+            vote_type:
+              cannot_change_to_open_ended: "kan inte byta till öppen typ av fråga eftersom du redan har definierat möjliga giltiga svar på denna fråga"
       messages:
         translations_too_short: Det krävs minst en översättning
         record_invalid: "Felmeddelanden: %{errors}"

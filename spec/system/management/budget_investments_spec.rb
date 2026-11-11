@@ -7,25 +7,6 @@ describe "Budget Investments" do
   let(:heading) { create(:budget_heading, group: group, name: "Health") }
   let(:user)    { create(:user, :level_two) }
 
-  it_behaves_like "nested documentable",
-                  "user",
-                  "budget_investment",
-                  "new_management_budget_investment_path",
-                  { budget_id: "budget_id" },
-                  "documentable_fill_new_valid_budget_investment",
-                  "Create Investment",
-                  "Investment created successfully.",
-                  management: true
-
-  it_behaves_like "nested imageable",
-                  "budget_investment",
-                  "new_management_budget_investment_path",
-                  { budget_id: "budget_id" },
-                  "imageable_fill_new_valid_budget_investment",
-                  "Create Investment",
-                  "Investment created successfully.",
-                  management: true
-
   it_behaves_like "mappable",
                   "budget_investment",
                   "investment",
@@ -40,7 +21,7 @@ describe "Budget Investments" do
 
     scenario "finds investment using budget slug" do
       login_managed_user(user)
-      login_as_manager(manager)
+      login_as manager.user
       visit management_budget_investment_path("budget_slug", investment)
 
       expect(page).to have_content investment.title
@@ -73,7 +54,7 @@ describe "Budget Investments" do
 
       click_button "Create Investment"
 
-      expect(page).to have_content "Investment created successfully."
+      expect(page).to have_content "Budget Investment created successfully."
 
       expect(page).to have_content "Health"
       expect(page).to have_content "Build a park in my neighborhood"
@@ -143,7 +124,7 @@ describe "Budget Investments" do
         click_link "Support budget investments"
       end
 
-      fill_in "search", with: "what you got"
+      fill_in "Search investments", with: "what you got"
       click_button "Search"
 
       within("#budget-investments") do
@@ -170,7 +151,7 @@ describe "Budget Investments" do
         click_link "Support budget investments"
       end
 
-      fill_in "search", with: "Area 52"
+      fill_in "Search investments", with: "Area 52"
       click_button "Search"
 
       within("#budget-investments") do
@@ -249,7 +230,7 @@ describe "Budget Investments" do
     login_managed_user(user)
     login_as(create(:administrator).user)
 
-    visit management_sign_in_path
+    visit management_root_path
 
     click_link "Create budget investment"
 
@@ -320,7 +301,7 @@ describe "Budget Investments" do
       create(:budget_investment, heading: create(:budget_heading, group: group))
 
       login_managed_user(user)
-      login_as_manager(manager)
+      login_as manager.user
 
       visit management_budget_investments_path(budget)
       click_link "Default heading investment"
@@ -340,7 +321,7 @@ describe "Budget Investments" do
       create(:budget_investment, heading: heading)
 
       login_managed_user(user)
-      login_as_manager(manager)
+      login_as manager.user
 
       visit management_budget_investments_path(budget)
       click_button "Support"
@@ -361,7 +342,7 @@ describe "Budget Investments" do
       create(:budget_investment, heading: heading, title: "Don't support me!")
 
       login_managed_user(user)
-      login_as_manager(manager)
+      login_as manager.user
 
       visit management_budget_investments_path(budget)
       click_link "Don't support me!"
@@ -523,8 +504,8 @@ describe "Budget Investments" do
         expect(page).to have_content(low_investment.title)
       end
 
-      select "District Nine", from: "heading_id"
-      click_button("Search")
+      select "District Nine", from: "Heading"
+      click_button "Search"
 
       within "#budget-investments" do
         expect(page).not_to have_content(unvoted_investment.title)

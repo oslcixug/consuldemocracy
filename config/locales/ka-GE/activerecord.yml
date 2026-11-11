@@ -93,24 +93,6 @@ ka:
       legislation/proposal:
         one: "ინიციატივა"
         other: "ინიციატივები"
-      legislation/draft_versions:
-        one: "კანონპროექტი"
-        other: "კანონპროექტები"
-      legislation/questions:
-        one: "კითხვა"
-        other: "კითხვები"
-      legislation/question_options:
-        one: "კითხვის ვარიანტი"
-        other: "კითხვის ვარიანტები"
-      legislation/answers:
-        one: "პასუხი"
-        other: "პასუხები"
-      documents:
-        one: "დოკუმენტი"
-        other: "დოკუმენტები"
-      images:
-        one: "ფოტოსურათი"
-        other: "ფოტოსურათები"
       topic:
         one: "საკითხი"
         other: "საკითხები"
@@ -267,7 +249,6 @@ ka:
         public_interests: "იმ ელემენტების კვალიფიკაციების გასაჯაროება, რომელთაც მე მივყვები"
         recommended_debates: "დებატების ირგვლივ არსებული რეკომენდაციების ჩვენება"
         recommended_proposals: "ინიციატივების ირგვლივ არსებული რეკომენდაციების ჩვენება"
-        redeemable_code: "ელ.ფოსტით მიღებული დადასტურების კოდი"
       direct_message:
         title: "სათაური"
         body: "გზავნილი"
@@ -325,7 +306,6 @@ ka:
         title: "სათაური"
       site_customization/page:
         content: შინაარსი
-        created_at: შექმნილია
         subtitle: ქვესათაური
         slug: მოკლე დასახელება
         status: სტატუსი
@@ -420,15 +400,6 @@ ka:
       image:
         title: სათაური
         attachment: "აირჩიეთ ფოტოსურათი"
-      poll/question/answer:
-        title: პასუხი
-        description: აღწერა
-      poll/question/answer/translation:
-        title: პასუხი
-        description: "აღწერა"
-      poll/question/answer/video:
-        title: სათაური
-        url: სხვა სერვერზე განთავსებული ვიდეოს ბმული
       newsletter:
         segment_recipient: მიმღებები
         subject: თემა
@@ -519,8 +490,6 @@ ka:
           attributes:
             document_number:
               not_in_census: "დოკუმენტი არ შედის აღწერაში"
-            user_id:
-              has_voted: "მომხმარებელმა უკვე მისცა ხმა"
         legislation/process:
           attributes:
             end_date:

@@ -1,29 +1,40 @@
 class Admin::MenuComponent < ApplicationComponent
-  include LinkListHelper
-  use_helpers :can?
+  delegate :link_list, to: :helpers
 
   def links
-    [
-      (proposals_link if feature?(:proposals)),
-      (debates_link if feature?(:debates)),
-      comments_link,
-      (polls_link if feature?(:polls)),
-      (legislation_link if feature?(:legislation)),
-      (budgets_link if feature?(:budgets)),
-      booths_links,
-      (signature_sheets_link if feature?(:signature_sheets)),
-      messages_links,
-      site_customization_links,
-      moderated_content_links,
-      profiles_links,
-      stats_link,
-      settings_links,
-      dashboard_links,
-      (machine_learning_link if ::MachineLearning.enabled?)
-    ]
+    if Rails.application.multitenancy_management_mode?
+      multitenancy_management_links
+    else
+      default_links
+    end
   end
 
   private
+
+    def default_links
+      [
+        (proposals_link if feature?(:proposals)),
+        (debates_link if feature?(:debates)),
+        comments_link,
+        (polls_link if feature?(:polls)),
+        (legislation_link if feature?(:legislation)),
+        (budgets_link if feature?(:budgets)),
+        booths_links,
+        (signature_sheets_link if feature?(:signature_sheets)),
+        messages_links,
+        site_customization_links,
+        moderated_content_links,
+        profiles_links,
+        stats_link,
+        settings_links,
+        dashboard_links,
+        (machine_learning_link if ::MachineLearning.enabled?)
+      ]
+    end
+
+    def multitenancy_management_links
+      [tenants_link, administrators_link]
+    end
 
     def moderated_content?
       moderated_sections.include?(controller_name) && controller.class.module_parent != Admin::Legislation
@@ -39,8 +50,8 @@ class Admin::MenuComponent < ApplicationComponent
     end
 
     def polls?
-      controller.class.module_parent == Admin::Poll::Questions::Answers ||
-        %w[polls active_polls recounts results questions answers].include?(controller_name) &&
+      controller.class.module_parent == Admin::Poll::Questions::Options ||
+        %w[polls active_polls recounts results questions options].include?(controller_name) &&
           action_name != "booth_assignments"
     end
 
@@ -54,7 +65,7 @@ class Admin::MenuComponent < ApplicationComponent
     end
 
     def settings?
-      controllers_names = ["settings", "tenants", "tags", "geozones", "local_census_records", "imports"]
+      controllers_names = %w[settings tenants tags locales geozones local_census_records imports]
       controllers_names.include?(controller_name)
     end
 
@@ -62,7 +73,7 @@ class Admin::MenuComponent < ApplicationComponent
       controllers_names = ["pages", "banners", "information_texts", "documents", "images", "content_blocks"]
 
       (controllers_names.include?(controller_name) || homepage? || pages?) &&
-        controller.class.module_parent != Admin::Poll::Questions::Answers
+        controller.class.module_parent != Admin::Poll::Questions::Options
     end
 
     def homepage?
@@ -395,7 +406,8 @@ class Admin::MenuComponent < ApplicationComponent
       [
         t("admin.menu.administrators"),
         admin_administrators_path,
-        controller_name == "administrators"
+        controller_name == "administrators",
+        class: "administrators-link"
       ]
     end
 
@@ -462,6 +474,7 @@ class Admin::MenuComponent < ApplicationComponent
           settings_link,
           tenants_link,
           tags_link,
+          (locales_link if I18n.available_locales.many?),
           geozones_link,
           local_census_records_link
         )
@@ -481,7 +494,8 @@ class Admin::MenuComponent < ApplicationComponent
         [
           t("admin.menu.multitenancy"),
           admin_tenants_path,
-          controller_name == "tenants"
+          controller_name == "tenants",
+          class: "tenants-link"
         ]
       end
     end
@@ -491,6 +505,14 @@ class Admin::MenuComponent < ApplicationComponent
         t("admin.menu.proposals_topics"),
         admin_tags_path,
         controller_name == "tags"
+      ]
+    end
+
+    def locales_link
+      [
+        t("admin.menu.locales"),
+        admin_locales_path,
+        controller_name == "locales"
       ]
     end
 
@@ -506,7 +528,7 @@ class Admin::MenuComponent < ApplicationComponent
       [
         t("admin.menu.site_customization.images"),
         admin_site_customization_images_path,
-        controller_name == "images" && controller.class.module_parent != Admin::Poll::Questions::Answers
+        controller_name == "images" && controller.class.module_parent != Admin::Poll::Questions::Options
       ]
     end
 

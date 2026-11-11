@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_28_184039) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
-  enable_extension "plpgsql"
   enable_extension "unaccent"
 
   create_table "active_poll_translations", id: :serial, force: :cascade do |t|
@@ -94,19 +94,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.integer "user_id"
     t.string "description"
     t.index ["user_id"], name: "index_administrators_on_user_id"
-  end
-
-  create_table "ahoy_events", id: :uuid, default: nil, force: :cascade do |t|
-    t.uuid "visit_id"
-    t.integer "user_id"
-    t.string "name"
-    t.jsonb "properties"
-    t.datetime "time", precision: nil
-    t.string "ip"
-    t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
-    t.index ["time"], name: "index_ahoy_events_on_time"
-    t.index ["user_id"], name: "index_ahoy_events_on_user_id"
-    t.index ["visit_id"], name: "index_ahoy_events_on_visit_id"
   end
 
   create_table "audits", id: :serial, force: :cascade do |t|
@@ -405,13 +392,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.boolean "hide_money", default: false
   end
 
-  create_table "campaigns", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "track_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
-
   create_table "ckeditor_assets", id: :serial, force: :cascade do |t|
     t.string "data_file_name", null: false
     t.string "data_content_type"
@@ -474,6 +454,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "cookies_vendors", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "cookie"
+    t.text "script"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cookie"], name: "index_cookies_vendors_on_cookie", unique: true
+  end
+
   create_table "dashboard_actions", id: :serial, force: :cascade do |t|
     t.string "title", limit: 80
     t.text "description"
@@ -528,7 +518,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.integer "author_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "visit_id"
     t.datetime "hidden_at", precision: nil
     t.integer "flags_count", default: 0
     t.datetime "ignored_flag_at", precision: nil
@@ -537,7 +526,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.integer "cached_votes_down", default: 0
     t.integer "comments_count", default: 0
     t.datetime "confirmed_hide_at", precision: nil
-    t.integer "cached_anonymous_votes_total", default: 0
     t.integer "cached_votes_score", default: 0
     t.bigint "hot_score", default: 0
     t.integer "confidence_score", default: 0
@@ -1025,8 +1013,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.string "answer"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.bigint "option_id"
     t.index ["author_id"], name: "index_poll_answers_on_author_id"
-    t.index ["question_id", "answer"], name: "index_poll_answers_on_question_id_and_answer"
+    t.index ["option_id", "author_id"], name: "index_poll_answers_on_option_id_and_author_id", unique: true
+    t.index ["option_id"], name: "index_poll_answers_on_option_id"
     t.index ["question_id"], name: "index_poll_answers_on_question_id"
   end
 
@@ -1092,9 +1082,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.text "amount_log", default: ""
     t.text "officer_assignment_id_log", default: ""
     t.text "author_id_log", default: ""
-    t.index ["answer"], name: "index_poll_partial_results_on_answer"
+    t.bigint "option_id"
     t.index ["author_id"], name: "index_poll_partial_results_on_author_id"
+    t.index ["booth_assignment_id", "date", "option_id"], name: "idx_on_booth_assignment_id_date_option_id_2ffcf6ea3b", unique: true
     t.index ["booth_assignment_id", "date"], name: "index_poll_partial_results_on_booth_assignment_id_and_date"
+    t.index ["option_id"], name: "index_poll_partial_results_on_option_id"
     t.index ["origin"], name: "index_poll_partial_results_on_origin"
     t.index ["question_id"], name: "index_poll_partial_results_on_question_id"
   end
@@ -1121,6 +1113,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.integer "question_id"
     t.integer "given_order", default: 1
     t.boolean "most_voted", default: false
+    t.boolean "allow_custom_text", default: false
     t.index ["question_id"], name: "index_poll_question_answers_on_question_id"
   end
 
@@ -1146,7 +1139,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.tsvector "tsv"
-    t.string "video_url"
     t.index ["author_id"], name: "index_poll_questions_on_author_id"
     t.index ["poll_id"], name: "index_poll_questions_on_poll_id"
     t.index ["proposal_id"], name: "index_poll_questions_on_proposal_id"
@@ -1209,7 +1201,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.integer "age"
     t.string "gender"
     t.integer "geozone_id"
-    t.integer "answer_id"
     t.integer "officer_assignment_id"
     t.integer "user_id"
     t.string "origin"
@@ -1219,6 +1210,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.index ["officer_assignment_id"], name: "index_poll_voters_on_officer_assignment_id"
     t.index ["poll_id", "document_number", "document_type"], name: "doc_by_poll"
     t.index ["poll_id"], name: "index_poll_voters_on_poll_id"
+    t.index ["user_id", "poll_id"], name: "index_poll_voters_on_user_id_and_poll_id", unique: true
     t.index ["user_id"], name: "index_poll_voters_on_user_id"
   end
 
@@ -1485,10 +1477,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
 
   create_table "site_customization_images", id: :serial, force: :cascade do |t|
     t.string "name", null: false
-    t.string "image_file_name"
-    t.string "image_content_type"
-    t.bigint "image_file_size"
-    t.datetime "image_updated_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_site_customization_images_on_name", unique: true
@@ -1514,14 +1502,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "locale"
-  end
-
-  create_table "stats_versions", id: :serial, force: :cascade do |t|
-    t.string "process_type"
-    t.integer "process_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["process_type", "process_id"], name: "index_stats_versions_on_process_type_and_process_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -1622,26 +1602,25 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.datetime "level_two_verified_at", precision: nil
     t.string "erase_reason"
     t.datetime "erased_at", precision: nil
-    t.boolean "public_activity", default: true
-    t.boolean "newsletter", default: true
+    t.boolean "public_activity"
+    t.boolean "newsletter"
     t.integer "notifications_count", default: 0
     t.boolean "registering_with_oauth", default: false
     t.string "locale"
     t.string "oauth_email"
     t.integer "geozone_id"
-    t.string "redeemable_code"
     t.string "gender", limit: 10
     t.datetime "date_of_birth", precision: nil
-    t.boolean "email_digest", default: true
-    t.boolean "email_on_direct_message", default: true
+    t.boolean "email_digest"
+    t.boolean "email_on_direct_message"
     t.boolean "official_position_badge", default: false
     t.datetime "password_changed_at", precision: nil, default: "2015-01-01 01:01:01", null: false
     t.boolean "created_from_signature", default: false
     t.integer "failed_email_digests_count", default: 0
     t.text "former_users_data_log", default: ""
     t.boolean "public_interests", default: false
-    t.boolean "recommended_debates", default: true
-    t.boolean "recommended_proposals", default: true
+    t.boolean "recommended_debates"
+    t.boolean "recommended_proposals"
     t.string "subscriptions_token"
     t.integer "failed_attempts", default: 0, null: false
     t.datetime "locked_at", precision: nil
@@ -1693,7 +1672,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.text "landing_page"
     t.integer "user_id"
     t.string "referring_domain"
-    t.string "search_keyword"
     t.string "browser"
     t.string "os"
     t.string "device_type"
@@ -1711,8 +1689,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
     t.string "utm_content"
     t.string "utm_campaign"
     t.datetime "started_at", precision: nil
+    t.string "visit_token"
+    t.string "visitor_token"
     t.index ["started_at"], name: "index_visits_on_started_at"
     t.index ["user_id"], name: "index_visits_on_user_id"
+    t.index ["visit_token"], name: "index_visits_on_visit_token", unique: true
+    t.index ["visitor_id", "started_at"], name: "index_visits_on_visitor_id_and_started_at"
+    t.index ["visitor_token", "started_at"], name: "index_visits_on_visitor_token_and_started_at"
   end
 
   create_table "votation_types", force: :cascade do |t|
@@ -1807,11 +1790,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_22_223950) do
   add_foreign_key "moderators", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "organizations", "users"
+  add_foreign_key "poll_answers", "poll_question_answers", column: "option_id"
   add_foreign_key "poll_answers", "poll_questions", column: "question_id"
   add_foreign_key "poll_booth_assignments", "polls"
   add_foreign_key "poll_officer_assignments", "poll_booth_assignments", column: "booth_assignment_id"
   add_foreign_key "poll_partial_results", "poll_booth_assignments", column: "booth_assignment_id"
   add_foreign_key "poll_partial_results", "poll_officer_assignments", column: "officer_assignment_id"
+  add_foreign_key "poll_partial_results", "poll_question_answers", column: "option_id"
   add_foreign_key "poll_partial_results", "poll_questions", column: "question_id"
   add_foreign_key "poll_partial_results", "users", column: "author_id"
   add_foreign_key "poll_question_answer_videos", "poll_question_answers", column: "answer_id"

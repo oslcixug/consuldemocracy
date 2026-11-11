@@ -60,18 +60,6 @@ zh-TW:
         other: "過程"
       legislation/proposal:
         other: "建議"
-      legislation/draft_versions:
-        other: "草稿版本"
-      legislation/questions:
-        other: "問題"
-      legislation/question_options:
-        other: "問題選項"
-      legislation/answers:
-        other: "答案"
-      documents:
-        other: "文檔"
-      images:
-        other: "圖像"
       topic:
         other: "主題"
       poll:
@@ -194,7 +182,6 @@ zh-TW:
         public_activity: "把我的活動清單公開"
         recommended_debates: "顯示辯論推薦"
         recommended_proposals: "顯示建議推薦"
-        redeemable_code: "通過電子郵件收到的驗證代碼"
       direct_message:
         title: "標題"
         body: "消息"
@@ -250,7 +237,6 @@ zh-TW:
         title: "標題"
       site_customization/page:
         content: 內容
-        created_at: 創建於
         subtitle: 副標題
         slug: Slug
         status: 狀態
@@ -340,15 +326,6 @@ zh-TW:
       image:
         title: 標題
         attachment: "附件"
-      poll/question/answer:
-        title: 回答
-        description: 描述
-      poll/question/answer/translation:
-        title: 回答
-        description: "描述"
-      poll/question/answer/video:
-        title: 標題
-        url: 外部視頻
       newsletter:
         segment_recipient: 收件者
         subject: 主題
@@ -421,8 +398,6 @@ zh-TW:
           attributes:
             document_number:
               not_in_census: "不在人口普查中的文檔"
-            user_id:
-              has_voted: "用戶已經投票"
         legislation/process:
           attributes:
             end_date:
