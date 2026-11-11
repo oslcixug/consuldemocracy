@@ -2,5 +2,16 @@
 # Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
 gl:
   images:
+    errors:
+      messages:
+        llm_not_configured: O LLM non está ben configurado. Contacta cunha persoa administradora.
+        rate_limit_exceeded: Agarda uns minutos antes de xerar novas suxestións.
+        title_and_description_required: Para suxerir imaxes, escribe primeiro un título e unha descrición.
     form:
+      attach_suggested_image_aria_label: Anexar a imaxe suxerida %{index} de %{count}
+      no_images_found: Non se atopou ningunha suxestión.
       or_separator: ou
+      pick_an_image: 'Escolle unha imaxe das suxestións seguintes:'
+      suggest_image_with_ai: Suxerir unha imaxe con IA
+      suggested_image_filename: Imaxe de %{author_name}.jpg
+      suggested_images_container: Imaxes suxeridas

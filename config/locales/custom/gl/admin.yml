@@ -4,6 +4,16 @@ gl:
   admin:
     actions:
       select: Seleccionar
+      show_to_valuators: Amosar %{name} ás persoas avaliadoras
+    activity:
+      show:
+        filters:
+          on_budget_investments: Proxectos de gasto
+    budget_investments:
+      index:
+        basic_filters:
+          title_or_id: Título ou ID
+          valuator_or_group: Persoa avaliadora ou grupo
     cookies:
       vendors:
         create:
@@ -28,6 +38,21 @@ gl:
         third_party_cookies: Cookies de terceiros
         update:
           notice: Provedor de cookies actualizado correctamente
+    polls:
+      votation_type:
+        open_description: Pregunta aberta que permite á persoa usuaria dar unha única resposta coas súas propias palabras.
+    proposals:
+      index:
+        list:
+          author: Autoría
+          id: ID
+          summary: Resumo
+          title: Proposta
+    questions:
+      show:
+        answers:
+          allow_custom_text:
+            help: Permite que as persoas usuarias escriban a súa propia resposta ao escoller esta opción. Útil para opcións como «Outra (especificar)».
     settings:
       index:
         blank_option: Ningún
@@ -35,3 +60,9 @@ gl:
           title: Consentimento de cookies
         cookies_consent_banner:
           title: Aviso de consentimento de cookies
+        llm:
+          title: Configuración do LLM
+    site_customization:
+      images:
+        index:
+          dimensions: (%{width}x%{height})

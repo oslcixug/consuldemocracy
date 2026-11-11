@@ -6,3 +6,6 @@ gl:
       edit:
         password:
           show: Amosar o contrasinal
+    budget_investments:
+      search:
+        label: Buscar proxectos

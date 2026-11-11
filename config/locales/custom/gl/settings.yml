@@ -29,3 +29,13 @@ gl:
       twitter_login_description: Permitir que as persoas usuarias inicien sesión coa conta de Twitter
       wordpress_login: Inicio de sesión con WordPress
       wordpress_login_description: Permitir que as persoas usuarias inicien sesión coa conta de WordPress
+    llm:
+      model: Modelo
+      model_description: O modelo de LLM que se vai usar.
+      provider: Provedor de LLM
+      provider_description: Os provedores estarán desactivados ata que se configuren as credenciais en secrets.yml.
+      title: Configuración do LLM
+      use_ai_image_suggestions: Suxestións de imaxes con IA
+      use_ai_image_suggestions_description: Permitir que as persoas usuarias usen IA para suxerir imaxes de Pexels, en vez de subir as súas propias.
+      use_llm_for_translations: Tradución de contidos
+      use_llm_for_translations_description: Usar un LLM para traducir os contidos, con prioridade sobre os servizos de tradución de Microsoft.

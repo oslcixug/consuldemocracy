@@ -9,12 +9,20 @@ gl:
         cookie: Nome da cookie
         name: Nome do provedor
         script: Código JavaScript
+      poll/question/option:
+        allow_custom_text: Permitir texto libre
+      votation_type/vote_type:
+        open: Resposta aberta
     errors:
       models:
         geozone:
           attributes:
             geojson:
               invalid_coordinates: O GeoJSON proporcionado contén coordenadas non válidas; as coordenadas deben estar no formato «Lonxitude, Latitude» e seguir o formato estándar RFC 7946
+        votation_type:
+          attributes:
+            vote_type:
+              cannot_change_to_open_ended: non se pode cambiar ao tipo de resposta aberta porque xa definiches posibles respostas válidas para esta pregunta
     models:
       cookies/vendor:
         one: provedor de cookies
@@ -22,5 +30,17 @@ gl:
       image:
         one: Imaxe
         other: Imaxes
+      legislation/answer:
+        one: Resposta
+        other: Respostas
+      legislation/draft_version:
+        one: Versión do borrador
+        other: Versións do borrador
+      legislation/question:
+        one: Pregunta
+        other: Preguntas
+      legislation/question_option:
+        one: Opción de resposta pechada
+        other: Opcións de resposta pechada
   attributes:
     created_at: Data de creación

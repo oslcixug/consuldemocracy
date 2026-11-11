@@ -1,0 +1,8 @@
+# Cadeas en galego que faltan ou se corrixen respecto a Crowdin (2.6.1).
+# Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
+gl:
+  valuation:
+    budget_investments:
+      show:
+        price_first_year_with_currency: Custo durante o primeiro ano (%{currency})
+        price_with_currency: Prezo (%{currency})

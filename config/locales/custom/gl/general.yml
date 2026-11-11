@@ -38,6 +38,21 @@ gl:
       name: SAML
       sign_in: Entra con SAML
       sign_up: Rexístrate con SAML
+  poll_questions:
+    custom_answer_aria_label: Resposta para %{option}
+  polls:
+    form:
+      maximum_exceeded: escolliches %{given} respostas, pero o máximo que podes escoller é %{maximum}
+      vote: Votar
+    questions_count:
+      one: Esta votación ten 1 pregunta.
+      other: Esta votación ten %{count} preguntas.
+    show:
+      already_voted_blank_in_web: Xa participaches nesta votación cun voto en branco. Se votas de novo, substituirase o teu voto anterior.
+      results:
+        open_ended:
+          blank: En branco
+          valid: Válidas
   proposals:
     form:
       map_marker_coordinates: 'Latitude: %{latitude}. Lonxitude: %{longitude}'
