@@ -3,17 +3,38 @@
 gl:
   admin:
     actions:
+      edit: Editar
+      mark_featured: Destacado
+      restore: Volver amosar
       select: Seleccionar
       show_to_valuators: Amosar %{name} ás persoas avaliadoras
     activity:
       show:
         filters:
           on_budget_investments: Proxectos de gasto
+    admin_notifications:
+      index:
+        new_notification: Nova notificación
+    banners:
+      edit:
+        form:
+          submit_button: Gardar os cambios
+      index:
+        title: Anuncios
     budget_investments:
       index:
         basic_filters:
           title_or_id: Título ou ID
           valuator_or_group: Persoa avaliadora ou grupo
+    budget_phases:
+      edit:
+        save_changes: Gardar os cambios
+    budgets:
+      edit:
+        drafting: Este orzamento participativo está en modo bosquexo, só os administradores poden velo dende a parte pública da páxina. Unha vez publicado, non se poderá volver a poñer en modo bosquexo outra vez.
+    comments:
+      index:
+        title: Comentarios agochados
     cookies:
       vendors:
         create:
@@ -38,6 +59,57 @@ gl:
         third_party_cookies: Cookies de terceiros
         update:
           notice: Provedor de cookies actualizado correctamente
+    dashboard:
+      actions:
+        index:
+          default:
+            email: Correo electrónico
+      administrator_tasks:
+        form:
+          proposal: Proposta
+    geozones:
+      edit:
+        form:
+          submit_button: Gardar os cambios
+    hidden_comments:
+      index:
+        filters:
+          with_confirmed_hide: Confirmados
+    hidden_debates:
+      index:
+        filters:
+          with_confirmed_hide: Confirmados
+    hidden_users:
+      index:
+        filters:
+          with_confirmed_hide: Confirmados
+    legislation:
+      draft_versions:
+        create:
+          error: Non se puido crear o bosquexo
+          notice: Bosquexo creado correctamente. <a href="%{link}">Preme para o veres</a>
+        destroy:
+          notice: O bosquexo borrouse correctamente
+        edit:
+          submit_button: Gardar os cambios
+        index:
+          title: Versións do bosquexo
+        update:
+          error: Non se puido actualizar o bosquexo
+          notice: Bosquexo actualizado correctamente. <a href="%{link}">Preme para o ver</a>
+      processes:
+        edit:
+          submit_button: Gardar os cambios
+        subnav:
+          questions: Debate
+      questions:
+        edit:
+          submit_button: Gardar os cambios
+    menu:
+      hidden_proposals: Propostas agochadas
+    poll_shifts:
+      new:
+        search_officer_button: Buscar
     polls:
       votation_type:
         open_description: Pregunta aberta que permite á persoa usuaria dar unha única resposta coas súas propias palabras.
@@ -49,6 +121,8 @@ gl:
           summary: Resumo
           title: Proposta
     questions:
+      index:
+        table_proposal: Proposta
       show:
         answers:
           allow_custom_text:
@@ -62,7 +136,23 @@ gl:
           title: Aviso de consentimento de cookies
         llm:
           title: Configuración do LLM
+    shared:
+      moderated_content: Comproba o contido revisado polos moderadores, e confirma se a moderación foi realizada correctamente.
+      proposal: Proposta
+      search:
+        search: Buscar
     site_customization:
       images:
         index:
           dimensions: (%{width}x%{height})
+    stats:
+      graph:
+        budget_investment_created: Proxectos de gasto creados
+        legislation_annotation_created: Anotacións lexislativas creadas
+        legislation_answer_created: Respostas lexislativas creadas
+    users:
+      columns:
+        email: Correo electrónico
+      index:
+        filters:
+          erased: Eliminados

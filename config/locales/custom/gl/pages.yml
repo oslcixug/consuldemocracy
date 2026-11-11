@@ -1,0 +1,10 @@
+# Cadeas en galego que faltan ou se corrixen respecto a Crowdin (2.6.1).
+# Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
+gl:
+  pages:
+    help:
+      budgets:
+        description: A sección de %{link} serve para que a xente decida de maneira directa a que se destina unha parte do orzamento.
+      debates:
+        feature_link: rexistrarte en %{org}
+        figcaption: Botóns «estou de acordo» e «non estou de acordo» para avaliar os debates.

@@ -1,0 +1,21 @@
+# Cadeas en galego que faltan ou se corrixen respecto a Crowdin (2.6.1).
+# Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
+gl:
+  legislation:
+    annotations:
+      version_chooser:
+        see_text: Ver bosquexo do texto
+    draft_versions:
+      changes:
+        see_text: Ver o bosquexo do texto
+      show:
+        select_draft_version: Escolle o bosquexo
+    processes:
+      shared:
+        debate_dates: Debate
+        draft_publication_date: Publicación do bosquexo
+    questions:
+      question:
+        debate: Debate
+    shared:
+      share_comment: Comentarios sobre a versión %{version_name} do bosquexo do proceso %{process_name}

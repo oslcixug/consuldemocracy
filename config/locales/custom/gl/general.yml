@@ -23,12 +23,44 @@ gl:
     recommended_actions:
       execute: Marcar a acción %{name} como feita
       unexecute: Desmarcar a acción %{name} como feita
+  debates:
+    edit:
+      form:
+        submit_button: Gardar os cambios
+    index:
+      featured_debates: Destacados
+      orders:
+        confidence_score: Máis apoiados
+        created_at: Novos
+        hot_score: Máis activos hoxe
+        recommendations: Recomendacións
+      recommendations:
+        actions:
+          error: Produciuse un erro. Por favor, accede á páxina «A miña conta» para deshabilitar de xeito manual as recomendacións para os debates
+          success: As recomendacións para debates foron desactivadas para esta conta
+        without_interests: Segue propostas para que che poidamos facer recomendacións
+      search_form:
+        title: Buscar
+      section_footer:
+        help_text_2: Para abrir un debate é preciso rexistrarse en %{org}. As persoas xa rexistradas tamén poden comentar os debates que estean abertos e valoralos cos botóns de «Estou de acordo» ou «Non estou de acordo» que se atopan en cada un deles.
+    show:
+      edit_debate_link: Editar
+    update:
+      form:
+        submit_button: Gardar os cambios
+  errors:
+    messages:
+      cannot_change_date:
+        poll_ended: Non se pode cambiar se a votación xa rematou
+        poll_started: Non se pode cambiar se a votación xa comezou
   ip_denied_handler:
     unauthorized: Acceso denegado. O teu enderezo IP non ten permiso para ver este contido.
   layouts:
     footer:
       cookies_consent_management: Configuración das cookies
       source_code: Código fonte
+    header:
+      moderation: Moderación
   omniauth:
     oidc:
       name: OIDC
@@ -54,16 +86,53 @@ gl:
           blank: En branco
           valid: Válidas
   proposals:
+    created:
+      motivation_2: <strong>Se queres recomendacións para preparar a publicación, deixa a proposta en modo bosquexo e guiarémoste.</strong>
+    edit:
+      form:
+        submit_button: Gardar os cambios
     form:
       map_marker_coordinates: 'Latitude: %{latitude}. Lonxitude: %{longitude}'
       proposal_responsible_name_note: (individualmente ou como representante dun colectivo; non se amosará publicamente)
+    index:
+      featured_proposals: Destacadas
+      orders:
+        confidence_score: Máis apoiadas
+        created_at: Novas
+        hot_score: Máis activas
+        most_commented: Máis comentadas
+        recommendations: Recomendacións
+        relevance: Importancia
+      recommendations:
+        actions:
+          error: Produciuse un erro. Por favor, accede á páxina «A miña conta» para deshabilitar de xeito manual as recomendacións para as propostas
+        without_interests: Segue propostas para que poidamos ofrecerche recomendacións
+      search_form:
+        button: Buscar
+        title: Buscar
+    show:
+      draft: Proposta en bosquexo. Non se poden obter apoios, nin aparecerá na lista de propostas.
+    update:
+      form:
+        submit_button: Gardar os cambios
+  related_content:
+    content_title:
+      debate: Debate
+      proposal: Proposta
   shared:
     actions:
       label: '%{action} %{name}'
     embedded_video:
       accept: Ver o vídeo
       warning: Esta páxina contén un vídeo dun provedor externo. Ao acceder ao seu contido, aceptas que os teus datos poidan transferirse a provedores externos.
+    search: Buscar
     show: Amosar
     translations:
       current_language: Idioma actual
+    unflag: Retirar denuncia
     warning_for_external_links: Ao confirmar, aceptas saír do sitio web.
+  users:
+    signup: rexistrarte
+  welcome:
+    cards:
+      title: Destacados

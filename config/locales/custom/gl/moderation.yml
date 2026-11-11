@@ -1,0 +1,32 @@
+# Cadeas en galego que faltan ou se corrixen respecto a Crowdin (2.6.1).
+# Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
+gl:
+  moderation:
+    budget_investments:
+      index:
+        filters:
+          with_ignored_flag: Marcadas como revisadas
+        ignore_flags: Marcar como revisados
+    comments:
+      index:
+        hide: Agochar comentarios
+    debates:
+      index:
+        filters:
+          with_ignored_flag: Marcados como revisados
+        hide: Agochar debate/s
+        ignore_flags: Marcar como revisado/s
+        orders:
+          flags: Máis denunciados
+    proposal_notifications:
+      index:
+        filters:
+          ignored: Marcadas como revisadas
+        hide: Agochar propostas
+        ignore_flags: Marcar como revisadas
+    proposals:
+      index:
+        filters:
+          with_ignored_flag: Marcadas como revisadas
+        hide: Agochar proposta/s
+        ignore_flags: Marcar como revisada/s

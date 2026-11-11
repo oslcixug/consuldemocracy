@@ -1,0 +1,219 @@
+# Adaptacións de textos á Universidade da Coruña (participa.udc.gal): cidade -> universidade,
+# cidadanía -> comunidade universitaria, sen «propostas cidadás», concello -> entidade...
+# Son propias desta instalación: NON van a Crowdin. Teñen prioridade sobre config/locales/gl/.
+gl:
+  activerecord:
+    attributes:
+      signature_sheet:
+        signable_id: ID de proposta/proposta de investimento
+    models:
+      legislation/proposal:
+        other: Propostas
+      proposal:
+        one: Proposta
+        other: Propostas
+  admin:
+    activity:
+      show:
+        filters:
+          on_proposals: Propostas
+    banners:
+      banner:
+        sections:
+          proposals: Propostas
+    budgets:
+      actions:
+        confirm:
+          ballots: Estás seguro/a? Esta acción só é necesaria se vas utilizar urnas físicas durante a votación final. As persoas poderán votar a través da web con, ou sen urnas físicas.
+      help:
+        budgets: Os orzamentos participativos permiten que as persoas propoñan e decidan de xeito directo como gastar parte do orzamento, cun seguimento e avaliación estrito das propostas por parte da institución.
+    dashboard:
+      index:
+        info: '<p>Este é o lugar onde ti, como administrador/a, implementas e supervisas o proceso de participación na túa localidade ou rexión.</p>
+
+
+          <p>Xa formas parte dos centos de gobernos e entidades locais de todo o mundo que utilizan a plataforma CONSUL DEMOCRACY para poñer en práctica a participación. Parabéns!</p>
+
+
+          <p>A Fundación CONSUL DEMOCRACY é o corazón da comunidade global de usuarios. Gustaríanos pedirche que te poñas en contacto connosco para saber quen está a utilizar o software e ver como podemos axudar na posta en marcha ou na súa xestión. Estamos ansiosos por darche a benvida á comunidade.</p>
+
+
+          <p>Feliz administración!</p>
+
+
+          <p>Un cordial saúdo do equipo da Fundación CONSUL DEMOCRACY</p>'
+    homepage:
+      feeds:
+        proposals: Propostas
+    legislation:
+      processes:
+        subnav:
+          proposals: Propostas
+    machine_learning:
+      help:
+        description_2: Este módulo permite implantar calquera tipo de programas de IA/Machine Learning en CONSUL DEMOCRACY. Os programas poden procesar a información dispoñible en CONSUL DEMOCRACY e producir resultados que axuden tanto aos usuarios como aos administradores a levar a cabo unha participación máis eficaz e intelixente. O módulo foi desenvolvido para facilitar a implantación e execución de novos programas, mantendo independentes entre si o código xeral de CONSUL DEMOCRACY e o código destes novos programas.
+    menu:
+      proposals: Propostas
+      site_customization:
+        information_texts_menu:
+          proposals: Propostas
+    proposals:
+      index:
+        title: Propostas
+    questions:
+      edit:
+        title: Editar pregunta
+    stats:
+      graph:
+        proposal_created: Propostas
+      sdg:
+        proposals: Propostas
+      show:
+        summary:
+          proposals: Propostas
+  dashboard:
+    mailer:
+      forward:
+        introduction: Escríboche para dicirche que estou a participar en %{org}, a plataforma na que podemos decidir a universidade que queremos. E para isto, veño de crear a miña propia proposta, e agora necesito da túa axuda! Pero non te preocupes porque é moi sinxelo.
+        support: Tan só tes que facer clic no botón que verás a continuación «Apoiar esta proposta» e directamente poderás consultar os detalles antes de impulsala. Só as propostas que consigan o máximo apoio poderán levarse a cabo por parte da universidade, e pensei que ti seguro que me axudas a conseguilo!
+    poster:
+      index:
+        intro_text: <strong>Estou participando en %{org}</strong> coa miña propia proposta e se me axudas poderei lograr os apoios necesarios para facer a universidade que todos queremos
+  debates:
+    index:
+      section_footer:
+        help_text_1: O espazo de debates está dirixido para que calquera persoa poida expor temas que lle preocupan e sobre os que queira compartir puntos de vista con outras persoas.
+  geozones:
+    none: Toda a universidade
+  guides:
+    proposal:
+      title: Unha proposta
+  layouts:
+    footer:
+      description: Este portal usa a %{consul} que é %{open_source}.
+      participation_text: Decide como debe ser a Universidade que queres.
+    header:
+      proposals: Propostas
+  legislation:
+    processes:
+      shared:
+        proposals_dates: Propostas
+  mailers:
+    new_actions_notification_on_create:
+      subject: Creouse o borrador da túa proposta
+      text_2: 'Cando esteas preparado, publica a túa proposta desde esta ligazón: <a href=''%{link}''>link</a>.'
+      text_4: 'Dispós dunha ferramenta que pode converterse na túa mellor aliada: O panel de propostas.'
+    new_actions_notification_on_published:
+      subject: A túa proposta xa está publicada. Non deixes de difundir!
+  management:
+    menu:
+      support_proposals: Apoiar propostas
+    proposals:
+      index:
+        title: Apoiar propostas
+  moderation:
+    menu:
+      proposals: Propostas
+    proposals:
+      index:
+        title: Propostas
+  pages:
+    accessibility:
+      keyboard_shortcuts:
+        navigation_table:
+          rows:
+          - key_column: 0
+            page_column: Inicio
+          - key_column: 1
+            page_column: Debates
+          - key_column: 2
+            page_column: Propostas
+          - key_column: 3
+            page_column: Votos
+          - key_column: 4
+            page_column: Orzamentos participativos
+          - key_column: 5
+            page_column: Procesos lexislativos
+    help:
+      debates:
+        description: Na sección de %{link} podes expoñer e compartir a túa opinión con outras persoas sobre temas que che preocupan relacionados coa universidade. Tamén é un espazo onde xerar ideas que a través das outras seccións de %{org} leven a actuacións concretas por parte da universidade.
+        link: debates
+      faq:
+        page:
+          description: Emprega esta páxina para resolveres os problemas máis frecuentes.
+        title: Tes algunha dúbida?
+      how_to_use:
+        text: 'Emprégao na túa entidade ou axúdanos a melloralo, é software libre.
+
+
+          Este portal de goberno aberto emprega a [aplicación CONSUL DEMOCRACY] (https://github.com/consuldemocracy/consuldemocracy ''consul democracy github'') que é software libre con [licenza AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html ''AGPLv3 gnu'' ), o que significa que calquera pode usar libremente o código, copialo, velo en detalle, modificalo e redistribuílo ao mundo coas modificacións que quixer (mantendo o que outros poidan facer á súa vez o mesmo). Porque xulgamos que a cultura é mellor e máis rica cando se libera.
+
+
+          Se sabes programar, podes ver o código e axudáresnos a melloralo en [CONSUL DEMOCRACY app](https://github.com/consuldemocracy/consuldemocracy ''consul democracy github'').'
+      menu:
+        proposals: Propostas
+      other:
+        how_to_use: Emprega %{org_name} na túa entidade
+      polls:
+        description: A sección de %{link} actívase cada vez que unha proposta acada o 1% dos apoios e pasa á votación ou cando a universidade propón un tema para que a xente decida sobre el.
+      processes:
+        description: Na sección %{link}, a comunidade universitaria participa na redacción e modificación da normativa que afecta á universidade, e pode dar a súa opinión sobre as políticas en debates previos.
+      proposals:
+        description: Na sección %{link} podes formular propostas para que a universidade as leve a cabo. As propostas obteñen apoios e se alcanzan abondos sométense a votación. As propostas aprobadas nestas votacións son asumidas pola Universidade e lévanse a cabo.
+        link: propostas
+        title: Propostas
+      title: '%{org} é unha plataforma de participación'
+      titles:
+        how_to_use: Emprégao na túa entidade
+    titles:
+      help: Que é %{org}? - Participación
+  polls:
+    index:
+      no_geozone_restricted: Toda a universidade
+  proposals:
+    index:
+      section_footer:
+        description: As propostas da comunidade universitaria son unha oportunidade para que se poida decidir sobre como queremos que sexa a nosa universidade, despois de conseguir suficientes apoios e sometelas a un proceso de votación.
+      section_header:
+        title: Propostas
+      title: Propostas
+    new:
+      more_info: Como funcionan as propostas?
+  sdg:
+    goals:
+      help:
+        description: Podes aliñar as túas aportacións á comunidade (temas, propostas e proxectos de inversión) cos Obxectivos de Desenvolvemento Sostible da Axenda 2030, isto  permitiranos ter unha visión xeral da nosa aportación en cada uno dos obxectivos de desenvolvemento sostible. A continuación podes informarte de todos os obxectivos, as súas metas e as metas localizadas.
+  sdg_management:
+    menu:
+      proposals: Propostas
+  seeds:
+    cards:
+      budget:
+        description: Os orzamentos participativos permiten propoñer e decidir directamente como gastar parte do orzamento, cun seguimento e avaliación rigorosa das propostas por parte da institución. Máxima eficacia e control con satisfacción para todos.
+      header:
+        description: Software libre para a participación.
+      proposal:
+        description: Un espazo para que calquera poida crear unha proposta e buscar apoios. As propostas que acaden suficientes apoios serán votadas e así, xuntos, podemos decidir os asuntos que nos importan.
+        label: Propostas
+        title: Como funcionan as propostas?
+  settings:
+    process:
+      debates_description: O espazo de debate da comunidade universitaria está dirixido a calquera que poida presentar problemas que lles afecten e sobre os que queren compartir as súas opinións con outros
+      polls_description: As votacións son un proceso participativo polo cal a comunidade universitaria con dereito a voto pode tomar decisións dun modo directo
+      proposals: Propostas
+      proposals_description: As propostas da comunidade universitaria son unha oportunidade para que se poida decidir sobre como queremos que sexa a nosa universidade, despois de conseguir suficientes apoios e sometelas a un proceso de votación.
+  shared:
+    followable:
+      proposal:
+        create:
+          notice: Agora estás seguindo esta proposta! <br> Notificarémosche os cambios a medida que se produciren para que esteas ao tanto.
+        destroy:
+          notice: Deixaches de seguir esta proposta! <br> Xa non recibirás máis notificacións relacionadas coa proposta.
+  users:
+    show:
+      proposals: Propostas
+  verification:
+    letter:
+      new:
+        office: Verifique en calquera oficina de apoio
+    user_permission_support_proposal: Apoiar propostas

@@ -76,7 +76,7 @@ es:
         other: Papeletas de votación
       proposal:
         one: "Propuesta ciudadana"
-        other: "Propuestas"
+        other: "Propuestas ciudadanas"
       sdg/goal:
         one: "objetivo"
         other: "objetivos"

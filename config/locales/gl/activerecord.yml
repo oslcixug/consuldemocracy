@@ -29,13 +29,13 @@ gl:
         one: "Barra de progreso"
         other: "Barras de progreso"
       comment:
-        one: "Comentario"
+        one: "Comentar"
         other: "Comentarios"
       debate:
-        one: "Debate"
+        one: "o debate"
         other: "Debates"
       tag:
-        one: "Etiqueta"
+        one: "Tema"
         other: "Etiquetas"
       user:
         one: "Usuario"
@@ -44,7 +44,7 @@ gl:
         one: "Moderador"
         other: "Moderadores"
       administrator:
-        one: "Administrador"
+        one: "Administración"
         other: "Administradores"
       valuator:
         one: "Avaliador"
@@ -57,7 +57,7 @@ gl:
         other: "Xestores"
       newsletter:
         one: "Boletín informativo"
-        other: "Boletíns informativos"
+        other: "Envío de newsletters"
       vote:
         one: "Voto"
         other: "Votos"
@@ -74,8 +74,8 @@ gl:
         one: Papeleta
         other: Papeletas
       proposal:
-        one: "Proposta"
-        other: "Propostas"
+        one: "Proposta cidadá"
+        other: "Propostas cidadás"
       sdg/goal:
         one: "obxectivo"
         other: "obxectivos"
@@ -90,13 +90,13 @@ gl:
         other: "metas"
       site_customization/page:
         one: Páxina
-        other: Páxinas
+        other: Páxinas personalizadas
       site_customization/image:
         one: Imaxe
-        other: Imaxes
+        other: Personalizar imaxes
       site_customization/content_block:
         one: Bloque
-        other: Bloques
+        other: Personalizar bloques
       document:
         one: Documento
         other: Documentos
@@ -104,8 +104,8 @@ gl:
         one: "Proceso"
         other: "Procesos"
       legislation/proposal:
-        one: "Proposta"
-        other: "Propostas"
+        one: "a proposta"
+        other: "Propostas cidadás"
       tenant:
         one: "entidade"
         other: "entidades"
@@ -318,7 +318,7 @@ gl:
       signature_sheet:
         title: "Título"
         signable_type: "Tipo de sinaturas"
-        signable_id: "ID de proposta/proposta de investimento"
+        signable_id: "ID de proposta cidadá/proposta de investimento"
         document_numbers: "Números de documentos"
       sdg/goal:
         code: "Código"

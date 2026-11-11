@@ -30,7 +30,7 @@ gl:
     cards:
       budget:
         title: "Como funcionan os orzamentos participativos?"
-        description: "Os orzamentos participativos permiten propoñer e decidir directamente como gastar parte do orzamento, cun seguimento e avaliación rigorosa das propostas por parte da institución. Máxima eficacia e control con satisfacción para todos."
+        description: "Os orzamentos participativos permiten aos cidadáns propoñer e decidir directamente como gastar parte do orzamento, cun seguimento e avaliación rigorosa das propostas por parte da institución. Máxima eficacia e control con satisfacción para todos."
         link_text: "Máis información sobre os orzamentos participativos"
         label: "Orzamentos participativos"
       debate:
@@ -40,14 +40,14 @@ gl:
         label: "Debates"
       header:
         title: "CONSUL DEMOCRACY"
-        description: "Software libre para a participación."
+        description: "Software libre para a participación cidadá."
         link_text: "Máis información"
         label: "Benvido/a a"
       proposal:
-        title: "Como funcionan as propostas?"
-        description: "Un espazo para que calquera poida crear unha proposta e buscar apoios. As propostas que acaden suficientes apoios serán votadas e así, xuntos, podemos decidir os asuntos que nos importan."
+        title: "Como funcionan as propostas cidadás?"
+        description: "Un espazo para que calquera poida crear unha proposta cidadá e buscar apoios. As propostas que acaden suficientes apoios serán votadas e así, xuntos, podemos decidir os asuntos que nos importan."
         link_text: "Máis información sobre as propostas"
-        label: "Propostas"
+        label: "Propostas cidadás"
     categories:
       associations: Asociacións
       culture: Cultura

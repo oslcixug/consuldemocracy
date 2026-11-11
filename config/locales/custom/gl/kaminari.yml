@@ -1,0 +1,15 @@
+# Cadeas en galego que faltan ou se corrixen respecto a Crowdin (2.6.1).
+# Teñen prioridade sobre config/locales/gl/; cando cheguen a Crowdin/upstream, quitalas de aquí.
+gl:
+  helpers:
+    page_entries_info:
+      entry:
+        zero: Sen entradas
+      more_pages:
+        display_entries: Amósanse <strong>%{first}&nbsp;-&nbsp;%{last}</strong> dun total de <strong>%{total} %{entry_name}</strong>
+      one_page:
+        display_entries:
+          zero: Non se atoparon %{entry_name}
+  views:
+    pagination:
+      next: Seguinte

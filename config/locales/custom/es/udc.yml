@@ -1,0 +1,19 @@
+# Adaptacións de textos á Universidade da Coruña (participa.udc.gal): cidade -> universidade,
+# cidadanía -> comunidade universitaria, sen «propostas cidadás», concello -> entidade...
+# Son propias desta instalación: NON van a Crowdin. Teñen prioridade sobre config/locales/es/.
+es:
+  activerecord:
+    models:
+      proposal:
+        other: Propuestas
+  pages:
+    help:
+      faq:
+        title: ¿Tienes alguna duda?
+  proposals:
+    index:
+      title: Propuestas
+  seeds:
+    cards:
+      proposal:
+        label: Propuestas

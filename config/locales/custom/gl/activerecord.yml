@@ -24,9 +24,15 @@ gl:
             vote_type:
               cannot_change_to_open_ended: non se pode cambiar ao tipo de resposta aberta porque xa definiches posibles respostas válidas para esta pregunta
     models:
+      administrator:
+        one: Administrador
+      comment:
+        one: Comentario
       cookies/vendor:
         one: provedor de cookies
         other: provedores de cookies
+      debate:
+        one: Debate
       image:
         one: Imaxe
         other: Imaxes
@@ -36,11 +42,23 @@ gl:
       legislation/draft_version:
         one: Versión do borrador
         other: Versións do borrador
+      legislation/proposal:
+        one: Proposta
       legislation/question:
         one: Pregunta
         other: Preguntas
       legislation/question_option:
         one: Opción de resposta pechada
         other: Opcións de resposta pechada
+      newsletter:
+        other: Boletíns informativos
+      site_customization/content_block:
+        other: Bloques
+      site_customization/image:
+        other: Imaxes
+      site_customization/page:
+        other: Páxinas
+      tag:
+        one: Etiqueta
   attributes:
     created_at: Data de creación

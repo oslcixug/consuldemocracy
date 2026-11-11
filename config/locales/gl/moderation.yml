@@ -10,7 +10,7 @@ gl:
           all: Todo
           pending_flag_review: Pendentes
           with_ignored_flag: Marcados como revisados
-        hide: Agochar comentarios
+        hide: Ocultar comentarios
         ignore_flags: Marcar como revisadas
         orders:
           flags: Máis denunciadas
@@ -26,12 +26,12 @@ gl:
         filters:
           all: Todo
           pending_flag_review: Pendentes
-          with_ignored_flag: Marcados como revisados
-        hide: Agochar debate/s
-        ignore_flags: Marcar como revisado/s
+          with_ignored_flag: Marcado como revisado
+        hide: Ocultar debates
+        ignore_flags: Marcar como revisado
         orders:
           created_at: Máis novos
-          flags: Máis denunciados
+          flags: Máis denunciadas
         title: Debates
     header:
       title: Moderar
@@ -39,7 +39,7 @@ gl:
       flagged_comments: Comentarios
       flagged_debates: Debates
       flagged_investments: Proxectos de orzamentos participativos
-      proposals: Propostas
+      proposals: Propostas cidadás
       proposal_notifications: Notificacións de propostas
       users: Bloquear usuarios
     proposals:
@@ -49,15 +49,15 @@ gl:
         filters:
           all: Todo
           pending_flag_review: Pendentes de revisión
-          with_ignored_flag: Marcadas como revisadas
+          with_ignored_flag: Marcar como revisado
         headers:
           moderate: Moderar
-        hide: Agochar proposta/s
-        ignore_flags: Marcar como revisada/s
+        hide: Ocultar propostas
+        ignore_flags: Marcar como revisado
         orders:
           created_at: Máis recentes
           flags: Máis denunciadas
-        title: Propostas
+        title: Propostas cidadás
     budget_investments:
       index:
         block_authors: Bloquear autores/as
@@ -65,9 +65,9 @@ gl:
         filters:
           all: Todo
           pending_flag_review: Pendentes
-          with_ignored_flag: Marcadas como revisadas
+          with_ignored_flag: Marcado como revisado
         hide: Agochar investimentos orzamentarios
-        ignore_flags: Marcadas como revisadas
+        ignore_flags: Marcar como revisado
         orders:
           created_at: Máis recentes
           flags: Máis denunciadas
@@ -79,9 +79,9 @@ gl:
         filters:
           all: Todo
           pending_review: Pendentes de revisión
-          ignored: Marcadas como revisadas
-        hide: Agochar propostas
-        ignore_flags: Marcadas como revisadas
+          ignored: Marcar como revisado
+        hide: Ocultar propostas
+        ignore_flags: Marcar como revisado
         orders:
           created_at: Máis recentes
           moderated: Moderado
